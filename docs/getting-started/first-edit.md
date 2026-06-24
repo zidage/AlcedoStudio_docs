@@ -4,7 +4,7 @@
 
 ## 新建/打开项目
 
-进入项目管理界面后，首先点击“创建新项目”按钮，选择一个合适的*文件夹*作为项目文件的存储位置。输入项目名称后，点击“确定”完成项目的初始化。
+进入项目管理界面后，首先在欢迎界面点击“创建新项目”按钮，再的出现新面板选择一个合适的*文件夹*作为项目文件的存储位置。输入项目名称后，点击“确定”完成项目的初始化。
 
 <div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
 	<img src={require('./tutorial_img/create_new_proj.png').default} alt="新建项目界面：创建项目入口" width="60%" />
@@ -25,7 +25,7 @@
 
 ### 图片选择
 
-等待导入完成后，可以双击打开相册中的图像进入编辑页面，或是拖动选框多选图像后点击上方“添加所选”将图片添加到导出队列中。
+等待导入完成后，可以双击打开相册中的图像进入编辑页面，或是拖动选框多选图像后右键“添加所选”将图片添加到导出队列中。
 
 <div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
 	<img src={require('./tutorial_img/select_1.png').default} alt="新建项目界面：创建项目入口" width="60%" />
@@ -48,7 +48,7 @@
 </div>
 
 ### 预览缩放
-双击图像图像可放大，按住 `Ctrl/Command` 键并滚动鼠标滚轮可以缩放预览, 左上角会显示当前缩放比例，最大支持 800% 的放大。
+双击图像图像可放大，按住 `Ctrl/Command` 键并滚动鼠标滚轮可以缩放预览, 左上角会显示当前缩放比例，最大支持 800% 的放大。同时支持触摸板的手势动作。
 
 ### 编辑选项
 
@@ -72,24 +72,14 @@
 	<img src={require('./tutorial_img/edit_3.png').default} alt="新建项目界面：创建项目入口" width="60%" />
 </div>
 
-对于 OpenDRT 来说，用户还可以调整其中的预设参数来获得不同的显示效果。调整时，图像预览会实时更新以反映当前的调整效果。
-
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/edit_4.png').default} alt="新建项目界面：创建项目入口" width="60%" />
-</div>
+对于 OpenDRT 来说，用户还可以调整其中的预设参数来获得不同的显示效果。调整时，图像预览会实时更新以反映当前的调整效果。并且，也可通过调整OpenDRT的内部参数来获得预设以外的显示效果。
 
 ### RAW 解码设置
 
 在“RAW 解码”面板中，用户可以选择是否启用高光恢复以及镜头校正功能。启用高光恢复后，软件会尝试从 RAW 数据中恢复过曝区域的细节；启用镜头校正后，软件会根据镜头的特性对图像进行畸变校正。
 
-**高光重建关：**
 <div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
 	<img src={require('./tutorial_img/edit_5.png').default} alt="新建项目界面：创建项目入口" width="60%" />
-</div>
-
-**高光重建开：**
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/edit_6.png').default} alt="新建项目界面：创建项目入口" width="60%" />
 </div>
 注意，高光重建可能会造成伪影以及色调偏离，建议在需要恢复过曝细节的情况下开启，并仔细检查恢复效果。
 
@@ -105,7 +95,7 @@
 
 ## 导出设置
 
-完成编辑后，关闭编辑器面板回到相册页面，所有改动都会被自动保存。选中想要导出的图像后点击“添加所选”将其添加到导出队列中。
+完成编辑后，关闭编辑器面板回到相册页面，所有改动都会被自动保存。选中想要导出的图像后点击“添加所选”将其添加到导出队列中。当队列中同时存在HDR和SDR图像时，HDR图像会被金色标识标记出来以示区分。左右的导出设置可分别设置HDR和SDR图像的导出参数，以适应不同的输出需求。
 
 <div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
 	<img src={require('./tutorial_img/export_1.png').default} alt="新建项目界面：创建项目入口" width="60%" />
@@ -115,5 +105,4 @@
 
 ### 注意：
 
-- 当前版本的导出功能的一些参数组合并不会起效，比如图中的 JPEG + 16-bit 设置就没有实际意义，建议用户在导出前仔细检查设置以确保符合预期。
-- Ultra HDR 格式仅支持 JPEG 8bit 输出，最终图像可能会因为色彩空间和位深的限制而出现色调偏离，建议在需要极致亮度表现的情况下使用，并仔细检查导出效果。
+- Ultra HDR 格式请使用最高质量导出以保证最佳效果。
