@@ -1,33 +1,48 @@
+/*
+  Color tokens mirror the Alcedo Studio QML theme — the default "Alcedo" theme
+  defined in src/ui/alcedo_main/app_theme.cpp (MakePuerhTheme). The previous site
+  palette was the now-secondary "Classic" gold theme; this switches the docs to the
+  app's default blue/steel scheme so the two stay in sync.
+*/
 :root {
-  --alcedo-canvas: #111111;
-  --alcedo-deep: #141414;
-  --alcedo-base: #1f1f1f;
-  --alcedo-panel: #2b2b2b;
-  --alcedo-card: #242424;
-  --alcedo-separator: #363636;
-  --alcedo-hover: #333333;
-  --alcedo-gold: #fcc704;
-  --alcedo-gold-tint: rgba(252, 199, 4, 0.18);
-  --alcedo-wine: #8a0526;
+  /* Backgrounds — darkest (floor) to lightest (elevated), from bg_canvas..bg_deep */
+  --alcedo-canvas: #121212;    /* bg_canvas — outermost surface / page floor */
+  --alcedo-panel: #1a1a1a;    /* bg_panel  — primary workspaces, navbar/footer */
+  --alcedo-base: #242424;     /* bg_base   — cards, inputs, surfaces */
+  --alcedo-deep: #2e2e2e;     /* bg_deep   — floating / elevated surfaces */
+  --alcedo-card: #242424;     /* bg_base   — card surface */
+  --alcedo-separator: rgba(200, 200, 200, 0.10); /* divider / glass_stroke */
+  --alcedo-hover: #262525;    /* hover */
 
-  --ifm-color-primary: var(--alcedo-gold);
-  --ifm-color-primary-dark: #e3b200;
-  --ifm-color-primary-darker: #c89d00;
-  --ifm-color-primary-darkest: #9c7a00;
-  --ifm-color-primary-light: #ffd532;
-  --ifm-color-primary-lighter: #ffde57;
-  --ifm-color-primary-lightest: #ffe98b;
+  /* Brand blue CTA palette — tone_gold / accent_secondary / tone_steel */
+  --alcedo-accent: #6892b9;          /* accentColor  — primary CTA */
+  --alcedo-accent-hover: #76a0c7;    /* accent_secondary — hover */
+  --alcedo-accent-pressed: #567fa5;  /* tone_steel — pressed */
+  --alcedo-accent-tint: rgba(104, 146, 185, 0.18); /* selected_tint */
+  --alcedo-danger: #8a3a3a;          /* dangerColor / tone_wine */
+
+  /* Text — text / text_muted */
+  --alcedo-text: #e0e0e0;
+  --alcedo-text-muted: #888888;
+
+  --ifm-color-primary: var(--alcedo-accent);
+  --ifm-color-primary-dark: #5884ac;
+  --ifm-color-primary-darker: #4a7598;
+  --ifm-color-primary-darkest: #3b6082;
+  --ifm-color-primary-light: #79a1c4;
+  --ifm-color-primary-lighter: #8ab3d2;
+  --ifm-color-primary-lightest: #a6c6dd;
   --ifm-code-font-size: 95%;
   --ifm-background-color: var(--alcedo-canvas);
-  --ifm-background-surface-color: var(--alcedo-base);
-  --ifm-navbar-background-color: var(--alcedo-base);
-  --ifm-footer-background-color: var(--alcedo-deep);
+  --ifm-background-surface-color: var(--alcedo-panel);
+  --ifm-navbar-background-color: var(--alcedo-panel);
+  --ifm-footer-background-color: var(--alcedo-panel);
   --ifm-card-background-color: var(--alcedo-card);
   --ifm-toc-border-color: var(--alcedo-separator);
   --ifm-hr-border-color: var(--alcedo-separator);
-  --ifm-link-color: var(--alcedo-gold);
-  --ifm-menu-color-active: var(--alcedo-gold);
-  --ifm-menu-color-background-active: var(--alcedo-gold-tint);
+  --ifm-link-color: var(--alcedo-accent);
+  --ifm-menu-color-active: var(--alcedo-accent);
+  --ifm-menu-color-background-active: var(--alcedo-accent-tint);
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
@@ -40,7 +55,7 @@
 }
 
 .alcedo-home-hero {
-  background: var(--alcedo-base);
+  background: var(--alcedo-panel);
   border-bottom: 1px solid var(--alcedo-separator);
   padding: 3rem 0 2.5rem;
 }
@@ -51,7 +66,7 @@
 
 .alcedo-home-subtitle {
   margin-bottom: 1.25rem;
-  color: var(--ifm-color-emphasis-700);
+  color: var(--alcedo-text-muted);
   max-width: 720px;
 }
 
@@ -84,7 +99,7 @@
 .alcedo-home-card {
   background: var(--alcedo-card);
   border: 1px solid var(--alcedo-separator);
-  border-radius: 10px;
+  border-radius: 10px; /* panel_radius */
   padding: 1rem;
 }
 
@@ -99,7 +114,7 @@
 
 .alcedo-home-card-description {
   margin-bottom: 0.7rem;
-  color: var(--ifm-color-emphasis-700);
+  color: var(--alcedo-text-muted);
   font-size: 0.94rem;
 }
 
@@ -114,7 +129,7 @@
 .alcedo-home-focus-text {
   margin: 0;
   max-width: 760px;
-  color: var(--ifm-color-emphasis-700);
+  color: var(--alcedo-text-muted);
 }
 
 @media (max-width: 996px) {
