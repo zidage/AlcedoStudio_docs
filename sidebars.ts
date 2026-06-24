@@ -14,6 +14,16 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'AI 功能',
+      items: [
+        'ai/overview',
+        'ai/model-management',
+        'ai/label-generation',
+        'ai/search',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Tutorials',
       items: [
         'tutorials/basic-raw-workflow',

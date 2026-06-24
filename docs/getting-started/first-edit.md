@@ -1,6 +1,6 @@
 # 第一次编辑
 
-本页将提供一个简单的示例，展示如何使用 Pu-erh Lab 进行基本的图像编辑。我们将从导入一张 RAW 图像开始，进行一些基础调整，并最终导出编辑后的结果。
+本页将提供一个简单的示例，展示如何使用 Alcedo Studio 进行基本的图像编辑。我们将从导入一张 RAW 图像开始，进行一些基础调整，并最终导出编辑后的结果。
 
 ## 新建/打开项目
 
@@ -20,6 +20,8 @@
 <div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
 	<img src={require('./tutorial_img/import_2.png').default} alt="新建项目界面：创建项目入口" width="60%" />
 </div>
+
+导入完成后，若项目已激活 AI 模型，软件会弹出“Use AI to analyze image content?”对话框，询问是否为这批图像生成内容标签；若尚未激活模型，则会弹出“Set up an AI model to analyze images”引导你前往设置安装并激活模型。你可以选择“Generate”生成、“Skip”跳过，或勾选“Remember My Choice”记住本次选择。相关设置与完整说明见 [AI 模型管理](../ai/model-management.md) 与 [AI 标签生成](../ai/label-generation.md)。
 
 ### 图片选择
 

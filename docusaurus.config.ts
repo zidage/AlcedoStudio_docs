@@ -3,7 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'Pu-erh Lab',
+  title: 'Alcedo Studio',
   tagline: '高性能 RAW 图像处理与编辑文档',
   favicon: 'img/favicon.ico',
 
@@ -12,9 +12,14 @@ const config: Config = {
   },
 
   url: 'https://zidage.github.io',
-  baseUrl: '/PuerhLab/zh/',
+  baseUrl: '/AlcedoStudio_docs/',
+
+  // GitHub Pages config is now set via deployment workflow, but we keep
+  // organizationName/projectName for the trailing-slash behavior of the
+  // classic preset. The docs site lives in its own repo (AlcedoStudio_docs),
+  // while the software source is at github.com/zidage/AlcedoStudio.
   organizationName: 'zidage',
-  projectName: 'PuerhLab',
+  projectName: 'AlcedoStudio_docs',
 
   onBrokenLinks: 'throw',
 
@@ -46,7 +51,7 @@ const config: Config = {
       respectPrefersColorScheme: false,
     },
     navbar: {
-      title: 'Pu-erh Lab 文档',
+      title: 'Alcedo Studio 文档',
       items: [
         {
           type: 'docSidebar',
@@ -60,7 +65,7 @@ const config: Config = {
           position: 'left',
         },
         {
-          href: 'https://github.com/zidage/PuerhLab',
+          href: 'https://github.com/zidage/AlcedoStudio',
           label: 'GitHub',
           position: 'right',
         },
@@ -92,12 +97,12 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/zidage/PuerhLab',
+              href: 'https://github.com/zidage/AlcedoStudio',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Pu-erh Lab`,
+      copyright: `Copyright © ${new Date().getFullYear()} Alcedo Studio`,
     },
     prism: {
       theme: prismThemes.github,
