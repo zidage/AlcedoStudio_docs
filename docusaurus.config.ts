@@ -55,13 +55,13 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'docsSidebar',
           position: 'left',
           label: 'Docs',
         },
         {
-          to: '/docs/tutorials/basic-raw-workflow',
-          label: 'Tutorials',
+          to: '/docs/ai/provider-configuration',
+          label: 'AI 配置',
           position: 'left',
         },
         {
@@ -80,15 +80,6 @@ const config: Config = {
             {
               label: '介绍',
               to: '/docs/intro',
-            },
-          ],
-        },
-        {
-          title: 'Tutorials',
-          items: [
-            {
-              label: '基础 RAW 工作流',
-              to: '/docs/tutorials/basic-raw-workflow',
             },
           ],
         },

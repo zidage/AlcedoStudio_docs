@@ -21,7 +21,7 @@
 	<img src={require('./tutorial_img/import_2.png').default} alt="新建项目界面：创建项目入口" width="60%" />
 </div>
 
-导入完成后，若项目已激活 AI 模型，软件会弹出“Use AI to analyze image content?”对话框，询问是否为这批图像生成内容标签；若尚未激活模型，则会弹出“Set up an AI model to analyze images”引导你前往设置安装并激活模型。你可以选择“Generate”生成、“Skip”跳过，或勾选“Remember My Choice”记住本次选择。相关设置与完整说明见 [AI 模型管理](../ai/model-management.md) 与 [AI 标签生成](../ai/label-generation.md)。
+导入完成后，若项目已激活本地 AI 模型，软件会弹出 `Use AI to analyze image content?（使用 AI 分析图像内容？）` 对话框，询问是否为这批图像生成内容标签；若尚未激活本地模型，则会弹出 `Set up an AI model to analyze images（设置用于分析图像的 AI 模型）`，引导你前往 `Local Content Recognition（本地内容识别）` 安装并激活模型。你可以选择 `Generate（生成）`、`Skip（跳过）`，或勾选 `Remember My Choice（记住我的选择）`。相关设置与完整说明见 [本地 AI 模型管理](../ai/model-management.md) 与 [AI 标签生成](../ai/label-generation.md)。需要为选中照片生成描述、评分和评分理由时，请使用 [API 供应商配置](../ai/provider-configuration.md) 中的高级内容分析流程。
 
 ### 图片选择
 

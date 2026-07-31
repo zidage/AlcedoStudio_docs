@@ -1,7 +1,7 @@
 import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 
 const sidebars: SidebarsConfig = {
-  tutorialSidebar: [
+  docsSidebar: [
     'intro',
     {
       type: 'category',
@@ -17,18 +17,10 @@ const sidebars: SidebarsConfig = {
       label: 'AI 功能',
       items: [
         'ai/overview',
+        'ai/provider-configuration',
         'ai/model-management',
         'ai/label-generation',
         'ai/search',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Tutorials',
-      items: [
-        'tutorials/basic-raw-workflow',
-        'tutorials/hdr-workflow',
-        'tutorials/color-workflow',
       ],
     },
     {

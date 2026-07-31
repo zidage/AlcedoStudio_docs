@@ -32,4 +32,6 @@
 
 ## 设置与 AI
 
-点击工具栏“Settings”打开设置，包含 Language、Theme and color、Cache 与 AI 四个分类。AI 分类用于下载、激活与管理 AI 模型，以及配置导入时的标签生成偏好，详见 [AI 功能概览](../ai/overview.md)。
+点击工具栏 `Settings（设置）` 打开设置。与 AI 相关的设置分为两条路径：`Local Content Recognition（本地内容识别）` 用于下载、激活本地视觉模型和配置导入时的标签生成偏好；`Advanced Content Analysis（高级内容分析）` 用于创建 API 供应商配置、选择模型，并配置描述、评分与评分理由的生成方式。完整入口见 [AI 功能概览](../ai/overview.md) 和 [API 供应商配置](../ai/provider-configuration.md)。
+
+相册左侧工具区还提供 `Advanced Content Analysis（高级内容分析）` 入口。打开项目并选中一张或多张照片后，点击该入口即可对当前选择运行 API 分析；没有选择照片时入口会保持不可用。

@@ -4,28 +4,37 @@ sidebar_position: 1
 
 # AI 功能概览
 
-Alcedo Studio 在 RAW 编辑与资产管理之外，引入了一组基于 CLIP 模型的 AI 功能，用于自动识别图像内容并据此检索图像。这些功能共享同一个模型：下载并激活一次，即可同时用于内容标签生成与语义搜索。
+Alcedo Studio 目前提供两条 AI 能力链：一条在本机运行视觉模型，用于内容标签和语义搜索；另一条通过你配置的 API 供应商，完成更完整的图像描述、评分和评分理由。两者的设置入口、数据路径和使用场景都不同。
 
-## 功能组成
+## 文档入口
 
-- [AI 模型管理](./model-management.md)：在设置中下载、选择镜像源、激活模型。
+- [API 供应商配置](./provider-configuration.md)：创建 API 供应商配置、保存 API key 或 Codex OAuth、选择模型并运行高级内容分析。
+- [本地 AI 模型管理](./model-management.md)：下载、选择镜像源、激活本地视觉模型。
 - [AI 标签生成](./label-generation.md)：为图像自动生成内容标签，可在导入时触发，也可手动生成或重新生成。
 - [AI 搜索与模糊搜索](./search.md)：在全局搜索中按自然语言语义检索图像，或使用模糊 / 精确匹配。
 
-## 模型与工作方式
+## 两条能力链的区别
 
-AI 功能使用一个 CLIP 视觉模型。模型本身不会随安装包分发，需要联网下载。下载来源可在设置中选择镜像源（HF Mirror、Hugging Face、Sufy CDN 或自定义地址），详见 [AI 模型管理](./model-management.md)。
+| 能力链 | 设置入口 | 数据路径 | 主要结果 |
+| --- | --- | --- | --- |
+| 本地 AI | `Local Content Recognition（本地内容识别）` | 图像在本机由已激活模型处理 | 内容标签、标签筛选、语义搜索 |
+| API 供应商 | `Advanced Content Analysis（高级内容分析）` | 选中的图像发送到所选 API 供应商 | 描述、评分、评分理由 |
 
-下载的模型文件存放在你指定的下载目录中。激活后，软件会在本地加载并运行该模型，对图像进行推理以生成内容标签，并构建用于语义搜索的向量。标签生成与语义搜索的推理都在本地完成，图像数据不会上传。
+本地模型不会随安装包分发，需要联网下载。下载来源和存储位置在 `Local Content Recognition（本地内容识别）` 中设置；激活后，标签生成与语义搜索都在本机完成，图像不会因为这两项功能上传到 API 供应商。
+
+API 分析不依赖本地 CLIP 模型，但需要先配置一个可用的 API 供应商、凭据和模型。高级内容分析只处理当前选中的照片，并可能产生 API 供应商费用。详细流程见 [API 供应商配置](./provider-configuration.md)。
 
 ## 前置条件
 
-要使用任意 AI 功能，都需要先在设置中下载并激活一个模型。未激活模型时：
+使用本地 AI 时，需要在 `Local Content Recognition（本地内容识别）` 中下载并激活模型。未激活时，语义搜索不可用，导入时的标签生成也会提示先设置本地模型。
 
-- 导入图像时不会出现“Use AI to analyze image content?”的生成询问，而是出现“Set up an AI model to analyze images”提示，引导你前往设置安装并激活模型。
-- 语义搜索不可用，搜索对话框会提示“Semantic search is not available yet”。
-- 标签生成需要模型处于 Active 状态，未激活时无法生成。
+使用 API 供应商时，需要在 `Advanced Content Analysis（高级内容分析）` 中：
+
+1. 创建一个 API 供应商配置。
+2. 按 API 供应商要求保存 API key，或完成 `OpenAI Codex OAuth` 登录。
+3. 选择模型并点击 `Test & Refresh` 确认连接。
+4. 打开项目，选中至少一张照片，再从左侧工具区进入 `Advanced Content Analysis（高级内容分析）`。
 
 ## 界面语言说明
 
-需要留意的是，AI 相关的界面文本目前尚未提供中文翻译，实际显示为英文（如 Generate、Download、Activate、Semantic 等）。本文档在描述这些控件时会直接引用英文标签，便于你在界面中对照查找。编辑器等其他界面的本地化不受影响。
+AI 相关控件仍有一部分显示为英文（如 `Test & Refresh`、`Analyze Selected`、`Description`、`Rating`）。本文档保留这些英文标签，便于你在界面中对照查找；评分严苛程度会根据界面语言显示中文或英文名称。

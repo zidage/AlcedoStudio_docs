@@ -12,15 +12,9 @@ const homeEntryList = [
   },
   {
     title: 'AI 功能',
-    description: '模型下载与激活、内容标签生成，以及语义 / 模糊搜索的完整说明。',
+    description: '本地模型、API 供应商配置、内容标签、图像评分与语义 / 模糊搜索。',
     to: '/docs/ai/overview',
     linkLabel: '查看 AI 功能',
-  },
-  {
-    title: 'Editing Tutorials',
-    description: '围绕 RAW、HDR 与色彩管理提供可迭代的教程路径。',
-    to: '/docs/tutorials/basic-raw-workflow',
-    linkLabel: '查看 Tutorials',
   },
   {
     title: 'Developer Docs',
@@ -42,12 +36,7 @@ function HomeHero() {
         </p>
         <div className="alcedo-home-actions">
           <Link className="button button--primary" to="/docs/intro">
-            Get Started
-          </Link>
-          <Link
-            className="button button--outline button--secondary"
-            to="/docs/tutorials/basic-raw-workflow">
-            Tutorials
+            Quick Start
           </Link>
           <Link className="alcedo-home-dev-link" to="/docs/developer/architecture-overview">
             Developer Docs

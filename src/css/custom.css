@@ -137,3 +137,86 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* A compact process rail used by the API provider configuration page. */
+.ai-config-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 1.5rem 0 2rem;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--alcedo-separator);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--alcedo-panel);
+}
+
+.ai-config-flow li {
+  min-height: 8.5rem;
+  padding: 1.05rem 1rem 1.15rem;
+  border-right: 1px solid var(--alcedo-separator);
+}
+
+.ai-config-flow li:last-child {
+  border-right: 0;
+}
+
+.ai-config-flow-number {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: var(--alcedo-accent);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+
+.ai-config-flow strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--alcedo-text);
+  font-size: 0.98rem;
+}
+
+.ai-config-flow small {
+  display: block;
+  color: var(--alcedo-text-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.theme-doc-markdown table code {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .ai-config-flow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ai-config-flow li:nth-child(2) {
+    border-right: 0;
+  }
+
+  .ai-config-flow li:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--alcedo-separator);
+  }
+}
+
+@media (max-width: 480px) {
+  .ai-config-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-config-flow li,
+  .ai-config-flow li:nth-child(2) {
+    min-height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--alcedo-separator);
+  }
+
+  .ai-config-flow li:last-child {
+    border-bottom: 0;
+  }
+}
