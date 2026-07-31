@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkpu_erh_lab_docs=globalThis.webpackChunkpu_erh_lab_docs||[]).push([[235],{8552(s){s.exports=JSON.parse('{"name":"docusaurus-plugin-content-pages","id":"default"}')}}]);
