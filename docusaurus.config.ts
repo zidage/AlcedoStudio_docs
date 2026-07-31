@@ -25,7 +25,15 @@ const config: Config = {
 
   i18n: {
     defaultLocale: 'zh-Hans',
-    locales: ['zh-Hans'],
+    locales: ['zh-Hans', 'en'],
+    localeConfigs: {
+      'zh-Hans': {
+        label: '简体中文',
+      },
+      en: {
+        label: 'English',
+      },
+    },
   },
 
   presets: [
@@ -63,6 +71,10 @@ const config: Config = {
           to: '/docs/ai/provider-configuration',
           label: 'AI 配置',
           position: 'left',
+        },
+        {
+          type: 'localeDropdown',
+          position: 'right',
         },
         {
           href: 'https://github.com/zidage/AlcedoStudio',

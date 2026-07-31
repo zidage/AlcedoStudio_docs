@@ -10,6 +10,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/installation',
         'getting-started/interface-overview',
         'getting-started/first-edit',
+        'getting-started/edit-history-and-versions',
       ],
     },
     {
@@ -29,6 +30,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'developer/build-from-source',
         'developer/architecture-overview',
+        'developer/edit-history-architecture',
         'developer/gpu-backend',
       ],
     },

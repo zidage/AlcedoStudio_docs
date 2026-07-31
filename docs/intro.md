@@ -9,5 +9,6 @@ Alcedo Studio 是一个面向摄影工作流的开源 RAW 图像处理与数字�
 ## 当前范围
 
 - [快速上手](./getting-started/installation.md)：安装、界面理解、第一张图像编辑。
+- [编辑历史与版本（界面）](./getting-started/edit-history-and-versions)：Versions / Edit History 面板，以及粘贴与合并。
 - [AI 功能](./ai/overview.md)：本地模型下载与激活、API 供应商配置、内容标签、图像评分、语义与模糊搜索。
-- 开发文档：未完成。
+- [编辑历史与版本（Mini-Git）](./developer/edit-history-architecture)：提交图、恢复日志（WAL）与物化。
