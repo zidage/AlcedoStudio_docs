@@ -1,0 +1,22 @@
+{
+  "link.title.Docs": {
+    "message": "Docs",
+    "description": "The title of the footer links column with title=Docs in the footer"
+  },
+  "link.title.Project": {
+    "message": "Project",
+    "description": "The title of the footer links column with title=Project in the footer"
+  },
+  "link.item.label.介绍": {
+    "message": "Introduction",
+    "description": "The label of footer link with label=介绍 linking to /docs/intro"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/zidage/AlcedoStudio"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 Alcedo Studio",
+    "description": "The footer copyright"
+  }
+}

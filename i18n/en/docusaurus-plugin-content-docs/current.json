@@ -5,14 +5,14 @@
   },
   "sidebar.docsSidebar.category.Getting Started": {
     "message": "Getting Started",
-    "description": "The label for category Getting Started in sidebar docsSidebar"
+    "description": "The label for category 'Getting Started' in sidebar 'docsSidebar'"
   },
   "sidebar.docsSidebar.category.AI 功能": {
     "message": "AI",
-    "description": "The label for category AI 功能 in sidebar docsSidebar"
+    "description": "The label for category 'AI 功能' in sidebar 'docsSidebar'"
   },
   "sidebar.docsSidebar.category.Developer": {
     "message": "Developer",
-    "description": "The label for category Developer in sidebar docsSidebar"
+    "description": "The label for category 'Developer' in sidebar 'docsSidebar'"
   }
 }
