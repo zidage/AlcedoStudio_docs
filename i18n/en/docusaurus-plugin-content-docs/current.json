@@ -1,6 +1,6 @@
 {
   "version.label": {
-    "message": "Next",
+    "message": "v0.3.3",
     "description": "The label for version current"
   },
   "sidebar.docsSidebar.category.Getting Started": {
@@ -9,10 +9,42 @@
   },
   "sidebar.docsSidebar.category.AI 功能": {
     "message": "AI",
-    "description": "The label for category 'AI 功能' in sidebar 'docsSidebar'"
+    "description": "Sidebar category"
   },
   "sidebar.docsSidebar.category.Developer": {
     "message": "Developer",
     "description": "The label for category 'Developer' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.快速上手": {
+    "message": "Getting Started",
+    "description": "Sidebar category"
+  },
+  "sidebar.docsSidebar.category.图库与选片": {
+    "message": "Library and Selection",
+    "description": "Sidebar category"
+  },
+  "sidebar.docsSidebar.category.编辑照片": {
+    "message": "Editing Photos",
+    "description": "Sidebar category"
+  },
+  "sidebar.docsSidebar.category.导出": {
+    "message": "Export",
+    "description": "Sidebar category"
+  },
+  "sidebar.docsSidebar.category.设置与自动化": {
+    "message": "Settings and Automation",
+    "description": "Sidebar category"
+  },
+  "sidebar.docsSidebar.category.版本与升级": {
+    "message": "Versions and Upgrading",
+    "description": "Sidebar category"
+  },
+  "sidebar.docsSidebar.category.逐版更新记录": {
+    "message": "Complete Release Notes",
+    "description": "Sidebar category"
+  },
+  "sidebar.docsSidebar.category.开发者": {
+    "message": "Developer",
+    "description": "Sidebar category"
   }
 }

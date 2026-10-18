@@ -4,11 +4,17 @@ sidebar_position: 3
 
 # Local AI Model Management
 
+Version scope: v0.3.3. The live screenshot shows settings with the model not activated. Label generation was not run in this demonstration; see the [verification record](../developer/tutorial-source-map.md).
+
 This page covers the local vision models in `Settings → Local Content Recognition`. Once downloaded and activated, a model can power import-time content label generation, label filtering, and semantic search; inference runs on your machine.
 
 To configure an API provider for photo descriptions, ratings, and rating reasons, see [API provider configuration](./provider-configuration.md) instead.
 
 ## Opening local AI settings
+
+![Local model settings; the shown model is not activated](/img/tutorial-v0.3.3/local-ai.webp)
+
+*Windows Release v0.3.3, Chinese UI: Local model settings; the shown model is not activated.*
 
 Click `Settings` on the toolbar and choose `Local Content Recognition` on the left; or, when the `Set up an AI model to analyze images` prompt appears during import, click `Set up model` and the app jumps straight to this section.
 

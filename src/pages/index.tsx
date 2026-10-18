@@ -10,13 +10,22 @@ function Home(): ReactNode {
       title: translate({id: 'homepage.entry.quickStart.title', message: 'Quick Start'}),
       description: translate({
         id: 'homepage.entry.quickStart.description',
-        message: '从安装、界面到第一张 RAW 图片编辑，快速建立完整工作流。',
+        message: '按 v0.3.3 的实际界面，从创建项目到完成第一张照片。',
       }),
       to: '/docs/getting-started/installation',
       linkLabel: translate({
         id: 'homepage.entry.quickStart.link',
         message: '进入 Quick Start',
       }),
+    },
+    {
+      title: translate({id: 'homepage.entry.editing.title', message: '编辑与导出'}),
+      description: translate({
+        id: 'homepage.entry.editing.description',
+        message: 'RAW 与位图输入、节点与蒙版、LUT 编码、版本对比和导出预设。',
+      }),
+      to: '/docs/editing/raw-and-geometry',
+      linkLabel: translate({id: 'homepage.entry.editing.link', message: '查看编辑教程'}),
     },
     {
       title: translate({id: 'homepage.entry.ai.title', message: 'AI 功能'}),
@@ -26,6 +35,15 @@ function Home(): ReactNode {
       }),
       to: '/docs/ai/overview',
       linkLabel: translate({id: 'homepage.entry.ai.link', message: '查看 AI 功能'}),
+    },
+    {
+      title: translate({id: 'homepage.entry.versions.title', message: '版本与升级'}),
+      description: translate({
+        id: 'homepage.entry.versions.description',
+        message: 'v0.2.0 至 v0.3.3 完整更新记录、项目兼容性与旧工作流变化。',
+      }),
+      to: '/docs/releases/upgrade-guide',
+      linkLabel: translate({id: 'homepage.entry.versions.link', message: '查看升级指南'}),
     },
     {
       title: translate({id: 'homepage.entry.developer.title', message: 'Developer Docs'}),
@@ -55,7 +73,7 @@ function Home(): ReactNode {
           </Heading>
           <p className="alcedo-home-subtitle">
             <Translate id="homepage.hero.subtitle">
-              面向摄影工作流的高性能 RAW 图像处理、编辑与资产管理项目文档。
+              v0.3.3 使用教程：导入、选片、节点调色、LUT、版本对比与导出。
             </Translate>
           </p>
           <div className="alcedo-home-actions">
@@ -99,9 +117,8 @@ function Home(): ReactNode {
             </Heading>
             <p className="alcedo-home-focus-text">
               <Translate id="homepage.focus.text">
-                当前文档版本聚焦几条主线：RAW 编辑流程、GPU 加速路径、色彩管理能力、AI
-                辅助的资产管理
-                与搜索，以及可扩展架构。该结构用于支持后续章节持续细化，而不过早引入冗余页面。
+                教程按生产 QML 入口自顶向下整理，并配有 Windows Release v0.3.3 的实机截图。
+                逐版记录保留 v0.2.x 至 v0.3.3 的功能、性能与修复说明，升级指南解释项目格式和操作变化。
               </Translate>
             </p>
           </div>

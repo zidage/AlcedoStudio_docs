@@ -4,6 +4,8 @@ sidebar_position: 1
 
 # AI Features Overview
 
+This page follows v0.3.3. Local labels/semantic search developed through v0.2.6; API descriptions and ratings expanded in v0.2.7. The v0.3.3 [agent/CLI workflow](../automation/cli.md) operates the app and does not replace either AI configuration path.
+
 Alcedo Studio currently offers two AI capability chains: one runs a vision model on your machine for content labels and semantic search; the other goes through an API provider you configure to produce fuller image descriptions, ratings, and rating reasons. The two have different setup entry points, data paths, and use cases.
 
 ## Documentation index

@@ -1,108 +1,51 @@
 # 第一次编辑
 
-本页将提供一个简单的示例，展示如何使用 Alcedo Studio 进行基本的图像编辑。我们将从导入一张 RAW 图像开始，进行一些基础调整，并最终导出编辑后的结果。
+用一张照片完成 v0.3.3 的完整流程：创建项目、导入、调整、保留版本并导出。
 
-## 新建/打开项目
+## 1. 创建项目
 
-进入项目管理界面后，首先在欢迎界面点击“创建新项目”按钮，再的出现新面板选择一个合适的*文件夹*作为项目文件的存储位置。输入项目名称后，点击“确定”完成项目的初始化。
+![新建项目的名称和存储位置](/img/tutorial-v0.3.3/new-project.webp)
 
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/create_new_proj.png').default} alt="新建项目界面：创建项目入口" width="60%" />
-	<img src={require('./tutorial_img/project_name.png').default} alt="新建项目界面：填写项目名称" width="60%" />
-</div>
+*Windows Release v0.3.3 实机：新建项目的名称和存储位置。*
 
-## 图片导入/筛选
+启动后点击 `新建项目…（New Project…）`，输入 `项目名称（Project Name）`，选择 `存储位置（Storage Location）`，点击 `创建项目（Create Project）`。已有项目可通过 `打开项目…（Open Project…）` 或 `文件（File） → 加载项目（Load Project）` 打开。项目引用原片，请保留原片所在目录。
 
-### 导入图片
+## 2. 导入一张照片
 
-新建完成后，点击”导入图片“，在操作系统的文件选择对话框中选择一张或多张 RAW 图像文件，点击“打开”完成导入。导入的图像将显示在相册页面中。
+在左侧点击 `导入图像（Import Images）`，选择 RAW 文件。v0.3.2 起也支持 JPEG、PNG、TIFF、OpenEXR；位图导入后的输入设置与 RAW 不同。
 
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/import_2.png').default} alt="新建项目界面：创建项目入口" width="60%" />
-</div>
+等待导入任务完成，确认缩略图出现。若弹出 AI 标签提示，可以生成、跳过或先配置模型；标签不是编辑的前置条件。批量导入和文件类型选择见[图库教程](../library/import-and-organize.md)。
 
-导入完成后，若项目已激活本地 AI 模型，软件会弹出 `Use AI to analyze image content?（使用 AI 分析图像内容？）` 对话框，询问是否为这批图像生成内容标签；若尚未激活本地模型，则会弹出 `Set up an AI model to analyze images（设置用于分析图像的 AI 模型）`，引导你前往 `Local Content Recognition（本地内容识别）` 安装并激活模型。你可以选择 `Generate（生成）`、`Skip（跳过）`，或勾选 `Remember My Choice（记住我的选择）`。相关设置与完整说明见 [本地 AI 模型管理](../ai/model-management.md) 与 [AI 标签生成](../ai/label-generation.md)。需要为选中照片生成描述、评分和评分理由时，请使用 [API 供应商配置](../ai/provider-configuration.md) 中的高级内容分析流程。
+## 3. 检查输入与构图
 
-### 图片选择
+双击缩略图进入编辑器。打开 `RAW 解码（RAW Decode）`，先检查相机白平衡、去马赛克与镜头识别。只有过曝区域确实需要恢复时才尝试高光重建，并放大检查伪影。
 
-等待导入完成后，可以双击打开相册中的图像进入编辑页面，或是拖动选框多选图像后右键“添加所选”将图片添加到导出队列中。
+打开 `几何（Geometry）`，选择裁剪比例，在照片上调整裁剪框和旋转。几何作用于整张图，每次确认修改都会成为历史步骤。见[输入与几何](../editing/raw-and-geometry.md)。
 
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/select_1.png').default} alt="新建项目界面：创建项目入口" width="60%" />
-</div>
+## 4. 调整影调与颜色
 
-### 图片筛选
+![影调调整](/img/tutorial-v0.3.3/tone.webp)
 
-同时，可以点击右侧统计面板中的某个参数（如拍摄日期）来查看该日期的所有图像，或是点击某个相机型号来查看该型号的所有图像。此时仍可以继续点击
-更多的参数来进行多维度的筛选，直到找到想要编辑的图像。
+*Windows Release v0.3.3 实机：影调调整。*
 
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/select_2.png').default} alt="新建项目界面：创建项目入口" width="60%" />
-</div>
+保持默认调色节点选中，进入 `色调（Tone）`：先调曝光，再按需要调高光（Highlights） / 阴影（Shadows）、白色色阶（Whites） / 黑色色阶（Blacks）与对比度。松开滑块后查看 `历史（History）` 是否增加记录；双击滑块可恢复该项默认值。
 
-## 基础调整
+在 `外观（Look）` 调整饱和度与创意白平衡。这里的白平衡针对调色节点，与 RAW 解码（RAW Decode）中的相机白平衡用途不同。详细说明见[影调与色彩](../editing/tone-and-color.md)。
 
-双击一张图像进入编辑页面后，左侧是编辑历史，右侧是参数调整面板，中间是图像预览区域。我们可以在右侧的参数面板中进行各种调整，如曝光、对比度、白平衡等。调整时，图像预览会实时更新以反映当前的调整效果。
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/edit_1.png').default} alt="新建项目界面：创建项目入口" width="60%" />
-</div>
+需要胶片外观时，先在 `设置（Settings） → LUT（LUTs）` 下载官方包，再打开左侧 `LUT（LUTs）` 浏览器选择 LUT，在右侧 LUT 页调整强度。自定义 LUT 还需匹配输入与输出编码，见 [LUT 教程](../editing/lut-library.md)。
 
-### 预览缩放
-双击图像图像可放大，按住 `Ctrl/Command` 键并滚动鼠标滚轮可以缩放预览, 左上角会显示当前缩放比例，最大支持 800% 的放大。同时支持触摸板的手势动作。
+## 5. 保存另一种处理并对比
 
-### 编辑选项
+打开 `版本（Versions）`，使用 `从当前提交创建分支（Branch from current commit）` 创建分支并命名，再尝试另一种颜色或曝光。两个版本会分别保留。
 
-整体操作接近于其他主流的 RAW 编辑软件，建议直接上手尝试，以下仅对本软件的特色功能进行介绍。
+点击画面上的 `对比（Compare）` 看未调整 / 当前效果，或在版本（Versions）点击 `对比（Compare）` 选择两个版本。对比时编辑、撤销 / 重做与版本切换暂时不可用，结束后点击 `关闭（Close）`。HDR 输出暂不支持该对比模式。见[版本管理](./edit-history-and-versions.md)和[对比教程](../editing/comparison.md)。
 
-用户可通过双击滑动条来重置参数。
+## 6. 导出
 
-### LUT 调整
+1. 点击顶部 `图库（Library）`，选中刚才编辑的照片，点击 `加入队列（Add to Queue）`。
+2. 打开右侧 `导出（Export）`，选择目标文件夹。
+3. 普通 SDR 照片可以从 `网页（Web）` 或 `最高质量 JPEG（Maximum Quality JPEG）` 预设开始；检查格式、尺寸和文件名示例。
+4. 核对 EXIF、ICC 和 GPS。v0.3.3 默认保留 GPS；不需要位置时取消 `EXIF 中的 GPS 位置（GPS location in EXIF）`，或使用网页（Web） / 社交媒体（Social Media） / 电子邮件（Email）预设。
+5. 点击导出按钮，等待队列显示 `完成（Done）`，到目标目录检查文件。出现 `失败（Failed）` 时查看错误后重试。
 
-“色调”面板的第一项即为 LUT 调整，用户可以加载一个 `ACEScc->ACEScc` 的 .cube 文件来进行色调调整。用户可将自己制作或转换的 LUT 文件放在 `bin/LUTs` 目录下，重新打开编辑器后即可在下拉菜单中选择使用。
-
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/edit_2.png').default} alt="新建项目界面：创建项目入口" width="60%" />
-</div>
-
-### 显示变换
-
-在“显示变换”面板中，用户可以选择不同的显示变换算法来调整图像的显示效果。当前提供了 ACES 2.0 和 OpenDRT 两种算法，用户可以根据自己的需求选择使用。
-
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/edit_3.png').default} alt="新建项目界面：创建项目入口" width="60%" />
-</div>
-
-对于 OpenDRT 来说，用户还可以调整其中的预设参数来获得不同的显示效果。调整时，图像预览会实时更新以反映当前的调整效果。并且，也可通过调整OpenDRT的内部参数来获得预设以外的显示效果。
-
-### RAW 解码设置
-
-在“RAW 解码”面板中，用户可以选择是否启用高光恢复以及镜头校正功能。启用高光恢复后，软件会尝试从 RAW 数据中恢复过曝区域的细节；启用镜头校正后，软件会根据镜头的特性对图像进行畸变校正。
-
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/edit_5.png').default} alt="新建项目界面：创建项目入口" width="60%" />
-</div>
-注意，高光重建可能会造成伪影以及色调偏离，建议在需要恢复过曝细节的情况下开启，并仔细检查恢复效果。
-
-镜头矫正会根据元数据自动识别镜头型号并进行校正（Auto模式），如果用户觉得校正效果不理想，也可以手动选择镜头型号或是关闭校正。
-
-### HDR 设置
-
-在“显示变换”面板中，用户可以选择 HDR 规范中的编码色域和 EOTF 来开启 HDR 编辑模式（如 P3D65 + ST 2084 PQ）。注意，在 Windows 下，HDR 暂时不会被正确预览，但仍然会被正确导出，建议在需要 HDR 输出的情况下开启并进行编辑，导出后在支持 HDR 的设备上查看效果。而在 macOS 下，HDR 编辑模式可以被正确预览导出。
-
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/edit_7.png').default} alt="新建项目界面：创建项目入口" width="60%" />
-</div>
-
-## 导出设置
-
-完成编辑后，关闭编辑器面板回到相册页面，所有改动都会被自动保存。选中想要导出的图像后点击“添加所选”将其添加到导出队列中。当队列中同时存在HDR和SDR图像时，HDR图像会被金色标识标记出来以示区分。左右的导出设置可分别设置HDR和SDR图像的导出参数，以适应不同的输出需求。
-
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/export_1.png').default} alt="新建项目界面：创建项目入口" width="60%" />
-</div>
-
-右侧可选择导出的参数，如格式、分辨率等。点击“开始导出”后，软件会将编辑后的图像按照设置进行导出。导出完成后，导出队列不会被清空，用户可以继续添加新的图像进行导出，或是手动清空队列。
-
-### 注意：
-
-- Ultra HDR 格式请使用最高质量导出以保证最佳效果。
+HDR 照片使用独立的 HDR 导出设置。完整格式、位深、命名和预设说明见[导出教程](../export/workflow.md)。

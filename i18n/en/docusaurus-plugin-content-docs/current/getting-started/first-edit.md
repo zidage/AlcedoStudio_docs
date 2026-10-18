@@ -1,108 +1,51 @@
-# Your First Edit
+# Your first edit
 
-This page walks through a simple example of basic image editing in Alcedo Studio. We'll start by importing a RAW image, make some basic adjustments, and finally export the result.
+Complete one v0.3.3 workflow: create a project, import a photo, edit, preserve an alternative and export.
 
-## Creating / opening a project
+## 1. Create a project
 
-In the project management screen, click the "Create Project" button on the welcome screen, then choose a suitable *folder* in the new panel as the storage location for the project files. Enter a project name and click "OK" to finish initializing the project.
+![Project name and storage form](/img/tutorial-v0.3.3/new-project.webp)
 
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/create_new_proj.png').default} alt="New project screen: create project entry" width="60%" />
-	<img src={require('./tutorial_img/project_name.png').default} alt="New project screen: enter project name" width="60%" />
-</div>
+*Windows Release v0.3.3, Chinese UI: Project name and storage form.*
 
-## Importing / filtering images
+Choose New Project… on the welcome screen, enter Project Name and Storage Location, then Create Project. Open existing projects through Open Project… or File → Load Project. Keep the source photos in place.
 
-### Importing images
+## 2. Import
 
-After creating the project, click "Import", select one or more RAW image files in the operating system's file picker, and click "Open" to finish the import. Imported images appear in the album page.
+Click Import Images and choose a RAW. Since v0.3.2, JPEG, PNG, TIFF and OpenEXR are also supported, with different input controls.
 
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/import_2.png').default} alt="Import screen: import images" width="60%" />
-</div>
+Wait for import completion and confirm the thumbnail appears. You may generate AI labels, skip them or configure a model later. See [Library](../library/import-and-organize.md) for folder scans and file-type selection.
 
-When the import finishes, if the project has a local AI model activated, the app shows a `Use AI to analyze image content?` dialog asking whether to generate content labels for this batch; if no local model is activated yet, it shows `Set up an AI model to analyze images`, guiding you to `Local Content Recognition` to install and activate a model. You can choose `Generate`, `Skip`, or tick `Remember My Choice`. Related settings and full instructions are in [Local AI model management](../ai/model-management.md) and [AI label generation](../ai/label-generation.md). For descriptions, ratings, and rating reasons for selected photos, use the advanced content analysis flow in [API provider configuration](../ai/provider-configuration.md).
+## 3. Check input and composition
 
-### Selecting images
+Double-click the photo. In RAW Decode, inspect camera white balance, demosaicing and lens detection. Try highlight reconstruction when needed, checking enlarged edges and highlight color.
 
-Once the import finishes, double-click an image in the album to open the edit page, or drag a selection box over multiple images and right-click "Add Selected" to add them to the export queue.
+In Geometry, choose an aspect ratio, move the crop and adjust rotation. Confirmed changes enter History. See [input and geometry](../editing/raw-and-geometry.md).
 
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/select_1.png').default} alt="Album screen: multi-select" width="60%" />
-</div>
+## 4. Adjust tone and color
 
-### Filtering images
+![Tone adjustments](/img/tutorial-v0.3.3/tone.webp)
 
-You can also click a parameter in the statistics panel on the right (such as capture date) to see all images from that date, or click a camera model to see all images from that model. Keep clicking more parameters to filter across multiple dimensions until you find the image you want to edit.
+*Windows Release v0.3.3, Chinese UI: Tone adjustments.*
 
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/select_2.png').default} alt="Album screen: filtering by parameter" width="60%" />
-</div>
+Select the default Color Grade. In Tone, start with Exposure, then adjust Highlights / Shadows, Whites / Blacks and Contrast as needed. Release a slider to commit the adjustment; double-click it to restore its default.
 
-## Basic adjustments
+Use Look for saturation and creative white balance. This differs from camera white balance in RAW Decode. See [tone and color](../editing/tone-and-color.md).
 
-Double-click an image to enter the edit page: edit history on the left, the parameter adjustment panel on the right, and the image preview in the center. In the right panel you can adjust exposure, contrast, white balance, and more. The preview updates in real time to reflect each adjustment.
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/edit_1.png').default} alt="Edit screen: adjustment panel" width="60%" />
-</div>
+For a film look, download an official package in Settings → LUTs, choose a LUT in the left browser and set Strength on the right. Custom LUTs need appropriate input and output encodings; see [LUTs](../editing/lut-library.md).
 
-### Zooming the preview
+## 5. Preserve and compare
 
-Double-click the image to zoom in; hold `Ctrl/Command` and scroll the mouse wheel to zoom the preview. The current zoom level is shown in the top-left corner, up to 800%. Touchpad gestures are supported too.
+In Versions, Branch from current commit and name the alternative. Try a different look on that branch.
 
-### Edit options
+Open Compare in the viewport for before/after, or from Versions to select A and B. Editing, undo/redo and checkout pause during comparison. Close it to resume editing. HDR comparison is unavailable. See [Versions](./edit-history-and-versions.md) and [comparison](../editing/comparison.md).
 
-Overall operation is close to other mainstream RAW editors, so we recommend trying it directly; below we only cover this app's distinctive features.
+## 6. Export
 
-Double-click a slider to reset its parameter.
+1. Return to Library, select the photo and Add to Queue.
+2. Open Export and select a destination.
+3. For an ordinary SDR photo, start with Web or Maximum Quality JPEG. Check format, size and the filename example.
+4. Review EXIF, ICC and GPS. v0.3.3 retains GPS by default; disable GPS location in EXIF or choose Web / Social Media / Email when location is unnecessary.
+5. Start export, wait for Done and inspect the actual file. Review errors for Failed items before retrying.
 
-### LUT adjustments
-
-The first item in the "Tone" panel is the LUT adjustment, letting you load an `ACEScc->ACEScc` .cube file for tone adjustments. You can place your own or converted LUT files in the `bin/LUTs` directory; reopening the editor makes them selectable from the dropdown.
-
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/edit_2.png').default} alt="Edit screen: LUT adjustment" width="60%" />
-</div>
-
-### Display transform
-
-In the "Display Transform" panel you can choose different display transform algorithms to adjust how the image is shown. Two algorithms are currently available: ACES 2.0 and OpenDRT; pick whichever suits your needs.
-
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/edit_3.png').default} alt="Edit screen: display transform" width="60%" />
-</div>
-
-With OpenDRT you can also adjust its preset parameters for different looks, with the preview updating in real time. You can go beyond the presets by tweaking OpenDRT's internal parameters.
-
-### RAW decode settings
-
-In the "RAW Decode" panel you can enable highlight recovery and lens correction. With highlight recovery enabled, the app tries to recover detail from blown-out areas of the RAW data; with lens correction enabled, it corrects distortion based on the lens characteristics.
-
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/edit_5.png').default} alt="Edit screen: RAW decode settings" width="60%" />
-</div>
-Note: highlight reconstruction may introduce artifacts and hue shifts. We recommend enabling it only when you need to recover blown-out detail, and carefully checking the recovered result.
-
-Lens correction auto-detects the lens model from metadata (Auto mode); if you are not happy with the result, you can also choose the lens model manually or turn correction off.
-
-### HDR settings
-
-In the "Display Transform" panel you can enable HDR editing mode by choosing the encoding color space and EOTF from the HDR specs (e.g. P3D65 + ST 2084 PQ). On Windows, HDR is not previewed correctly yet, but it is still exported correctly; we recommend enabling it when you need HDR output, editing with it, and checking the result on HDR-capable devices after export. On macOS, HDR editing mode previews and exports correctly.
-
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/edit_7.png').default} alt="Edit screen: HDR settings" width="60%" />
-</div>
-
-## Export settings
-
-After editing, close the editor back to the album page — all changes are saved automatically. Select the images to export and click "Add Selected" to add them to the export queue. When the queue contains both HDR and SDR images, HDR images are marked with a gold badge to tell them apart. The two export setting areas configure HDR and SDR export parameters separately, to suit different output needs.
-
-<div style={{display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap'}}>
-	<img src={require('./tutorial_img/export_1.png').default} alt="Export screen: export queue" width="60%" />
-</div>
-
-On the right you can choose export parameters such as format and resolution. Click "Start Export" and the software exports the edited images with the current settings. The queue is not cleared after export; you can keep adding images to export, or clear the queue manually.
-
-### Note:
-
-- Use the highest-quality export for Ultra HDR format to ensure the best result.
+HDR photos use separate HDR settings. See [export](../export/workflow.md).

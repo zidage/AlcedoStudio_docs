@@ -3,7 +3,7 @@
     "message": "Quick Start"
   },
   "homepage.entry.quickStart.description": {
-    "message": "From installation and the interface to editing your first RAW image: build a complete workflow quickly."
+    "message": "Follow the v0.3.3 interface from creating a project to finishing your first photo."
   },
   "homepage.entry.quickStart.link": {
     "message": "Enter Quick Start"
@@ -33,7 +33,7 @@
     "message": "Alcedo Studio technical documentation"
   },
   "homepage.hero.subtitle": {
-    "message": "Documentation for a high-performance RAW image processing, editing, and asset management project for photography workflows."
+    "message": "v0.3.3 tutorials: import, select, grade with nodes, use LUTs, compare Versions and export."
   },
   "homepage.section.entries": {
     "message": "Documentation"
@@ -42,7 +42,7 @@
     "message": "Focus areas"
   },
   "homepage.focus.text": {
-    "message": "This documentation version focuses on several main threads: the RAW editing pipeline, GPU acceleration paths, color management, AI-assisted asset management and search, and an extensible architecture. The structure is meant to support continuous refinement of later sections without introducing redundant pages too early."
+    "message": "Tutorials follow production QML entry points and include real Windows Release v0.3.3 screenshots. Complete v0.2.x–v0.3.3 notes retain features, performance changes and fixes; the upgrade guide explains format and workflow changes."
   },
   "theme.ErrorPageContent.title": {
     "message": "This page crashed.",
@@ -370,5 +370,23 @@
   "theme.tags.tagsPageTitle": {
     "message": "Tags",
     "description": "The title of the tag list page"
+  },
+  "homepage.entry.editing.title": {
+    "message": "Editing and Export"
+  },
+  "homepage.entry.editing.description": {
+    "message": "RAW and raster input, nodes and masks, LUT encodings, Version comparison and export presets."
+  },
+  "homepage.entry.editing.link": {
+    "message": "Read editing tutorials"
+  },
+  "homepage.entry.versions.title": {
+    "message": "Versions and Upgrading"
+  },
+  "homepage.entry.versions.description": {
+    "message": "Complete v0.2.0–v0.3.3 notes, project compatibility and workflow changes."
+  },
+  "homepage.entry.versions.link": {
+    "message": "Read the upgrade guide"
   }
 }

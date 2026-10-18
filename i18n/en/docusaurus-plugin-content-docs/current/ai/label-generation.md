@@ -4,6 +4,8 @@ sidebar_position: 4
 
 # AI Label Generation
 
+Version scope: v0.3.3. Folder imports can include RAW, JPEG, TIFF, PNG and OpenEXR. Check selected types and counts in the [import dialog](../library/import-and-organize.md) before deciding to generate labels.
+
 With a local model activated, Alcedo Studio can generate content labels for images. Labels are inferred by the on-device vision model, describe the main content of the image, and also back semantic search and the inspector's `By Labels` filter.
 
 This page covers the local labeling flow. Descriptions, ratings, and rating reasons produced by an API provider are a separate flow; see [API provider configuration](./provider-configuration.md).

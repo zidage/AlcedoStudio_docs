@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Alcedo Studio',
-  tagline: '高性能 RAW 图像处理与编辑文档',
+  tagline: 'v0.3.3 使用教程与 v0.2.x–v0.3.3 更新记录',
   favicon: 'img/favicon.ico',
 
   future: {
@@ -70,6 +70,11 @@ const config: Config = {
         {
           to: '/docs/ai/provider-configuration',
           label: 'AI 配置',
+          position: 'left',
+        },
+        {
+          to: '/docs/releases/upgrade-guide',
+          label: '版本与升级',
           position: 'left',
         },
         {

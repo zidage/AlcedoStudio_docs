@@ -1,37 +1,55 @@
-# Interface Overview
+# Interface overview
 
-This page introduces the main interface and entry points of the software.
+Since v0.2.8, Library and Editor share one window. In v0.3.3 the workflow runs from the welcome screen to Library, Editor and the Library's Export inspector.
 
-## Launch screen
+## Welcome screen
 
-![Project management](/img/interface/project_mgmt.png)
+![Project name and storage form](/img/tutorial-v0.3.3/new-project.webp)
 
-The launch screen appears on startup. Here you can choose the interface language (currently Chinese and English) and the GPU acceleration backend, and load or create projects, or open recent projects directly from "Recent Projects". Clicking "Create Project" opens the new-project page, where you enter a project name and storage location.
+*Windows Release v0.3.3, Chinese UI: Project name and storage form.*
 
-## Album main screen
+Use New Project… to enter a project name and parent folder, or Open Project… to open a `.alcd` file. Recent projects show a cover, photo count, edited count and capture range. Selecting a recent project previews it; entering it is a separate step. Previewing alone does not save it.
 
-![Album page](/img/interface/album.png)
+Choose the interface language here. The processing backend is managed in Settings → Acceleration and changes after a restart.
 
-Opening a project enters the album main screen, a three-column layout:
+## Top toolbar
 
-- Left "LOCAL FOLDERS": the collection and folder list, with the "Search" tab on top opening global search (see [AI search and fuzzy search](../ai/search.md)), the "Import" button at the bottom importing images, "New collection" creating a collection, and "Delete collection" available for a selected non-root folder.
-- Middle browser: thumbnails shown in grid or list view, zoomable with the slider above or `Ctrl/Command` + wheel; double-clicking an image enters the edit screen, and right-clicking opens a context menu (rating, Details, copy / paste adjustments, delete, add to other collections, etc.).
-- Right inspector: shows "LIBRARY OVERVIEW" statistics and filter entry points, including filtering by capture date, camera model, tags, rating, lens, and more; with an active search, a "SEARCH FILTER" card shows the current query and can clear it.
+The main controls are the collections sidebar toggle, Library / Editor navigation, File and Settings. File offers Load Project, Create Project and Save Project. The right sidebar toggle controls the inspector in Library and adjustment panels in Editor.
 
-## Edit screen
+Background tasks use the top status indicator. Click it to inspect progress or errors. Agent sessions stay pinned in the task area; see [settings and tasks](../settings/preferences.md).
 
-![Edit page](/img/interface/edit.png)
+## Library
 
-Double-click an image in the album to enter the edit screen, the main screen for image adjustments. The left rail switches between **Edit History** (the commit graph of the current Version) and **Versions** (the named branch list); the right side is the parameter adjustment panel; the center is the image preview. Panel usage is covered in [Edit History and Versions (UI)](./edit-history-and-versions).
+![Library and Album inspector](/img/tutorial-v0.3.3/library.webp)
 
-## Export
+*Windows Release v0.3.3, Chinese UI: Library and Album inspector.*
 
-![Export page](/img/interface/export.png)
+- **Left:** Search, Advanced Content Analysis, Background Tasks, collections, Import From Folder and Import Images.
+- **Center:** photo thumbnails, zoom, selection and context actions. Double-click a photo to edit.
+- **Right:** Album for statistics, filtering, sorting and grouping; Image for photo details and existing AI results; Export for output settings and queue.
 
-Select images and click "Export" to open the export dialog, where you can choose the target directory, format, resolution, bit depth, and more; the right side shows the export queue and its status. After editing, closing the editor back to the album page saves all changes automatically.
+Clicking a statistic filters photos; its field actions sort or group them. See [Library management](../library/import-and-organize.md).
 
-## Settings and AI
+## Editor
 
-Click `Settings` on the toolbar to open settings. AI-related settings are split into two paths: `Local Content Recognition` for downloading and activating local vision models and configuring import-time label generation preferences; `Advanced Content Analysis` for creating API provider profiles, choosing models, and configuring how descriptions, ratings, and rating reasons are generated. Full entry points are in [AI features overview](../ai/overview.md) and [API provider configuration](../ai/provider-configuration.md).
+![Single-window Editor and Tone panel](/img/tutorial-v0.3.3/editor-tone.webp)
 
-The album's left tool area also provides an `Advanced Content Analysis` entry. After opening a project and selecting one or more photos, click the entry to run API analysis on the current selection; the entry stays disabled when no photos are selected.
+*Windows Release v0.3.3, Chinese UI: Single-window Editor and Tone panel.*
+
+The left rail contains History, Versions, Nodes, Mask Groups, LUTs and Tasks. Click to open or collapse a panel. The central viewport shows the photo; the bottom filmstrip follows the Library's collection and filters.
+
+On the right, scopes and photo information appear above the adjustments:
+
+1. RAW Decode, or Input Color for raster files.
+2. Geometry for the whole photo.
+3. Tone for the selected Color Grade.
+4. Look for the selected grade's white balance, selective color and wheels.
+5. LUT for its look, strength and encodings.
+6. Display Transform for the whole photo.
+7. Post Processing for whole-image diffusion, detail and texture.
+
+Mask and Compare are contextual pages. Check the grade name above the adjustments before editing: each Color Grade has its own Tone, Look, LUT and masks.
+
+## Return and export
+
+Use Library in the toolbar. Select photos, Add to Queue, then configure the Export inspector. Saving edits and producing an output image are separate operations. Continue with [your first edit](./first-edit.md).

@@ -4,28 +4,30 @@ sidebar_position: 2
 
 # API 供应商配置
 
-高级内容分析会通过你配置的 API 供应商，为选中的照片生成描述、评分和评分理由。它与 `Local Content Recognition（本地内容识别）` 中的本地视觉模型是两条独立的能力链：本地模型服务于标签生成和语义搜索；API 供应商服务于更完整的图像描述与评价。
+版本范围：Alcedo Studio v0.3.3 的配置界面。模板中的模型名称是该版本的配置起点，实际可用性以供应商返回和测试并刷新（Test & Refresh）结果为准。本次教程更新未向远程供应商发送照片或测试计费请求。
+
+高级内容分析会通过你配置的 API 供应商，为选中的照片生成描述、评分和评分理由。它与 `本地内容识别（Local Content Recognition）` 中的本地视觉模型是两条独立的能力链：本地模型服务于标签生成和语义搜索；API 供应商服务于更完整的图像描述与评价。
 
 <ol className="ai-config-flow" aria-label="API 供应商配置流程">
   <li>
     <span className="ai-config-flow-number">01</span>
     <strong>打开设置</strong>
-    <small>Settings（设置）→ Advanced Content Analysis（高级内容分析）</small>
+    <small>设置（Settings）→ 高级内容分析（Advanced Content Analysis）</small>
   </li>
   <li>
     <span className="ai-config-flow-number">02</span>
     <strong>创建配置</strong>
-    <small>Provider settings（提供商设置）→ +</small>
+    <small>提供商设置（Provider settings）→ +</small>
   </li>
   <li>
     <span className="ai-config-flow-number">03</span>
     <strong>保存凭据</strong>
-    <small>API key（API 密钥）或 Codex Login（Codex 登录）</small>
+    <small>API 密钥（API key）或 Codex 登录（Codex Login）</small>
   </li>
   <li>
     <span className="ai-config-flow-number">04</span>
     <strong>刷新并测试</strong>
-    <small>Test &amp; Refresh（测试并刷新）</small>
+    <small>测试并刷新（Test &amp; Refresh）</small>
   </li>
 </ol>
 
@@ -39,20 +41,20 @@ sidebar_position: 2
 
 | 能力 | 设置入口 | 处理位置 | 主要结果 |
 | --- | --- | --- | --- |
-| 本地 AI | `Local Content Recognition`（本地内容识别） | 图像在本机由已激活模型处理 | 内容标签、标签筛选、语义搜索 |
-| API 供应商 | `Advanced Content Analysis`（高级内容分析） | 选中的图像发送到所选 API 供应商 | 图像描述、1–5 星评分、评分理由 |
+| 本地 AI | `本地内容识别（Local Content Recognition）` | 图像在本机由已激活模型处理 | 内容标签、标签筛选、语义搜索 |
+| API 供应商 | `高级内容分析（Advanced Content Analysis）` | 选中的图像发送到所选 API 供应商 | 图像描述、1–5 星评分、评分理由 |
 
 本页只介绍第二行。需要下载本地模型时，请查看[本地 AI 模型管理](./model-management.md)；需要了解本地标签生成和搜索，请查看 [AI 标签生成](./label-generation.md) 与 [AI 搜索与模糊搜索](./search.md)。
 
 ## 打开设置
 
-点击工具栏中的 `Settings（设置）`，在左侧选择 `Advanced Content Analysis（高级内容分析）`。这个分类中的文案已经支持中英文切换；本文统一使用“中文翻译（英文原文）”的写法，方便在不同界面语言下对照。
+点击工具栏中的 `设置（Settings）`，在左侧选择 `高级内容分析（Advanced Content Analysis）`。这个分类中的文案已经支持中英文切换；本文统一使用“中文翻译（英文原文）”的写法，方便在不同界面语言下对照。
 
-页面顶部的 `Output language（输出语言）` 控制 API 结果使用的语言：
+页面顶部的 `输出语言（Output language）` 控制 API 结果使用的语言：
 
-- `Follow app language（跟随应用语言）`：跟随 Alcedo Studio 的界面语言。
-- `English（English）`：要求供应商返回英文描述和理由。
-- `中文（中文）`：要求供应商返回中文描述和理由。
+- `跟随应用语言（Follow app language）`：跟随 Alcedo Studio 的界面语言。
+- 英文（界面项为 `English`）：要求供应商返回英文描述和理由。
+- `中文`：要求供应商返回中文描述和理由。
 
 这个选项是 AI 输出语言，不会改变软件界面的语言。
 
@@ -60,7 +62,7 @@ sidebar_position: 2
 
 ### 1. 添加配置
 
-在 `Provider settings（提供商设置）` 标题右侧点击 `+`，按钮的中文翻译是 `Add provider（添加提供商）`。在弹出的选择窗口中，提示文字 `Choose a template to create a profile from.` 的中文含义是“选择一个模板创建配置”。
+在 `提供商设置（Provider settings）` 标题右侧点击 `+`，按钮的中文翻译是 `添加提供商（Add provider）`。在弹出的选择窗口中，提示文字 `Choose a template to create a profile from.` 的中文含义是“选择一个模板创建配置”。
 
 选择模板后，软件会立即创建一个配置并打开编辑页；新建配置会成为当前活动配置。模板的默认地址、请求方式、模型和返回格式已经填好，通常只需要补充凭据并刷新模型。
 
@@ -75,43 +77,43 @@ sidebar_position: 2
 | `Volcengine Ark / 火山方舟` | 火山方舟 | Bearer；`Doubao Seed 2.0 Lite (260428)` |
 | `Volcengine Ark Coding Plan - Anthropic-compatible` | 火山方舟 Coding Plan - Anthropic 兼容 | Bearer；`Doubao Seed 2.0 Lite` |
 | `OpenAI Codex OAuth` | OpenAI Codex OAuth | Codex OAuth；`GPT-5.3 Codex` |
-| `Custom` | 自定义 | 无认证；`Unconfigured` |
+| `Custom` | 自定义 | 无认证；`Unconfigured`（尚未配置模型） |
 
 如果使用 CC Switch 或 OpenCode，请先确认对应的路由器或服务地址已经可访问。模板只是配置起点，不会替你创建第三方账户或启动外部服务。
 
 ### 2. 配置 API 密钥
 
-除 `OpenAI Codex OAuth` 外，需要密钥的模板会显示 `API key（API 密钥）` 区块：
+除 `OpenAI Codex OAuth` 外，需要密钥的模板会显示 `API 密钥（API key）` 区块：
 
-1. 在 `Paste API key（粘贴 API 密钥）` 输入框粘贴密钥。
-2. 点击 `Save Key（保存密钥）`。
+1. 在 `粘贴 API 密钥（Paste API key）` 输入框粘贴密钥。
+2. 点击 `保存密钥（Save Key）`。
 3. 页面只显示掩码后的尾部，不会再次显示完整密钥。
 
-需要更换密钥时，重新保存即可；需要移除密钥时点击 `Delete Key（删除密钥）`。密钥由应用的凭据存储区管理，不要把真实密钥写进教程、截图或提交到仓库。
+需要更换密钥时，重新保存即可；需要移除密钥时点击 `删除密钥（Delete Key）`。密钥由应用的凭据存储区管理，不要把真实密钥写进教程、截图或提交到仓库。
 
 ### 3. 配置 OpenAI Codex OAuth
 
 选择 `OpenAI Codex OAuth` 后，编辑页显示 `OpenAI OAuth` 区块，中文界面仍显示 `OpenAI OAuth`，不会要求粘贴 API 密钥。推荐流程是：
 
-1. 点击 `Open Login（打开登录）`，在浏览器中完成 Codex 登录。
+1. 点击 `打开登录（Open Login）`，在浏览器中完成 Codex 登录。
 2. 回到 Alcedo Studio，等待状态变为已连接；模型会自动加载。
-3. 如果当前构建不能自动打开登录流程，在终端运行 `codex login`，完成后回到页面点击 `Use Codex Login（使用 Codex 登录）`。
-4. 需要断开账号时点击 `Disconnect（断开连接）`。
+3. 如果当前构建不能自动打开登录流程，在终端运行 `codex login`，完成后回到页面点击 `使用 Codex 登录（Use Codex Login）`。
+4. 需要断开账号时点击 `断开连接（Disconnect）`。
 
-`Use Codex Login（使用 Codex 登录）` 会读取本机 Codex 登录文件中的访问凭据；它不会把完整 token 显示在设置界面中。若提示找不到登录文件，请先确认 `codex login` 已成功完成，并且当前用户与 Alcedo Studio 使用的是同一个系统账户。
+`使用 Codex 登录（Use Codex Login）` 会读取本机 Codex 登录文件中的访问凭据；它不会把完整 token 显示在设置界面中。若提示找不到登录文件，请先确认 `codex login` 已成功完成，并且当前用户与 Alcedo Studio 使用的是同一个系统账户。
 
 ### 4. 选择模型并测试连接
 
-在 `Model（模型）` 区块中输入关键词搜索模型，输入框提示为 `Search models（搜索模型）`。模板自带一个默认模型；点击 `Test & Refresh（测试并刷新）` 后，Alcedo Studio 会用当前配置连接服务并尝试刷新模型列表。
+在 `模型（Model）` 区块中输入关键词搜索模型，输入框提示为 `搜索模型（Search models）`。模板自带一个默认模型；点击 `测试并刷新（Test & Refresh）` 后，Alcedo Studio 会用当前配置连接服务并尝试刷新模型列表。
 
-刷新成功后，可从列表中选择具体模型，选择结果会自动保存。如果没有匹配项，界面会显示 `No matching models（未找到匹配的模型）`。如果 API 供应商不提供模型列表，模板中的默认模型仍可能可以直接使用；此时不要随意修改模型 ID，先参考 API 供应商的接口文档确认准确拼写。
+刷新成功后，可从列表中选择具体模型，选择结果会自动保存。如果没有匹配项，界面会显示 `未找到匹配的模型（No matching models）`。如果 API 供应商不提供模型列表，模板中的默认模型仍可能可以直接使用；此时不要随意修改模型 ID，先参考 API 供应商的接口文档确认准确拼写。
 
 连接结果会显示在按钮下方。按这个顺序检查：
 
 1. API 密钥是否已经保存，或 OAuth 是否显示已连接。
-2. `Base URL（基础 URL）` 与 `Endpoint（端点）` 是否属于同一套 API 请求方式。
+2. `基础 URL（Base URL）` 与 `端点（Endpoint）` 是否属于同一套 API 请求方式。
 3. API 供应商是否允许当前模型进行图像输入和结构化输出。
-4. 自定义模型列表接口是否需要补充 `Models endpoint（模型端点）` 与 `Models response data pointer（模型响应数据指针）`。
+4. 自定义模型列表接口是否需要补充 `模型端点（Models endpoint）` 与 `模型响应数据指针（Models response data pointer）`。
 
 高级内容分析需要视觉输入和结构化结果。模型列表里如果有能力标记，优先选择同时支持 vision 与 structured output 的模型。
 
@@ -119,7 +121,7 @@ sidebar_position: 2
 
 中文界面中的区块名称是 `高级`，英文界面名称是 `Advanced`。本文将它称为“高级字段”，避免把它理解成另一个独立设置页面。
 
-模板已经包含常用值。只有在使用自建网关、代理或非标准兼容接口时，才需要修改这些字段。文本框在编辑结束时自动保存，不需要额外的 Save 按钮；如果当前有正在运行的高级内容分析任务，字段会暂时锁定。
+模板已经包含常用值。只有在使用自建网关、代理或非标准兼容接口时，才需要修改这些字段。文本框在编辑结束时自动保存，不需要额外的保存按钮；如果当前有正在运行的高级内容分析任务，字段会暂时锁定。
 
 | 字段（英文） | 中文界面 | 作用与常见修改场景 |
 | --- | --- | --- |
@@ -139,45 +141,45 @@ sidebar_position: 2
 
 ### 复制与删除配置
 
-- `Duplicate（复制）` 会复制当前配置的请求方式和模型字段，并生成新的内部 ID；复制出来的配置不会自动带上原配置的密钥，需要重新保存。
-- `Delete（删除）` 会打开 `Delete provider（删除提供商）` 确认窗口，提示 `Delete this provider profile?（删除此提供商配置？）`。确认框默认勾选 `Delete saved key（删除已保存的密钥）`；如果希望保留凭据槽位，请在确认前取消勾选。
+- `复制（Duplicate）` 会复制当前配置的请求方式和模型字段，并生成新的内部 ID；复制出来的配置不会自动带上原配置的密钥，需要重新保存。
+- `删除（Delete）` 会打开 `删除提供商（Delete provider）` 确认窗口，提示 `删除此提供商配置？（Delete this provider profile?）`。确认框默认勾选 `删除已保存的密钥（Delete saved key）`；如果希望保留凭据槽位，请在确认前取消勾选。
 
 ## 运行高级内容分析
 
 完成 API 供应商、凭据和模型配置后，回到相册主界面：
 
 1. 打开一个项目，并在浏览区选择一张或多张照片。
-2. 点击左侧工具区的 `Advanced Content Analysis（高级内容分析）`。
-3. 对话框顶部会显示 `Provider（提供商）`、`Model（模型）` 和 `Output language（输出语言）`，先确认三项都是预期配置。
-4. 在 `Tasks（任务）` 中选择需要生成的内容。
-5. 设置 `Overwrite（覆盖）` 规则和评价严苛程度。
-6. 点击 `Analyze Selected（分析所选图像）` 开始。
+2. 点击左侧工具区的 `高级内容分析（Advanced Content Analysis）`。
+3. 对话框顶部会显示 `提供商（Provider）`、`模型（Model）` 和 `输出语言（Output language）`，先确认三项都是预期配置。
+4. 在 `任务（Tasks）` 中选择需要生成的内容。
+5. 设置 `覆盖（Overwrite）` 规则和评价严苛程度。
+6. 点击 `分析所选图像（Analyze Selected）` 开始。
 
 未打开项目或没有选中照片时，入口会被禁用；对话框也不会把“当前浏览区全部照片”当作默认目标，分析范围始终是明确选中的照片。
 
-### Tasks（任务）
+### 任务（Tasks）
 
 可以组合以下任务：
 
-- `Description（描述）`：生成或更新图像描述。
-- `Rating（评分）`：生成 1–5 星照片评分。
-- `Rating reason（评分理由）`：随评分生成简短的评分理由。只有选中 `Rating（评分）` 时可用。
+- `描述（Description）`：生成或更新图像描述。
+- `评分（Rating）`：生成 1–5 星照片评分。
+- `评分理由（Rating reason）`：随评分生成简短的评分理由。只有选中 `评分（Rating）` 时可用。
 
-同时选择 `Description（描述）` 与 `Rating（评分）` 时，软件会以一次 `Analysis（分析）` 阶段完成；只选其中一项时，会显示对应的 `Description（描述）` 或 `Rating（评分）` 阶段。
+同时选择 `描述（Description）` 与 `评分（Rating）` 时，软件会以一次 `分析（Analysis）` 阶段完成；只选其中一项时，会显示对应的 `描述（Description）` 或 `评分（Rating）` 阶段。
 
-### Overwrite（覆盖）
+### 覆盖（Overwrite）
 
 默认情况下，三个覆盖选项都已勾选：
 
-- `Overwrite photo rating（覆盖照片评分）`
-- `Overwrite rating reason（覆盖评分理由）`
-- `Overwrite image description（覆盖图像描述）`
+- `覆盖照片评分（Overwrite photo rating）`
+- `覆盖评分理由（Overwrite rating reason）`
+- `覆盖图像描述（Overwrite image description）`
 
 取消某项后，已有对应内容的照片会被跳过，不会被新的结果覆盖。任务结束时，如果有被跳过的照片，结果摘要会显示跳过的数量。
 
 ### 评价严苛程度
 
-选择 `Rating（评分）` 后，可以在 `Rating strictness（评价严苛程度）` 中选择评分风格。该选择会保存在本机，下次打开对话框仍会保留：
+选择 `评分（Rating）` 后，可以在 `评价严苛程度（Rating strictness）` 中选择评分风格。该选择会保存在本机，下次打开对话框仍会保留：
 
 | 英文选项 | 中文选项 | 评分倾向 |
 | --- | --- | --- |
@@ -193,40 +195,40 @@ sidebar_position: 2
 
 运行时对话框会显示当前阶段、已完成数量、失败数量、取消数量和服务返回的 token 使用量：
 
-- `Cancel（取消）` 会停止后续调用；已经成功保存的结果会保留。
-- 如果软件提示当前任务受到交互锁保护，可以点击 `Move task to background（将任务移至后台）` 关闭对话框，让任务继续在后台运行。
-- 完成后点击 `Done（完成）` 关闭对话框。结果会刷新当前焦点照片的 `Image` 检查器，可在那里查看和编辑描述、评分与评分理由。
-- 部分照片失败时，`Failure details（失败详情）` 会列出文件、API 供应商状态、错误码、模型和 request ID，适合复制给 API 供应商或用于排查。
+- `取消（Cancel）` 会停止后续调用；已经成功保存的结果会保留。
+- 如果软件提示当前任务受到交互锁保护，可以点击 `将任务移至后台（Move task to background）` 关闭对话框，让任务继续在后台运行。
+- 完成后点击 `完成（Done）` 关闭对话框。结果会刷新当前焦点照片的 `图像（Image）` 检查器，可在那里查看和编辑描述、评分与评分理由。
+- 部分照片失败时，`失败详情（Failure details）` 会列出文件、API 供应商状态、错误码、模型和 request ID，适合复制给 API 供应商或用于排查。
 
-## Quick Start
+## 快速上手
 
 先验证一次完整流程时，可以这样做：
 
-1. 打开 `Settings（设置）→ Advanced Content Analysis（高级内容分析）`。
-2. 点击 `+ → OpenCode - OpenAI-compatible chat`，保存 `API key（API 密钥）`。
-3. 点击 `Test & Refresh（测试并刷新）`，选择一个支持图像输入的模型。
-4. 回到相册选择一张照片，打开 `Advanced Content Analysis（高级内容分析）`。
-5. 保留 `Description（描述）`、`Rating（评分）`、`Rating reason（评分理由）` 的默认勾选，点击 `Analyze Selected（分析所选图像）`。
+1. 打开 `设置（Settings）→ 高级内容分析（Advanced Content Analysis）`。
+2. 点击 `+ → OpenCode - OpenAI-compatible chat`，保存 `API 密钥（API key）`。
+3. 点击 `测试并刷新（Test & Refresh）`，选择一个支持图像输入的模型。
+4. 回到相册选择一张照片，打开 `高级内容分析（Advanced Content Analysis）`。
+5. 保留 `描述（Description）`、`评分（Rating）`、`评分理由（Rating reason）` 的默认勾选，点击 `分析所选图像（Analyze Selected）`。
 
-如果使用本地 CC Switch 路由，则选择对应的 CC Switch 模板；如果使用其他网关，则从 `Custom（自定义）` 开始，再按 API 供应商文档填写高级字段。
+如果使用本地 CC Switch 路由，则选择对应的 CC Switch 模板；如果使用其他网关，则从 `自定义（Custom）` 开始，再按 API 供应商文档填写高级字段。
 
 ## 常见问题
 
-### Provider（提供商）或 Model（模型）显示为 No provider selected（未选择提供商）/ No model selected（未选择模型）
+### 提供商（Provider）或模型（Model）显示为未选择提供商（No provider selected）/ 未选择模型（No model selected）
 
-回到 `Provider settings（提供商设置）`，确认列表中有配置，并点击该配置的使用按钮；编辑配置后选择模型，再用 `Test & Refresh（测试并刷新）` 刷新。新增模板通常会自动成为当前活动配置。
+回到 `提供商设置（Provider settings）`，确认列表中有配置，并点击该配置的使用按钮；编辑配置后选择模型，再用 `测试并刷新（Test & Refresh）` 刷新。新增模板通常会自动成为当前活动配置。
 
-### API 密钥已保存，但 Test & Refresh（测试并刷新）仍失败
+### API 密钥已保存，但测试并刷新（Test & Refresh）仍失败
 
-检查 `Auth type（认证类型）` 是否与 API 供应商要求一致：Bearer 认证使用 `bearer`，自定义 API 密钥请求头使用 `api_key_header`，本地无密钥路由使用 `none`。同时检查基础 URL 是否重复包含端点路径。
+检查 `认证类型（Auth type）` 是否与 API 供应商要求一致：Bearer 认证使用 `bearer`，自定义 API 密钥请求头使用 `api_key_header`，本地无密钥路由使用 `none`。同时检查基础 URL 是否重复包含端点路径。
 
 ### 模型列表为空
 
-先确认 API 供应商提供模型发现接口；不提供时可继续使用模板默认模型。自定义接口则检查 `Models endpoint（模型端点）` 和 `Models response data pointer（模型响应数据指针）`，并再次点击 `Test & Refresh（测试并刷新）`。
+先确认 API 供应商提供模型发现接口；不提供时可继续使用模板默认模型。自定义接口则检查 `模型端点（Models endpoint）` 和 `模型响应数据指针（Models response data pointer）`，并再次点击 `测试并刷新（Test & Refresh）`。
 
 ### 分析失败，但界面显示了 request ID
 
-保留 `Failure details（失败详情）` 中的 provider status、error code、model 和 request ID，先核对模型是否支持图像输入与结构化输出，再向 API 供应商查询该 request ID。不要把完整 API key 或 OAuth token 一并发送。
+保留 `失败详情（Failure details）` 中的 provider status、error code、model 和 request ID，先核对模型是否支持图像输入与结构化输出，再向 API 供应商查询该 request ID。不要把完整 API key 或 OAuth token 一并发送。
 
 ### 设置项变灰，无法修改
 

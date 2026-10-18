@@ -4,6 +4,8 @@ sidebar_position: 2
 
 # API Provider Configuration
 
+Version scope: the v0.3.3 configuration UI. Template model names are configuration starting points; actual availability depends on the provider and Test & Refresh. This documentation update did not send photos to a remote provider or test billable requests.
+
 Advanced content analysis uses an API provider you configure to generate descriptions, ratings, and rating reasons for selected photos. It is a separate capability chain from the local vision model in `Local Content Recognition`: the local model serves label generation and semantic search; the API provider serves fuller image descriptions and evaluations.
 
 <ol className="ai-config-flow" aria-label="API provider configuration flow">

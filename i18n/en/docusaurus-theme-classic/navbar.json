@@ -14,5 +14,9 @@
   "item.label.GitHub": {
     "message": "GitHub",
     "description": "Navbar item with label GitHub"
+  },
+  "item.label.版本与升级": {
+    "message": "Versions and Upgrading",
+    "description": "Upgrade guide"
   }
 }

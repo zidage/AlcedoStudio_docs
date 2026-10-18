@@ -1,53 +1,43 @@
-# Edit History and Versions (UI)
+# History, Versions and copying adjustments
 
-The editor’s left rail has two panels: **Versions** and **Edit History**. Both refer to the same edit records for the current photo. One lists named branches; the other shows the commits on the branch you are using.
+History records the current Version's steps; Versions stores alternative treatments of the same photo. This page describes v0.3.3. Older v0.2.x projects require the [upgrade guidance](../releases/upgrade-guide.md).
 
-**Note:** Project files from before v0.2.8 are not supported by the current release. Open them with the software version that created them, or create a new project and re-import.
+## History
+
+![Agent badges and notes in History](/img/tutorial-v0.3.3/history.webp)
+
+*Windows Release v0.3.3, Chinese UI: Agent badges and notes in History.*
+
+Dragging updates the preview; releasing confirms the edit. Crop, nodes, masks and LUT encodings also produce history steps. Undo/redo moves through the active history without changing the original.
+
+Editing after undo creates a new continuation, not a named Version. Branch first to retain alternatives. Agent edits carry badges and notes.
 
 ## Versions
 
-**Versions** lists the named branches for this photo. Each row shows a display name and the commit it currently points at (or the image root).
+![Two named Versions](/img/tutorial-v0.3.3/versions.webp)
 
-- Select a Version to start using it (pending edits are saved first when needed).
-- **Branch from current** creates another branch from the current Version’s latest commit.
-- **Fork from root** creates a branch from the import baseline (before any user edits).
-- You can rename a Version. A Version that is not in use can be removed while at least one Version remains.
+*Windows Release v0.3.3, Chinese UI: Two named Versions.*
 
-The Version in use is marked with an outline. Editing is always bound to a Version.
+- **Branch from current commit:** create a branch from the current commit; unavailable before there is a commit.
+- **Fork new version from root:** start from the imported baseline.
+- **Select:** save as needed and switch to that Version.
+- **Rename:** give alternatives meaningful names.
+- **Remove Version:** remove a permitted inactive Version; switch away first.
 
-## Edit History
+Navigation and shutdown coordinate saving. Resolve save or recovery errors before continuing. File → Save Project saves the project; export creates independent image files.
 
-**Edit History** shows the commit graph for the Version currently in use, with undo and redo.
+## Selective copying and paste
 
-When you release a slider, that adjustment is recorded as one commit. Undo and redo move along this graph; they do not modify the original RAW file.
+1. Open Copy Adjustments on the source photo.
+2. Choose the source Version.
+3. Select nodes and parameters. RAW, camera white balance, lens and geometry are included from v0.3.1 onward.
+4. Select one or more target photos and open Paste Adjustments.
+5. Review Parameters to Paste, confirm and wait for background completion.
 
-The toolbar can also bring adjustments from another photo. See the next section.
+The editor paste entry is in Versions, not History. Paste creates and activates a new target Version while retaining the old one. v0.3.3 fixes partial paste resetting unselected values: copying only a LUT should preserve other unselected target adjustments.
 
-## Bringing adjustments from another photo: Paste and Merge
+Camera white balance, lenses and crop depend on the photo. Check one target before propagating a recipe across cameras or different compositions.
 
-Copy adjustments on one photo, then open the target photo. The clipboard holds that set of parameters, not the image itself. You then choose **Paste** or **Merge**; they serve different jobs.
+## Older instructions
 
-### Paste
-
-Use Paste when you want a **full look from another photo as a separate starting point** on the target, kept apart from what you already had there.
-
-Example: you finished exposure, white balance, and a film LUT on photo A, and you want photo B to start from that recipe while still keeping another Version you already made on B. Paste **creates a new Version** on B and switches to using it. B’s previous Version remains; it is simply no longer the one in use.
-
-Paste does not patch the old Version. It opens a new branch that carries the incoming adjustments.
-
-### Merge
-
-Use Merge when the target photo **already has edits you want to keep**, and you also want to take useful parts from another photo’s adjustments.
-
-Example: you already cropped and set exposure on B, and you want A’s color grade and LUT as well; where both sides changed the same control, you want to choose which value to keep. Merge stays on the **Version you are already using**. It does not create a new Version for this operation.
-
-If both sides changed the same field, a preview dialog asks you to keep the current value, take the incoming one, or set a final value. Confirming writes one merge commit; canceling leaves the current Version unchanged.
-
-### Which to use
-
-| What you want | Use |
-| --- | --- |
-| Bring another photo’s full adjustments in as a new starting point, kept next to the old Version | **Paste** |
-| Keep working on the current Version and fold in useful parts from another photo | **Merge** |
-
-Storage and recovery details are in [Edit History and Versions (Mini-Git)](../developer/edit-history-architecture).
+v0.2.8 offered Merge and conflict resolution. **The product Merge action was removed in v0.3.0.** Use selective copy/paste and [A/B comparison](../editing/comparison.md). Storage details are in the [history architecture](../developer/edit-history-architecture.md).
