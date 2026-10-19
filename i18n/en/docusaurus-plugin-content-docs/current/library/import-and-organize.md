@@ -1,58 +1,94 @@
-# Library: import, collections, ratings and grouping
+---
+sidebar_position: 1
+---
 
-This page follows the v0.3.3 Library. Disk folders store files; project collections organize photo references.
+# Library: Import, Collections, Ratings & Multi-Dimensional Culling
 
-## Import files or scan a folder
+Alcedo Studio’s Library workspace is powered by an embedded high-performance **DuckDB database (the Sleeve engine)**, engineered to effortlessly handle catalogs containing tens of thousands of high-resolution images. All cataloging operations are performed on lightweight metadata references, ensuring blazing-fast querying while keeping your original files untouched.
 
-Import Images selects explicit files. Import From Folder scans recursively and asks you to confirm.
+---
 
-The folder dialog has File types: RAW, JPEG, TIFF, PNG and OpenEXR, with counts and remembered selections. Other files are counted and excluded. To import only RAW, deselect other types.
+## Importing Photos: Fine-Grained Controls & Recursive Scanning
 
-1. Select the folder and wait for scanning.
-2. Check categories, counts and relative paths.
-3. Click Import … File(s).
-4. Wait for completion and inspect imported / failed counts.
+Alcedo Studio provides two flexible import pathways to accommodate diverse shooting workflows:
 
-Identification uses file contents; renaming an extension does not make an unsupported format valid. v0.3.0 accepted RAW only; v0.3.2 added raster formats. v0.3.3 improves large RAW imports and cancellation, adds a close X and shows imported count in the progress ring. After cancellation, inspect actual completed counts.
+```text
+[ Disk Source Files ] ──┬──▶ [ Import Images (Direct selection) ] ─────────┐
+                        └──▶ [ Import From Folder (Recursive + Filtering) ] ┴─▶ [ DuckDB Metadata Catalog & Thumbnail Cache ]
+```
 
-The project's LibRaw supports Nikon HE / HE*. If a recovery dialog appears, follow its converter and reimport instructions. Older DNG conversion guidance is not a required step for every Nikon photo.
+### 1. Import Images
+Click `Import Images` in the left panel to launch the system file dialog. Ideal for bringing in single photographs or a small preselected batch.
 
-## Collections and selection
+### 2. Import From Folder
+For full memory cards or external archive drives, recursive folder scanning is the recommended approach:
+1. Select the root directory. The engine scans the folder and all nested subdirectories.
+2. An import confirmation dialog aggregates files by their genuine format:
+   - **RAW**: Professional camera raw data (Sony `.ARW`, Canon `.CR2/.CR3`, Nikon `.NEF` including HE/HE*, Fujifilm `.RAF`, Leica / generic `.DNG`, etc.).
+   - **Raster Images**: JPEG, TIFF (8/16/32-bit), PNG, and OpenEXR.
+   - **Other Files**: Non-image assets are counted for visibility and automatically excluded.
+3. **Format Filtering**: Check only the formats you want to ingest. For dual-slot cards containing RAW + JPEG pairs, simply check RAW to keep your library lean.
+4. Click `Import … File(s)`. The engine concurrently extracts EXIF metadata and registers records into DuckDB. A circular progress ring monitors progress and supports smooth cancellation.
 
-Create a collection under LOCAL FOLDERS and enter its name. Select it to browse its contents; the context menu can add photos to another collection.
+:::important Project References vs. Physical Storage
+Alcedo Studio never copies or alters source files on disk. Importing simply establishes fast indexed pointers inside the `.alcd` project catalog.
+:::
 
-Ctrl+A selects every photo in the current view, including more than 1,000 in v0.3.3. The collection, search and filters determine that view.
+---
 
-Deletion distinguishes removal from a collection and deletion from the project. Check the scope. v0.3.3 performs deletion in the background; verify completion in Tasks. Removing project references and managing source files are separate operations.
+## Virtual Collections: Non-Destructive Asset Organization
 
-## Ratings and Image details
+Use the `Collections` panel in the left sidebar to group photographs by assignment, subject, or client:
 
-Rating in the context menu sets 1–5 stars; Unrated clears it. Since v0.3.1 it applies to all selected photos and saves in the background. Wait, then verify with the rating filter.
+- **Create & Manage**: Click `+` to add a new collection (e.g., "2026 Iceland Expedition", "Studio Portrait Portfolio").
+- **Organize**: Select one or multiple thumbnails in the center grid and drag them onto a collection, or right-click and choose `Add to Collection`.
+- **Safe Deletion Logic**:
+  - **Remove from Collection**: Only detaches the virtual reference from that specific collection; the photo remains fully indexed in the catalog.
+  - **Remove from Project**: Completely removes the photo’s edit history and index from the `.alcd` database, but **leaves the original file on disk completely intact**.
 
-The Image inspector shows file, camera, lens, exposure metadata and existing AI analysis. Manual ratings and [API analysis](../ai/provider-configuration.md) are separate entry points; review analysis options before replacing existing ratings.
+---
 
-## Filter, sort and group
+## Star Ratings & Culling
 
-![Library and Album inspector](/img/tutorial-v0.3.3/library.webp)
+Rapidly sorting through hundreds of burst frames is vital for photography workflows:
 
-*Windows Release v0.3.3, Chinese UI: Library and Album inspector.*
+- **Keyboard Culling**: With photos selected, press number keys `1` through `5` to assign star ratings; press `0` to clear ratings.
+- **Batch Rating**: Hold `Shift` for range selection or press `Ctrl+A` (`Cmd+A` on macOS) to select all images in the active view and assign ratings in bulk.
+- **Background Persistence**: All rating updates are committed asynchronously to the database without requiring manual project saves.
 
-| Action | Result |
-| --- | --- |
-| Click a statistic | Filter which photos appear |
-| Ascending / descending field action | Order the photos |
-| Group field action | Organize collapsible sections |
+---
 
-For example, filter by camera, group by capture date and sort within groups by rating.
+## Album Inspector: Filter, Sort & Group
 
-v0.3.0 adds capture-date activity view. v0.3.1 adds field sorting/grouping and import-date filters. v0.3.2 adds last-edit sorting and edit-date groups, with unedited photos in a separate group. Sorting on the grouping field also orders groups.
+The `Album` inspector on the right turns raw metadata into an interactive control dashboard:
 
-Collapsing groups and returning from Editor preserve the browse position. Reopening a project locates the last edited photo.
+![Library and Album Inspector](/img/tutorial-v0.3.3/library.webp)
+*Using the Album Inspector for multi-dimensional filtering and dynamic grouping*
 
-SEARCH FILTER shows the active query. Clearing it removes search, but other filters and the collection may still restrict results. See [search](../ai/search.md).
+### 1. Filter: Instant Viewport Narrowing
+The inspector automatically aggregates metadata across the active view. Click any attribute to apply real-time filtering:
+- **Capture Date**: Click a year, month, or specific day (e.g. "2026-06-07").
+- **Gear**: Filter by camera body (e.g. "Sony A1", "Nikon Z8") or specific focal length / lens model.
+- **Ratings & Labels**: Show only 5-star selects, or isolate specific AI tags (e.g. "Architecture", "Sunset").
+- **Compound Filters**: Combine criteria such as "Nikon Z8 + 50mm f/1.2 + 5 Stars". Active filter chips appear at the top and can be dismissed individually with `x`.
 
-## Capture time
+### 2. Sort: Tailored Timeline Navigation
+Use the dropdown menu beside any field to change the sort metric and order (Ascending / Descending):
+- **Capture Time**: Follows the chronological story recorded by camera hardware.
+- **Last Edited Time**: Quickly surfaces images you graded recently.
+- **Import Time** and **Rating**.
 
-v0.3.3 fixes RAW times being shifted by the computer's timezone. Library and export use the camera-clock time. This applies to newly imported photos only; existing records are not automatically corrected. It does not infer the camera timezone from GPS.
+### 3. Group: Structured Collapsible Sections
+Click `Group By` beside any metadata field to organize the thumbnail grid into collapsible, titled blocks:
+- **Group by Edit Status**: Visually separates "Edited" from "Unedited" frames to ensure no shot is missed.
+- **Group by Capture Date**: Neatly folds shoots by day or month with collapsible headers.
 
-Double-click a selected photo to edit, or [add it to the export queue](../export/workflow.md).
+---
+
+## Capture Time & Hardware Timezone Handling
+
+Digital cameras record timestamps in EXIF based on their internal hardware clock (without arbitrary desktop timezone offsets). Alcedo Studio parses the camera's physical timestamp directly, **preventing desktop timezone shifts from desynchronizing shoot times**. This guarantees consistent multi-camera synchronization across international travels.
+
+---
+
+Once your selects are organized, double-click an image to open [Input Decoding & Geometry](../editing/raw-and-geometry.md) and begin crafting your image!

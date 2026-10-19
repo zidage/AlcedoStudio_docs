@@ -1,37 +1,76 @@
-# 编辑历史与版本的存储
+---
+sidebar_position: 3
+---
 
-本页描述 v0.3.3 的提交图、恢复日志与保存检查点。用户操作见[历史与版本教程](../getting-started/edit-history-and-versions.md)。
+# 编辑历史与版本存储架构
 
-## 项目格式边界
+Alcedo Studio 的编辑历史采用 **有向无环图（DAG）提交与分支存储模型（内部实现为 Mini-Git 结构）**，支持非线性分支与非破坏性版本管理。
 
-v0.2.8 曾引入提交图历史；v0.3.0 又改变了项目与节点流水线格式。**v0.3.x 无法打开或自动迁移 v0.2.9 及更早项目。** 不能仅因旧项目已有 Mini-Git 就认为它与当前格式兼容。
+---
 
-## root、提交与 Version
+## 核心数据结构与抽象模型
 
-每张照片有导入基准 root。已确认的编辑形成不可变提交，记录参数或节点图变化。Version 是命名引用，指向一个提交或 root；活动 Version 对应当前编辑状态。
-
-撤销 / 重做移动当前历史位置。撤销后继续编辑会形成新的后续路径，不自动创建命名版本。分支操作显式建立另一个 Version，共享可达祖先。GPU 句柄与预览缓存不属于应持久保存的编辑内容。
-
-## 确认与保存
+在底层 C++ 服务中，每张照片的编辑上下文由以下核心对象组成：
 
 ```text
-实时输入 → 预览
-确认输入 → 追加应用恢复日志 → 推进工作 head
-保存检查点 → 将记录写入 DuckDB → 更新 Version / 流水线 → 清理已保存日志
+       [ Root 导入基准 ] (不可变基础)
+              │
+       [ Commit 1: 基础曝光 ]
+              │
+       [ Commit 2: 镜头校正与构图 ]
+             / \
+            /   \
+           ▼     ▼
+  [ Commit 3A ]  [ Commit 3B ]
+  (暖调电影胶片)   (高反差黑白)
+       ▲               ▲
+       │               │
+  Version: "Warm"  Version: "B&W" (活动分支指针)
 ```
 
-应用恢复日志针对已确认但尚未物化的编辑，DuckDB 自己的 WAL 负责数据库事务的物理恢复。两者用途不同，History 也不是直接显示日志文件。
+1. **Root（导入基准）**：每张照片被导入时生成的不可变根节点，记录源文件物理路径、原始传感器色彩矩阵与默认元数据。
+2. **Commit（提交节点）**：不可变的调整事务。记录单次滑块修改、色调曲线变动、节点增删或蒙版几何形变的精确参数差量。每个 Commit 均持有对其父提交（Parent Commit）的哈希指针。
+3. **Version（版本分支指针）**：轻量级命名引用（类似于 Git 中的分支名 `refs/heads/*`），指向 DAG 图中的某个具体 Commit 节点。活动 Version（Active Version）决定了当前视口加载哪一套调色状态。
 
-切换照片、切换 Version、离开编辑器或退出前，需要协调保存检查点。保存失败不能当成成功后继续覆盖状态，界面会给出恢复 / 重试路径。异常恢复的保证应由实际日志与恢复测试确认。
+---
 
-## 当前调整传递
+## 双写机制与保存检查点（Checkpoint Pipeline）
 
-来源照片和 Version 由调整传递服务生成所选参数包。Paste 在目标创建新 Version，原版本继续保留；v0.3.1 起允许复制 Develop / RAW、白平衡、镜头和几何，v0.3.3 修复部分粘贴未选参数保持的问题。
+为兼顾滑块交互的低延迟响应与意外退出下的数据持久性，系统采用了分层事务管线：
 
-v0.3.0 已移除产品中的 Merge 操作。本页不把历史上双亲提交或冲突处理设计作为当前界面教程。当前入口在 Versions，批量目标通过后台任务完成，应检查最终结果后再声明成功。
+```text
+[ 用户滑块松开 / 确定输入 ]
+            │
+            ▼
+[ 1. 追加恢复日志 (Journal Recovery Log) ] ──▶ 追加记录至本地内存事务日志，推进 Head 指针
+            │
+            ▼ (切图 / 切版本 / 保存项目 / 正常退出)
+[ 2. 检查点物化服务 (Save Checkpoint) ]    ──▶ 将待提交记录物化至 DuckDB 表中，更新 Version 索引
+            │
+            ▼
+[ 3. 日志轮转与清理 ]                      ──▶ 清理已成功写入数据库的暂存日志条目
+```
 
-## 源码入口
+### 为什么不直接实时写数据库？
+如果用户连续快速调整滑块，若每次操作都同步执行 DuckDB 磁盘写事务，会增加磁盘 I/O 负担并影响交互流畅度。
+通过引入 **恢复日志（Journal Log）**，滑块操作先写入轻量级日志并更新内存状态；当发生工作区切换、分支检出或触发保存时，物化服务（`editor_mini_git_materializer`）将待处理的提交批量写入 DuckDB。若遇到异常退出，重启时恢复引擎会重放未物化的日志，恢复未落盘的编辑提交。
 
-v0.3.3 的 `src/include/app` 包含 editor_working_document、editor_mini_git_commit_writer、editor_mini_git_journal_recovery、editor_mini_git_materializer、editor_save_checkpoint_service 与 adjustment_transfer_service。QML 使用 History / Versions 投影和命令接口，不直接改数据库引用。
+---
 
-相关目录和版本边界见[源码对应表](./tutorial-source-map.md)，对比操作见[A/B 教程](../editing/comparison.md)。
+## 选择性参数传递实现（Adjustment Transfer）
+
+`adjustment_transfer_service` 负责跨照片调色复用：
+1. **参数提取**：从来源照片的指定 Version 节点提取序列化参数树，并按模块（Tone、Look、LUT、Geometry 等）进行特征过滤。
+2. **分支注入**：针对每张目标照片，以其当前的 Active Commit 为基底，创建一个**全新的分支 Commit 与专属 Version**，将选中的参数合并注入，而目标照片原本未被选中的参数（如独特的镜头校正或裁剪构图）完整保持不变。
+3. **后台并发**：大批量传递通过后台任务队列执行，避免占用 UI 线程。
+
+---
+
+## 核心源码文件索引
+
+相关核心实现位于 `alcedo_studio/src/` 源码树下：
+- `include/app/editor_working_document.hpp`：活动编辑工作文档抽象
+- `include/app/editor_mini_git_commit_writer.hpp`：DAG 提交生成器
+- `include/app/editor_mini_git_journal_recovery.hpp`：故障恢复日志管理
+- `include/app/editor_mini_git_materializer.hpp`：DuckDB 数据库物化写入服务
+- `include/app/adjustment_transfer_service.hpp`：选择性参数复制与批量注入

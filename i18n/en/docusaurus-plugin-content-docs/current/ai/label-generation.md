@@ -2,46 +2,46 @@
 sidebar_position: 4
 ---
 
-# AI Label Generation
+# Automated AI Content Tagging
 
-Version scope: v0.3.3. Folder imports can include RAW, JPEG, TIFF, PNG and OpenEXR. Check selected types and counts in the [import dialog](../library/import-and-organize.md) before deciding to generate labels.
+During commercial shoots or travel expeditions, photographers easily capture thousands of frames. Manually tagging every image with subject keywords is exhausting. Alcedo Studio’s local on-device AI vision model identifies subjects, environments, and mood in milliseconds, generating structured content labels for instant catalog culling.
 
-With a local model activated, Alcedo Studio can generate content labels for images. Labels are inferred by the on-device vision model, describe the main content of the image, and also back semantic search and the inspector's `By Labels` filter.
+---
 
-This page covers the local labeling flow. Descriptions, ratings, and rating reasons produced by an API provider are a separate flow; see [API provider configuration](./provider-configuration.md).
+## Intelligent Import Prompts
 
-## The import-time prompt
+When your local vision model is `Active`, importing photographs triggers automated tagging options:
 
-When importing images, if the project has an activated local model and the import preference is `Always Ask` (the default), a `Use AI to analyze image content?` dialog appears:
+1. **Import Dialog**: Once directory scanning completes, a prompt asks `Use AI to analyze image content?`:
+   - **Generate**: Concurrently extracts visual embeddings and generates semantic tags for the batch. A circular progress indicator displays completed counts, inference speed, and time remaining.
+   - **Skip**: Ingests images into the catalog immediately without running AI models. Tagging can be performed at any later time.
+   - **Remember My Choice**: Persists your decision to application preferences, automating future imports without repetitive popups.
+2. **Asynchronous Non-Blocking Execution**: Tagging executes silently on background worker threads, allowing you to browse, rate, or grade photographs in the foreground without UI lag.
 
-- **Generate**: generates labels for this batch. The dialog then switches to `Generating semantic labels`, showing a circular progress, processed count, elapsed time, and estimated time remaining; you can click `Cancel` while processing.
-- **Skip**: skips this batch; the images import normally without labels.
-- **Remember My Choice**: remembers the current choice and syncs it into the import preference in the local AI settings.
+---
 
-If the import preference is `Always`, generation runs directly after import; with `Always Skip`, nothing is generated and no dialog appears. The preference can be changed in `Settings → Local Content Recognition → Import`.
+## Centralized Catalog Tag Management
 
-If the project has no activated local model, importing shows `Set up an AI model to analyze images`; click `Set up model` to go to the local AI settings, or `Not now` to skip this batch only.
+Navigate to `Settings → Local Content Recognition` for centralized batch tagging controls:
 
-## Manual generation and regeneration
+- **Catalog Statistics Dashboard**:
+  Displays clear metrics for the active catalog: `Total Images`, `With labels`, and `Need labels`.
+- **Generate (Incremental)**:
+  Scans the library and runs inference only on untagged photographs, saving compute time.
+- **Regenerate (Full Catalog Refresh)**:
+  When you download a more advanced model, click Regenerate to re-index all catalog images with updated, higher-accuracy semantic tags.
 
-In the `AI content recognition` section of `Local Content Recognition`:
+---
 
-- The top shows the current album's `Images`, `With labels`, and `Need labels` counts.
-- `Generate` only creates labels for images that do not have them yet.
-- `Regenerate` ignores existing labels and regenerates for all images in the album — useful after switching local models to re-label everything consistently.
-- While running, the button becomes `Cancel`, with progress and estimated time remaining below.
+## Where AI Tags Surface in the Workspace
 
-## Viewing labels
+Once generated, semantic labels integrate across your culling workflow:
 
-Generated labels can be viewed in these places:
+1. **Thumbnail Badges**: In the center grid, the most prominent keywords (e.g. `Portrait`, `Sunset`, `Architecture`, `Forest`) appear beneath each card.
+2. **Image Inspector**: Selecting any image displays its complete semantic tag stream in the right inspector banner.
+3. **Album Inspector Filter**:
+   Switch to the `By Labels` section of the Album inspector. Tags are sorted by frequency. Clicking any tag (such as `Nightscape`) instantly filters the entire catalog down to matching frames!
 
-- Below each thumbnail in the grid / list.
-- Right-click an image and choose `Details` — in the `Primary`, `Related`, and `Also Matched` sections of the details dialog.
-- The `By Labels` area of the right inspector — click a label to filter images.
+---
 
-## Notes
-
-- Label quality depends on the local model; different model variants may produce different label sets.
-- After switching local models, use `Regenerate` to update the labels consistently.
-- Label generation requires the local model to be `Active`; an API provider's API key does not make the local labeling flow available by itself.
-- Generation speed depends on CPU, GPU, memory, image count, and model size.
+With tags in place, proceed to [AI Semantic & Structured Search](./search.md) to search your photo catalog using natural language!

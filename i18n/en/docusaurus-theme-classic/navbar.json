@@ -7,9 +7,9 @@
     "message": "Docs",
     "description": "Navbar item with label Docs"
   },
-  "item.label.AI 配置": {
-    "message": "AI setup",
-    "description": "Navbar item with label AI 配置"
+  "item.label.CLI 与自动化": {
+    "message": "CLI & Automation",
+    "description": "Navbar item with label CLI 与自动化"
   },
   "item.label.GitHub": {
     "message": "GitHub",

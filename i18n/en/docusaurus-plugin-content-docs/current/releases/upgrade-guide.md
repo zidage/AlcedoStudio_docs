@@ -1,50 +1,42 @@
-# v0.2.x to v0.3.3: changes and upgrading
+---
+sidebar_position: 1
+---
 
-Current tutorials describe v0.3.3. Complete release notes below retain performance results and fixes as historical reports, not promises for your hardware.
+# Version Evolution & Upgrade Guide
 
-## Before upgrading
+Alcedo Studio has evolved from an early cross-platform experiment into a mature, professional digital darkroom and digital asset management system. This guide summarizes key architectural milestones and essential upgrade considerations.
 
-| Change | Action |
-| --- | --- |
-| v0.3.0 cannot read v0.2.9 or earlier projects | Keep the old app/project; export there or reimport originals into a new project. No automatic migration |
-| v0.3.0 removes Merge | Use selective copy/paste, which creates a target Version |
-| v0.3.1 stops bundling LUTs | Download official packages in Settings → LUTs and transfer custom resources |
-| v0.3.1 changes crop and wheels | Check rotated crops, Gamma and Gain in existing edits |
-| v0.3.2 changes diffusion curve | Check halos near whites |
-| v0.3.3 replaces filename presets | Save complete export presets again and check destination |
-| v0.3.3 retains GPS by default | Disable GPS for sharing, or choose Web / Social Media / Email |
-| v0.3.3 RAW time fix affects new imports | Existing Library records are not automatically corrected |
+---
 
-## v0.2.x
+## Critical Upgrade Notes
 
-| Version | Changes and current instructions |
-| --- | --- |
-| [v0.2.0](./v0.2.0.md) | macOS/Metal, basic HDR, language, scopes, aspect and reset: [installation](../getting-started/installation.md), [display](../editing/display-and-effects.md) |
-| [v0.2.1](./v0.2.1.md) | CUDA X-Trans: [RAW](../editing/raw-and-geometry.md) |
-| [v0.2.2](./v0.2.2.md) | Nikon HE recovery, linear DNG, highlights, LUT/Look, ICC/EXIF, early AI: [input](../editing/raw-and-geometry.md), [AI](../ai/overview.md) |
-| [v0.2.3](./v0.2.3.md) | Alcedo rebranding, UI, LUT search, experimental WebGPU, ONNX, matrix and preview changes: [interface](../getting-started/interface-overview.md) |
-| [v0.2.4](./v0.2.4.md) | OpenCL, collections, ratings, search, cache, project/history changes; experimental WebGPU retired: [Library](../library/import-and-organize.md) |
-| [v0.2.5](./v0.2.5.md) | Local tone, selective color, batch adjustment transfer, HDR export: [tone](../editing/tone-and-color.md), [export](../export/workflow.md) |
-| [v0.2.6](./v0.2.6.md) | Grain, halation, semantic labels/search, model download, native Nikon HE/HE*: [models](../ai/model-management.md), [effects](../editing/display-and-effects.md) |
-| [v0.2.7](./v0.2.7.md) | API descriptions/ratings, providers/credentials/OAuth, background tasks, field search: [API](../ai/provider-configuration.md), [tasks](../settings/preferences.md) |
-| [v0.2.8](./v0.2.8.md) | QML single-window editor, neural demosaicing, commit graph/recovery, recursive folder import: [interface](../getting-started/interface-overview.md), [history](../getting-started/edit-history-and-versions.md) |
-| [v0.2.9](./v0.2.9.md) | Signed updates, inspector export, naming/size/metadata, workspace switching/filmstrip: [export](../export/workflow.md), [settings](../settings/preferences.md) |
+Review these architectural and workflow updates before performing major version upgrades:
 
-## v0.3.x
+| Change | Introduced In | Upgrade & Workflow Guidance |
+| --- | --- | --- |
+| **Catalog Format Redesign (Incompatible with v0.2.x)** | **v0.3.0** | v0.3.0 completely redesigned the node-based pipeline and DuckDB project format. **Projects created in v0.2.9 or earlier cannot be directly opened in v0.3.x.** Keep an earlier build installed to export existing master edits, or initialize new v0.3.x projects by re-importing source files. |
+| **Node Pipeline & Layer Stack** | **v0.3.0** | Introduced sequential node grading, layer-based mask groups, and CAT02 creative white balance. Legacy merge operations evolved into safer [Selective Parameter Transfer](../getting-started/edit-history-and-versions.md). |
+| **LUT Distribution & Encoding** | **v0.3.1** | Official film simulation packages transitioned to on-demand downloads. Visit `Settings → LUTs` to install packages; configure Input and Output Color Space Encodings for custom LUTs. |
+| **Production Export Presets** | **v0.3.3** | Full-fledged export presets replaced legacy naming-only presets, offering turnkey profiles for Web, Social Media, and Print with automated GPS privacy protection for online sharing. |
 
-| Version | Changes and instructions |
-| --- | --- |
-| [v0.3.0](./v0.3.0.md) | New project format, nodes, radial/gradient masks and groups, grade white balance, contrast, shortcuts, structured search and unified GPU engine: [nodes](../editing/nodes-and-masks.md), [color](../editing/tone-and-color.md), [search](../ai/search.md) |
-| [v0.3.1](./v0.3.1.md) | LUT packages/browser/strength, diffusion, A/B, sorting/grouping, welcome overview, batch ratings, RAW/geometry copy and new crop: [LUTs](../editing/lut-library.md), [comparison](../editing/comparison.md), [Library](../library/import-and-organize.md) |
-| [v0.3.2](./v0.3.2.md) | Raster color input, import file types, remembered LUT encodings, edit-time sort/group, top task indicator, package removal: [input](../editing/raw-and-geometry.md), [LUTs](../editing/lut-library.md) |
-| [v0.3.3](./v0.3.3.md) | CLI/GUI agents, full export presets, GPS/EXIF/ICC, HDR edge, select-all/background deletion, partial paste and time fixes: [CLI](../automation/cli.md), [export](../export/workflow.md), [history](../getting-started/edit-history-and-versions.md) |
+---
 
-## Patch tags and builds
+## Architectural Evolution
 
-The repository also retains v0.2.0-hotfix, v0.2.3b, v0.2.4-Release and v0.2.8-Preview. Reproduce those using their exact tags and commit differences; the main version notes are not an individual test report for every installer.
+### v0.3.x Era: Node Pipelines, Color Science & Agent Automation
+- **v0.3.3**: Introduced `alcedo-cli` command-line companion and AI agent cooperative control; launched comprehensive export presets with GPS privacy toggles; enhanced Ultra HDR gain map exports and background queue management.
+- **v0.3.2**: Added automatic color space detection for raster bitmaps (JPEG, PNG, TIFF, OpenEXR); added persistent memory for 3D LUT input/output color encodings; introduced persistent top status light.
+- **v0.3.1**: Added official film simulation package manager; introduced A/B visual comparison system; added optical Diffusion glow; introduced dynamic sorting and collapsible grouping in the Album Inspector.
+- **v0.3.0**: Major milestone. Deployed the modern `.alcd` project architecture; launched node-based grading with radial/gradient mask groups; introduced CAT02 matrix creative white balance and middle-gray contrast.
 
-v0.2.9 builds 2014/2015 additionally record inspector export, signing, embedded localized notes and the Windows installer-only change. They are included in [v0.2.9](./v0.2.9.md).
+### v0.2.x Era: Single-Window Workspaces & Platform Foundations
+- **v0.2.9**: Digitally signed online update system; integrated Export Inspector; seamless Filmstrip navigation.
+- **v0.2.8**: Unified single-window Qt Quick QML architecture; GPU-accelerated Neural Engine demosaicing; transactional recovery logging and recursive folder imports.
+- **v0.2.7**: Multimodal cloud vision LLM integration; introduced five-tier critique strictness personas; supported OpenAI Codex OAuth browser sign-in.
+- **v0.2.6**: Added procedural film grain and optical halation; integrated on-device CLIP vision models for offline semantic tagging and natural language search; native Nikon HE/HE* raw support.
+- **v0.2.4–v0.2.5**: Introduced the DuckDB-powered Sleeve asset management catalog; added OpenCL GPU compute backend; implemented bilateral tone mapping and 8-hue selective color.
+- **v0.2.0–v0.2.3**: Established the Alcedo Studio brand; implemented Apple Silicon Metal 3 unified memory compute and Windows CUDA pipelines; standardized on the ACES scene-referred linear color workflow.
 
-## Verification
+---
 
-The tutorials follow tagged production QML and relevant C++ validation. Windows Release screenshots and a limited CLI/GUI demonstration were checked; exports, remote AI, macOS and all GPU paths were not fully tested. See the [source and screenshot map](../developer/tutorial-source-map.md).
+For exhaustive changelogs, benchmark notes, and bug fixes across all versions, explore the **Release Archive** in the sidebar.

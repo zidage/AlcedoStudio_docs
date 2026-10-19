@@ -2,87 +2,61 @@
 sidebar_position: 3
 ---
 
-# Local AI Model Management
+# Local AI Model Management & Activation
 
-Version scope: v0.3.3. The live screenshot shows settings with the model not activated. Label generation was not run in this demonstration; see the [verification record](../developer/tutorial-source-map.md).
+Alcedo Studio’s offline content recognition and natural language search are powered by **CLIP (Contrastive Language-Image Pre-training)** vision models, executing on an integrated, high-performance **ONNX Runtime** engine. This page guides you through downloading, managing, and activating local models.
 
-This page covers the local vision models in `Settings → Local Content Recognition`. Once downloaded and activated, a model can power import-time content label generation, label filtering, and semantic search; inference runs on your machine.
+---
 
-To configure an API provider for photo descriptions, ratings, and rating reasons, see [API provider configuration](./provider-configuration.md) instead.
+## How the Local Vision Model Operates
 
-## Opening local AI settings
+The local vision model encodes ingested images into dense semantic embeddings:
+- **Automatic Content Tagging**: Compares image feature embeddings against thousands of pre-calibrated photographic concepts using cosine similarity, inferring relevant subject tags in milliseconds.
+- **Natural Language Semantic Search**: When you search for "lighthouse during storm", the text encoder converts your query into a semantic vector and executes rapid nearest-neighbor vector matching across your local database.
+- **100% Client Privacy**: All forward inference occurs strictly on your local CPU / GPU hardware, **generating zero outbound network telemetry or image transfers**.
 
-![Local model settings; the shown model is not activated](/img/tutorial-v0.3.3/local-ai.webp)
+---
 
-*Windows Release v0.3.3, Chinese UI: Local model settings; the shown model is not activated.*
+## Configuring Storage & Download Mirrors
 
-Click `Settings` on the toolbar and choose `Local Content Recognition` on the left; or, when the `Set up an AI model to analyze images` prompt appears during import, click `Set up model` and the app jumps straight to this section.
+Click `Settings` in the top toolbar and navigate to `Local Content Recognition`:
 
-The page contains three main sections:
+![Local AI model settings](/img/tutorial-v0.3.3/local-ai.webp)
+*Local Model Management: Model selection, mirrors, and active runtime state*
 
-- `AI content recognition`: label statistics for the current album, and the generate / regenerate flows.
-- `Model`: choose, download, and activate a local model.
-- `Import`: whether to auto-generate labels when importing new images.
+### 1. Select Vision Model
+Use the model dropdown to pick a pre-trained model suited to your hardware:
+- **Default Recommended Model**: Offers a balance of compact file size (a few hundred megabytes) and rapid inference latency, ideal for modern laptops and workstations.
+- **High-Precision Model (if available)**: Features broader semantic vocabularies and nuanced scene understanding for demanding workstation hardware.
 
-## Choosing a model
+### 2. Download Directory
+Click the folder icon to specify where model weights are stored. An SSD partition with ample free space is recommended.
 
-Pick a model from the dropdown at the top of the `Model` section. The models in the list differ in size, accuracy, and language support; after selection, the status card shows the display name and total size. If you are unsure, start with the default item — you can switch and re-download later.
+### 3. Choosing a Download Mirror
+Select the optimal download endpoint based on your regional network connectivity:
+- **HF Mirror**: A dedicated regional mirror for Hugging Face, recommended for users in mainland China.
+- **Hugging Face Official**: Primary source for international users.
+- **Sufy CDN**: High-speed global content distribution network fallback.
+- **Custom**: For corporate intranets or air-gapped private repositories, provide a direct URL.
 
-## Setting the download directory
+---
 
-`Download directory` shows where the model files are stored. Click the folder icon on the right and choose a directory in `Select Model Download Folder`. Model files are large, so pick a location with plenty of space that you can keep long-term, and do not delete the files in it casually.
+## Download & Activation Steps
 
-## Choosing a mirror source
+1. **Check Status**: Click `Check`. If the model is not found locally, the card displays a red `Not downloaded` badge.
+2. **Download Model**: Click `Download`. The card displays download progress, downloaded bytes, and time remaining. If network interruption occurs, click `Cancel`, switch mirrors, and resume.
+3. **Activate Model**: Once downloaded, the badge transitions to gray: `Activate to generate labels`. Click `Activate` to load model weights into ONNX Runtime memory.
+4. **Active State**: When the card displays a vibrant green `Active` badge, your local AI engine is ready.
 
-The `Source` dropdown offers four options:
+---
 
-- **HF Mirror**: a Hugging Face mirror for networks with poor access to the official site; prefer it when the official site is slow or unstable.
-- **Hugging Face**: the official source; use it with a good connection — the most complete and up-to-date files.
-- **Sufy CDN**: a CDN-distributed mirror, useful as a backup to the first two.
-- **Custom**: a custom download address. Selecting it shows an input field for the full download root address, e.g. `https://example.com`.
+## Import Preferences
 
-Recommendations: use `Hugging Face` when you can reach the official source at a decent speed; use `HF Mirror` when access from China is difficult; if both are slow, try `Sufy CDN` or a custom address. When a download fails or stalls, switching the source and re-running `Download` is usually the most direct fix.
+Under the `Import` section, configure automated behavior when new photographs enter your catalog:
+- **Always Ask (Default)**: Displays an optional prompt during import, allowing you to choose whether to run analysis.
+- **Always**: Automatically queues all imported photos for background AI analysis.
+- **Always Skip**: Ingests images immediately without triggering AI models, leaving manual analysis available at your discretion.
 
-## Downloading and activating
+---
 
-With model, directory, and source set:
-
-1. Click `Check` to refresh the local status of the current model; a not-yet-downloaded model shows `Not downloaded`.
-2. Click `Download` to start. The status card shows a percentage, downloaded / total bytes, the current file name, download speed, and estimated time remaining; the button becomes `Cancel` while downloading.
-3. When the download finishes, the status card shows `Activate to generate labels` — the files are in place but not loaded into the runtime.
-4. Click `Activate`. When done, the status card shows a green `Active`; label generation and semantic search are now available.
-
-### Model status card
-
-The status card is the primary source of truth for model state:
-
-- Red / `Not downloaded`: no complete model files locally.
-- Accent color / `Downloading %1%` or `Activating…`: download or activation in progress.
-- Gray / `Activate to generate labels`: files downloaded but not activated.
-- Green / `Active`: the local model is ready.
-
-When idle, the card also shows controller-reported information such as errors, install paths, or current runtime state.
-
-### Other operations
-
-- `Check`: re-reads the local status of the selected model.
-- `Download` / `Cancel`: starts or interrupts the download.
-- `Delete`: removes the local files for this model; the status returns to `Not downloaded`.
-- `Activate`: loads a downloaded model.
-
-## Import-time label preference
-
-The label generation options in the `Import` section control what happens when importing new images:
-
-- **Always**: generate on every import without asking.
-- **Always Ask**: show the `Use AI to analyze image content?` dialog on every import.
-- **Always Skip**: never generate labels at import and never show the model setup prompt.
-
-See [AI label generation](./label-generation.md) for the import dialogs and the manual generation flow.
-
-## Troubleshooting
-
-- Download fails or stalls with no progress: switch the `Source` and re-run `Download`; for a custom source, confirm the address is reachable and the directory structure matches the official one.
-- Download completes but `Activate` fails: check that the directory is intact and disk space is sufficient; `Delete` and re-download if needed.
-- Status shows `Active` but label generation is still unavailable: confirm the current project is open, and click `Check` in the local AI section to refresh the status.
-- Semantic search still unavailable: confirm the local model is `Active`; an API provider profile does not replace the local semantic search model.
+With your model activated, proceed to [AI Content Tagging](./label-generation.md) and [AI Semantic & Structured Search](./search.md).

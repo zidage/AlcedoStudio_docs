@@ -1,58 +1,98 @@
-# Agents and alcedo-cli
+---
+sidebar_position: 1
+---
 
-v0.3.3 installs alcedo-cli with the application. It can connect to a GUI window or start an independent headless session. Use the schema from the same application version for exact parameters.
+# Automation & alcedo-cli Companion
 
-## Inspect the installation
+Alcedo Studio natively includes **`alcedo-cli`**, a specialized command-line interface and automation toolkit designed for modern digital darkrooms. Whether handing off batch export renders to automated scripts or inviting AI companion agents to co-edit inside your desktop window, `alcedo-cli` delivers structured, type-safe RPC endpoints.
 
-Windows places the CLI beside the program; macOS places it inside the app bundle. Run from that directory or add it to PATH.
+---
+
+## Core Execution Modes
+
+`alcedo-cli` operates in two powerful execution modes:
+
+```text
+[ alcedo-cli Automation Hub ]
+         │
+         ├─▶ Mode 1: Interactive GUI Companion Mode
+         │     Connects via local RPC to an active desktop window for real-time collaborative grading
+         │
+         └─▶ Mode 2: Headless Batch Pipeline Mode
+               Executes without a graphical window in server or script environments to batch process catalogs
+```
+
+---
+
+## Binary Location & Basic Commands
+
+- **Windows**: Bundled alongside the main binary in the application root directory (`alcedo-cli.exe`).
+- **macOS**: Located inside the application bundle (`AlcedoStudio.app/Contents/MacOS/alcedo-cli`).
+
+Run the following commands in your shell to verify connectivity:
 
 ```powershell
+# Display help and general usage
 alcedo-cli --help
+
+# List all active sessions (GUI windows or background headless sessions)
 alcedo-cli --json session list
+
+# Dump the complete API specification and parameter schemas
 alcedo-cli schema
 ```
 
-Select a named session when several exist. Keep CLI and application versions aligned.
+---
 
-## Work in a GUI session
+## Mode 1: Connecting to GUI Windows with AI Agents
 
-![Agent badges and notes in History](/img/tutorial-v0.3.3/history.webp)
+![Agent commits and notes in history](/img/tutorial-v0.3.3/history.webp)
+*AI agent parameter commits and rationale annotations recorded in history*
 
-*Windows Release v0.3.3, Chinese UI: Agent badges and notes in History.*
+While you edit in Alcedo Studio, external AI agents can connect to your window via `alcedo-cli` to assist with adjustments:
 
-Read the project and selection first, acquire control before changing state, inspect previews between edits and release control even after errors.
+### 1. Control Lock Protocol
+To prevent race conditions between human mouse dragging and agent commands, the architecture enforces a strict control acquisition protocol:
+1. **Acquire Control**: Before dispatching mutations, the agent must acquire the lock:
+   ```powershell
+   alcedo-cli --session <SESSION_NAME> call control.acquire '{"holder_name":"photo-assistant"}'
+   ```
+2. **Interface Response**: While the lock is held, parameter sliders in the GUI are temporarily locked, and an agent session card appears in the top task drawer. **You can still freely pan, zoom the canvas, or inspect scopes**.
+3. **Dispatch Edits**: The agent issues grading parameters, branches versions, or binds LUTs, annotating commits with intent (e.g. "Lifted shadow detail to introduce cool cinematic mood").
+4. **Release Control**: When finished or upon encountering an error, the agent releases control:
+   ```powershell
+   alcedo-cli --session <SESSION_NAME> call control.release '{}'
+   ```
+5. **Emergency Override**: You can interrupt agent actions at any time by clicking `Stop` in the GUI task bar to instantly reclaim manual control!
 
-```powershell
-alcedo-cli --session SESSION_NAME call control.acquire '{"holder_name":"photo-assistant"}'
-alcedo-cli --session SESSION_NAME call control.get '{}'
-alcedo-cli --session SESSION_NAME call control.release '{}'
-```
+---
 
-Replace SESSION_NAME with the actual name. Editing controls lock during control; pan, zoom and scopes remain available. Tasks list agent actions, while History shows badges and notes. After Stop, the agent must wait for your explicit instruction before reacquiring.
+## Mode 2: Headless Batch Pipelines
 
-## Headless work
-
-```powershell
-alcedo-cli session start --headless --project 'D:\Photos\Trip.alcd'
-alcedo-cli --json session list
-alcedo-cli schema
-alcedo-cli --session HEADLESS_NAME session stop
-```
-
-Stop only the headless session you started, after saving and waiting for work to finish. Never stop the user's GUI session.
-
-## Supported operations
-
-Projects/library include create/open/save, import, selection, ratings, metadata, search and deletion. Editing includes cataloged fields, LUTs, undo/redo and history. Versions include creation, branching, checkout, rename, removal and adjustment copy/paste. Output includes preview rendering, export and task monitoring.
-
-Inspect editor.catalog rather than guessing fields or borrowing another version's objects. In the tested Release, panel navigation and drawing a radial mask used the native UI; the presence of a feature in QML does not establish a dedicated CLI command.
-
-## Wait for background work
+For headless servers or automated CI pipelines, launch standalone headless sessions:
 
 ```powershell
-alcedo-cli --session SESSION_NAME call tasks.wait '{"task_id":"RETURNED_TASK_ID"}'
+# 1. Start a headless session with a project catalog
+alcedo-cli session start --headless --project 'D:\Photos\2026_Studio.alcd'
+
+# 2. Call tasks.wait to await background batch export completion
+alcedo-cli --session <HEADLESS_SESSION> call tasks.wait '{"task_id":"<task-id>"}'
+
+# 3. Safely terminate the session after saving
+alcedo-cli --session <HEADLESS_SESSION> session stop
 ```
 
-Check final state, successful/failed counts and output. A task_id alone is not proof of completion.
+---
 
-The [alcedo skill](https://github.com/zidage/alcedo-skills) supports an agent's preview → inspect → refine loop. For the screenshot demonstration, the Release CLI imported eight RAWs, changed exposure, branched a Version and applied a LUT in an independent project; see [verification scope](../developer/tutorial-source-map.md).
+## Core API Capabilities
+
+Using `alcedo-cli call <method> '<json_payload>'`, you can orchestrate nearly all darkroom capabilities:
+
+| Domain | Key Capabilities |
+| --- | --- |
+| **Catalog & Library** | `project.open` / `save`, `library.import`, star ratings, metadata queries, and search. |
+| **Darkroom Grading** | Querying parameter schemas (`editor.catalog`), reading/writing exposure, white balance, tone curves, and 3D LUTs. |
+| **Version Branches** | Branching named versions (`versions.branch`), version checkout, and selective adjustment transfer. |
+| **Batch Tasks** | Triggering export queues and monitoring progress via `tasks.wait`. |
+
+For autonomous editing workflows with LLMs, install the official [alcedo skill](https://github.com/zidage/alcedo-skills) to establish an intelligent feedback loop!

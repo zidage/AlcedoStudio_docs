@@ -26,8 +26,7 @@ const sidebars: SidebarsConfig = {
     {type: 'category', label: '导出', items: ['export/workflow']},
     {
       type: 'category', label: 'AI 功能',
-      items: ['ai/overview', 'ai/model-management', 'ai/label-generation',
-        'ai/search', 'ai/provider-configuration'],
+      items: ['ai/overview', 'ai/model-management', 'ai/label-generation', 'ai/search'],
     },
     {
       type: 'category', label: '设置与自动化',

@@ -1,88 +1,120 @@
-# Export: queue, presets, size and metadata
+---
+sidebar_position: 1
+---
 
-In v0.3.3, export lives in Library's right-hand Export inspector. Saving a project preserves editing state; export creates an independent image.
+# Export Workflow: Batch Queue, Presets & Metadata
 
-## Queue and destination
+In Alcedo Studio, every modification made during editing is preserved non-destructively in your catalog database. **Exporting** renders the full GPU color pipeline into standardized, master-grade image files ready for delivery and publishing.
 
-Select photos and Add to Queue, or use the queue's plus button. Check filenames and counts. Clearing the queue does not delete Library photos.
+---
 
-SDR and HDR entries use their respective settings. Check [Display Transform](../editing/display-and-effects.md) first.
+## Architecture Overview
 
-Choose Destination and optionally Put in Subfolder. Presets do not select a destination. Reopening the panel restores previous options, but verify the output location.
-
-## Full export presets
-
-![Full export preset menu, including local user presets at the bottom](/img/tutorial-v0.3.3/export-presets.webp)
-
-*Windows Release v0.3.3, Chinese UI: Full export preset menu, including local user presets at the bottom.*
-
-v0.3.3 replaces filename-only presets with full export presets:
-
-| Preset | Main settings |
-| --- | --- |
-| Standard | Defaults |
-| Web | JPEG quality 80, 2048 px long edge, GPS off |
-| Social Media | JPEG quality 90, 1080 × 1350 bounds, GPS off |
-| Email | JPEG quality 75, 1280 px long edge, GPS off |
-| Maximum Quality JPEG | Full size, quality 100 |
-| 16-bit TIFF | Full size, 16-bit, ZIP |
-| EXR Archive | Full size, 16-bit half-float OpenEXR |
-
-HDR options are included too: Web uses 2048 px / quality 85; Social Media uses 1350 px / quality 90. All options except destination are set.
-
-Unmatched edits show Custom. Enter Preset name and save your own; deletion applies to user presets. Old filename presets do not migrate into this menu.
-
-## File Naming
-
-Use Pattern and Insert field; review Example or Pattern error.
+Alcedo Studio employs an asynchronous background batch queue. Export rendering executes on dedicated GPU worker threads, allowing you to freely continue culling or grading other photographs without interruption:
 
 ```text
-{date:yyyy-MM-dd}_{source}_{sequence:0000}
+[ Select Photos in Library / Filmstrip ] ──▶ [ Add to Export Queue ]
+                                                       │
+[ Configure Export Presets / Naming / Resizing ] ◀─────┘
+       │
+       ▼
+[ Background GPU Batch Concurrent Rendering ] ──▶ [ Final Master Deliverables (JPEG / 16-bit TIFF / Ultra HDR / OpenEXR) ]
 ```
 
-Fields include source, date, padded sequence, camera make/model, lens, ISO, aperture, shutter, focal length and rating. The extension follows the format. Include source or sequence for batches and correct invalid patterns before export.
+---
 
-## SDR format and size
+## 1. Adding Photos to the Export Queue
 
-![SDR format, depth and long-edge size](/img/tutorial-v0.3.3/export-sizing.webp)
+1. Select one or more photos in the `Library` grid or the bottom `Filmstrip`.
+2. Click `Add to Queue` at the top of the right inspector (or click the `+` icon on the export queue drawer).
+3. Switch to the `Export` inspector tab to verify your queued items and source file count.
+4. Clearing the queue only removes pending render jobs; it never modifies or deletes photos from your catalog.
 
-*Windows Release v0.3.3, Chinese UI: SDR format, depth and long-edge size.*
+---
 
-| Format | Bit depth | Options |
+## 2. Professional Export Presets
+
+The Export inspector provides comprehensive presets that configure formats, color profiles, compression, and sizing in a single click:
+
+![Full export presets menu](/img/tutorial-v0.3.3/export-presets.webp)
+*Selecting built-in presets or managing custom export profiles*
+
+| Preset Name | Configuration & Specifications | Primary Use Case |
 | --- | --- | --- |
-| JPEG | 8 | Quality |
-| PNG | 8 / 16 | PNG Level |
-| TIFF | 8 / 16 / 32 | None / LZW / ZIP |
-| OpenEXR | 16 / 32 | Floating point |
+| **Web** | JPEG Quality 80, Long Edge scaled to 2048px, sRGB color space, **GPS coordinates stripped automatically**. | Web blogs and social platforms; balances compression speed with location privacy. |
+| **Social Media** | JPEG Quality 90, Bounds constrained to 1080 × 1350px (vertical orientation), sRGB, GPS stripped. | Instagram portrait streams and mobile social feeds. |
+| **Email** | Lightweight JPEG Quality 75, Long Edge 1280px. | Rapid client preview proofs and email attachments. |
+| **Maximum Quality JPEG** | Native resolution, JPEG Quality 100, full EXIF and embedded ICC color profile. | Everyday high-fidelity delivery and digital frame presentation. |
+| **16-bit TIFF** | Native resolution, 16-bit depth (lossless ZIP compression), full dynamic range preservation. | Fine-art giclée printing, high-end lithography, and master press prep. |
+| **EXR Archive** | Native resolution, 16-bit half-float linear OpenEXR data. | Visual effects (VFX) compositing, 3D pipelines, and archival mastering. |
 
-Choose Original, Long Edge, Bounds or Print. Bounds preserves aspect within the specified width/height; it does not stretch the image. Print includes mm/cm/in and DPI.
+### Custom User Presets
+Whenever you modify format parameters, dimensions, or naming patterns, the preset dropdown displays `Custom`. Enter a custom preset name in the field and click Save to store it permanently in your catalog. Click the trash icon to delete unused profiles.
 
-WebP is unavailable. EXR Archive is an image preset, not a project/RAW backup; retain the .alcd and originals for future editing.
+---
 
-## HDR Export
+## 3. Dynamic File Naming Patterns
 
-![HDR settings and pending queue; export has not run](/img/tutorial-v0.3.3/export-hdr-queue.webp)
+Alcedo Studio features a dynamic macro token replacement engine. A live **Example** preview updates in real time to prevent accidental filename collisions:
 
-*Windows Release v0.3.3, Chinese UI: HDR settings and pending queue; export has not run.*
+```text
+{date:yyyy-MM-dd}_{source}_{sequence:0001}
+```
 
-HDR photos export as Ultra HDR JPEG, with HDR Quality, Dithering and Max edge. In v0.3.3 the edge range is **256–8192 px**. HDR edge size is independent of SDR sizing; early shared-size instructions are outdated.
+Supported dynamic tokens include:
+- `{source}`: Original photo filename (excluding extension).
+- `{date:yyyy-MM-dd}`: Formatted capture date (`yyyy` year, `MM` month, `dd` day, `HH` hour, etc.).
+- `{sequence:0001}`: Zero-padded sequential increment (the number of zeros sets padding width).
+- **Metadata Macros**: `{camera_model}` (camera body), `{lens}` (lens name), `{iso}`, `{aperture}`, `{shutter}`, `{focal_length}`, `{rating}` (star rating).
 
-Check a representative export on a compatible HDR device/viewer before processing a batch.
+---
 
-## EXIF, ICC and GPS
+## 4. Output Formats, Bit Depth & Resampling
 
-![Web preset with EXIF, ICC and GPS disabled](/img/tutorial-v0.3.3/export-metadata.webp)
+![SDR format, bit depth, and sizing](/img/tutorial-v0.3.3/export-sizing.webp)
+*Fine-tuning bit depth, compression algorithms, and physical resampling*
 
-*Windows Release v0.3.3, Chinese UI: Web preset with EXIF, ICC and GPS disabled.*
+### Format & Bit Depth Matrix
+- **JPEG**: 8-bit standard compression with fine-grained 1–100 quality slider.
+- **PNG**: 8-bit and 16-bit support with configurable compression levels (0–9).
+- **TIFF**: 8-bit, 16-bit, and 32-bit floating-point with `None`, `LZW`, or `ZIP` lossless compression.
+- **OpenEXR**: Industry-standard 16-bit half-float and 32-bit full-float options.
 
-EXIF metadata controls photo metadata; ICC profile embeds the output color profile. GPS location in EXIF controls source position data and requires metadata output.
+### Sizing Modes
+- **Original**: Exports at the full pixel dimensions of your active crop.
+- **Long Edge**: Uniformly scales the longest edge to the specified pixel count while preserving aspect ratio.
+- **Bounds**: Specifies maximum width and height bounds (e.g. 1920 × 1080); fits the entire image proportionally within the box without stretching.
+- **Print**: Specify physical output measurements (mm / cm / in) and target print resolution (e.g. 300 DPI); the engine computes the corresponding pixel resolution automatically.
 
-v0.3.3 retains GPS by default and handles photo metadata for JPEG, Ultra HDR, TIFF, PNG and OpenEXR. Camera and lens serial numbers are excluded. Web / Social Media / Email turn GPS off; inspect custom presets before sharing.
+---
 
-v0.3.3 fixes macOS Rec.709 gamma 2.2 / BT.1886 preview/export curve and ICC consistency. External viewers still determine their own display behavior.
+## 5. Ultra HDR Next-Generation Export
 
-## Completion
+Alcedo Studio natively supports the **Ultra HDR JPEG** standard:
 
-Start Export … Files when settings, folder and queue are valid. Entries move from Queued to Exporting to Done, or Failed. Inspect task results, counts and actual files. A task starting is not completion.
+![HDR queue and parameters](/img/tutorial-v0.3.3/export-hdr-queue.webp)
+*Configuring Ultra HDR Gain Maps, HDR quality, and max edge scaling*
 
-Exports use saved edits. Save a revised treatment before exporting it again. The queue can be retained or cleared afterward.
+- **Dual-Compatibility Mechanics**: Ultra HDR embeds a GPU-computed **luminance gain map** inside a standard JPEG container. When viewed on standard SDR displays, it renders as a regular SDR tone-mapped image. When viewed on HDR-capable OLED screens, Apple XDR displays, or modern mobile flagships, the operating system applies the gain map, unlocking specular highlights exceeding 1000+ nits.
+- **Dedicated HDR Controls**: Tune HDR Quality, Dithering, and maximum HDR edge scaling (256–8192px) independently of SDR output rules.
+
+---
+
+## 6. Metadata, Color Profiles & Privacy Protection
+
+![Web preset metadata and GPS toggle](/img/tutorial-v0.3.3/export-metadata.webp)
+*Protecting photographer privacy: Independent GPS location toggle*
+
+- **EXIF metadata**: Toggles whether exposure parameters, camera bodies, and lens models are written into files.
+- **ICC profile**: Strongly recommended! Embeds an exact color profile (e.g. sRGB, Display P3) to prevent browser and OS color shifts.
+- **GPS location in EXIF**:  
+  Recognizing the privacy risks of sharing images shot at private residences or client locations, Alcedo Studio features an **independent GPS toggle**. Turning it off strips geographic coordinates while preserving exposure data and copyright tags.
+
+---
+
+## 7. Starting the Render Queue
+
+1. Select your target **Destination** folder (optionally checking `Put in Subfolder`).
+2. Click the blue `Export … Files` button.
+3. Queue items transition through states: `Queued` → `Exporting` → `Done`.
+4. If a file fails, detailed error messages are displayed. Once complete, your master deliverables are ready for client presentation!

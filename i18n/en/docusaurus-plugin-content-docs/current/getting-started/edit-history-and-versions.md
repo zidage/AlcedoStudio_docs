@@ -1,43 +1,73 @@
-# History, Versions and copying adjustments
+---
+sidebar_position: 4
+---
 
-History records the current Version's steps; Versions stores alternative treatments of the same photo. This page describes v0.3.3. Older v0.2.x projects require the [upgrade guidance](../releases/upgrade-guide.md).
+# Edit History, Version Branches & Selective Transfer
 
-## History
+Alcedo Studio introduces a **Git-style Directed Acyclic Graph (DAG) commit and branching architecture** to digital photo editing. You can experiment freely with bold creative grades, step back in time, and navigate distinct style branches without risk of data loss or bloated disk footprints.
 
-![Agent badges and notes in History](/img/tutorial-v0.3.3/history.webp)
+---
 
-*Windows Release v0.3.3, Chinese UI: Agent badges and notes in History.*
+## History: Atomic Commits & Non-Destructive Undo
 
-Dragging updates the preview; releasing confirms the edit. Crop, nodes, masks and LUT encodings also produce history steps. Undo/redo moves through the active history without changing the original.
+![History commit log with agent tags](/img/tutorial-v0.3.3/history.webp)
+*Reviewing chronological commits and adjustment records*
 
-Editing after undo creates a new continuation, not a named Version. Branch first to retain alternatives. Agent edits carry badges and notes.
+### 1. Commit Lifecycle
+- **Interactive Viewport Preview**: When dragging sliders, the GPU rendering pipeline maintains smooth, real-time 60fps canvas updates.
+- **Commit on Pointer Release**: Releasing the mouse pointer or concluding numeric input bundles the current modification into an atomic transaction commit in the DAG. Crop changes, mask edits, white balance tweaks, and LUT swaps all create discrete commits.
+- **Non-Destructive Navigation**: Press `Ctrl+Z` (`Cmd+Z` on macOS) to undo, and `Ctrl+Shift+Z` / `Ctrl+Y` to redo. Clicking any past step in the `History` panel instantly restores the canvas viewport to that precise historical state.
 
-## Versions
+### 2. Autonomous Agent & Automation Badges
+Edits generated via `alcedo-cli` or AI companion agents are annotated in the history panel with distinct badges and rationale descriptions, making it easy to review or roll back automated modifications.
 
-![Two named Versions](/img/tutorial-v0.3.3/versions.webp)
+---
 
-*Windows Release v0.3.3, Chinese UI: Two named Versions.*
+## Versions: Branching Creative Directions
 
-- **Branch from current commit:** create a branch from the current commit; unavailable before there is a commit.
-- **Fork new version from root:** start from the imported baseline.
-- **Select:** save as needed and switch to that Version.
-- **Rename:** give alternatives meaningful names.
-- **Remove Version:** remove a permitted inactive Version; switch away first.
+In traditional photo software, testing both a color and a black-and-white look often requires duplicating massive RAW files. Alcedo Studio’s **Versions** system lets a single image host multiple independent creative branches with virtually zero extra storage overhead:
 
-Navigation and shutdown coordinate saving. Resolve save or recovery errors before continuing. File → Save Project saves the project; export creates independent image files.
+![Two distinct named versions](/img/tutorial-v0.3.3/versions.webp)
+*Managing multiple independent creative branches for a single photograph*
 
-## Selective copying and paste
+### Core Branching Workflows
+- **Branch from current commit**:  
+  Forks a new branch head from your current editing milestone. For example, after finishing base tone adjustments, branch off into "Warm Cinematic Film" while keeping another branch for "High-Contrast B&W".
+- **Fork new version from root**:  
+  Creates a clean branch directly from the unadjusted RAW baseline, ideal for starting over with a completely fresh concept without losing existing work.
+- **Instant Checkout**:  
+  Clicking any version name instantly checks out that branch and recalculates the GPU color pipeline. Pending changes on the active branch are safely committed before switching.
+- **Rename & Prune**:  
+  Double-click version titles to rename them (e.g. "Client Preview", "Final Master Print"). The active branch is protected from accidental deletion; switch to another branch first before removing obsolete versions.
 
-1. Open Copy Adjustments on the source photo.
-2. Choose the source Version.
-3. Select nodes and parameters. RAW, camera white balance, lens and geometry are included from v0.3.1 onward.
-4. Select one or more target photos and open Paste Adjustments.
-5. Review Parameters to Paste, confirm and wait for background completion.
+---
 
-The editor paste entry is in Versions, not History. Paste creates and activates a new target Version while retaining the old one. v0.3.3 fixes partial paste resetting unselected values: copying only a LUT should preserve other unselected target adjustments.
+## Selective Adjustment Transfer (Copy & Paste)
 
-Camera white balance, lenses and crop depend on the photo. Check one target before propagating a recipe across cameras or different compositions.
+When you craft an exceptional color grade on one photograph, how do you apply it across an entire photo series?
 
-## Older instructions
+Alcedo Studio provides a precise **Selective Adjustment Transfer** engine. Its core principle: **Transferring color grades should never overwrite unique per-photo crops, focal lengths, or exposures.**
 
-v0.2.8 offered Merge and conflict resolution. **The product Merge action was removed in v0.3.0.** Use selective copy/paste and [A/B comparison](../editing/comparison.md). Storage details are in the [history architecture](../developer/edit-history-architecture.md).
+![Selective copy and paste adjustments](/img/tutorial-v0.3.3/versions.webp)
+*Selectively choosing parameters for transfer*
+
+### How to Transfer Adjustments
+1. **Copy Adjustments**:  
+   Right-click the graded source photo in the Library or Filmstrip and choose `Copy Adjustments…`.
+2. **Choose Source Version & Modules**:  
+   In the configuration dialog, select the source Version and check only the parameters you want to transfer:
+   - **Input & Geometry**: RAW camera white balance, demosaicing, lens calibration, crop, and rotation.
+   - **Color Grade Nodes**: Tone (exposure, contrast, curves), Look (CAT02 creative WB, vibrance, color wheels), 3D LUT, and color space encoding rules.
+   - **Global Transforms**: Display Transform (ACES 2.0 / OpenDRT) and Post Processing (diffusion, film grain, sharpening).
+3. **Select Target Photos**:  
+   Select one or more destination photos and right-click to choose `Paste Adjustments…`.
+4. **Confirm & Execute**:  
+   Verify the parameter selection and confirm. The transfer runs as an asynchronous background task.
+
+### Why Selective Transfer is Safer
+- **Automated Branch Creation**: Pasting generates a new named version branch on each target photo, preserving all preexisting edits.
+- **Non-Selected Parameters Remain Intact**: If you only transfer "3D LUT & Look", each target photo's individual crop boundaries, local exposure compensations, and masks remain **100% unaltered**. This eliminates accidental overrides of horizontal/vertical crops or sensor-level white balances.
+
+---
+
+Now that you have mastered version branches and adjustment transfer, continue to [Library & Asset Management](../library/import-and-organize.md) to explore catalog curation.

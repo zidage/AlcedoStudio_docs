@@ -68,8 +68,8 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          to: '/docs/ai/provider-configuration',
-          label: 'AI 配置',
+          to: '/docs/automation/cli',
+          label: 'CLI 与自动化',
           position: 'left',
         },
         {

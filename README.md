@@ -27,8 +27,7 @@ npm run start:en
 To preview **both** locales together (as on GitHub Pages):
 
 ```bash
-npm run build
-npm run serve
+npm run preview
 ```
 
 Then open:

@@ -1,51 +1,73 @@
-# Input, RAW decoding and geometry
+---
+sidebar_position: 1
+---
 
-RAW Decode and Geometry apply to the whole photo, independently of the selected Color Grade.
+# Input Decoding, Color Profiles & Geometry
 
-## Camera white balance and demosaicing
+Before creative color grading begins, establishing a clean physical input baseline and precise composition is vital. Alcedo Studio’s image pipeline treats **RAW Decode / Raster Input Color** and **Geometry** as global prerequisites that underpin all downstream color stages.
 
-![Camera white balance and lens correction](/img/tutorial-v0.3.3/raw-white-balance.webp)
+---
 
-*Windows Release v0.3.3, Chinese UI: Camera white balance and lens correction.*
+## RAW Photography: Sensor-Level White Balance & Demosaicing
 
-![Lens, demosaicing and highlight reconstruction](/img/tutorial-v0.3.3/raw-decode.webp)
+Digital camera RAW files are not ready-to-view RGB images; they consist of single-channel sensor measurements filtered through a physical Color Filter Array (CFA).
 
-*Windows Release v0.3.3, Chinese UI: Lens, demosaicing and highlight reconstruction.*
+![Camera white balance and lens calibration](/img/tutorial-v0.3.3/raw-white-balance.webp)
+*RAW Decode Console: Camera White Balance & Optical Calibration*
 
-1. Open RAW Decode and check camera white balance.
-2. Choose Method. RCD is the default for Bayer; Neural Engine supports Bayer and X-Trans and is the X-Trans default. Inspect fine edges and false color after changing methods.
-3. Try Enable Highlight Reconstruction when needed and check enlarged highlights for color shifts or artifacts.
-4. Review Input Profile where available. DNG embedded profiles can contribute HueSatMap and LookTable data; linear DNG is supported.
+### 1. Camera White Balance
+- **Physical Baseline (`As Shot`)**: The engine reads the color temperature (Kelvin) and tint recorded by the camera body, applying gains directly to the R, G, and B sensor channels.
+- **Distinct from Creative Look WB**: RAW white balance establishes an objectively neutral physical baseline as the image enters the scene-referred linear pipeline. Stylized artistic shifts are best applied later in the [Look Panel](../editing/tone-and-color.md) via CAT02 chromatic adaptation.
 
-RAW white balance corrects capture input. Look white balance is a creative grade adjustment. Equal Kelvin values need not produce equal results; see [color](./tone-and-color.md).
+### 2. Demosaicing Algorithms
+Demosaicing determines the sharpness, clarity, and artifact resistance when interpolating full three-channel color from the mosaic array:
+- **RCD (Ratio-based Corrected Demosaicing)**: The default algorithm for Bayer sensors. Offers edge preservation, low zipper artifacts, and moiré suppression.
+- **Neural Engine**: A GPU-accelerated deep learning demosaicing model supporting both Bayer and Fujifilm X-Trans sensors. The neural network leverages learned natural texture priors to reconstruct fine micro-contrast while suppressing chromatic fringing.
+- **X-Trans Specialization**: For Fujifilm’s 6×6 aperiodic CFA pattern, the pipeline defaults to a dedicated neural inference branch, eliminating painterly watercolor textures and false edge color artifacts.
 
-## Raster input color
+### 3. Highlight Reconstruction
+When one or two color channels clip in high dynamic range scenes (such as clipped green channels in specular reflections or sun edges), conventional interpolation produces unnatural magenta or cyan blotches. Checking `Enable Highlight Reconstruction` allows the algorithm to infer missing channel data from unclipped color gradients, producing a smooth, natural highlight roll-off.
 
-From v0.3.2, JPEG, PNG, TIFF and OpenEXR open with Input Color / Input Profile instead of RAW demosaicing and camera white balance.
+### 4. Lens Calibration
+Alcedo Studio features deep integration with the Lensfun optical database:
+- **Automatic Camera & Lens Matching**: Automatically detects camera mounts and specific lens profiles from EXIF metadata.
+- **Optical Corrections**: Eliminates barrel and pincushion geometric distortion, optical vignetting (edge fall-off), and lateral/transverse chromatic aberrations (purple/green color fringing).
+- **Manual Override**: For manual, vintage, or adapted lenses without full EXIF tags, search and select your lens profile manually from the picker.
 
-Start with Auto (metadata). The app reads available ICC, PNG color information or EXR chromaticities and converts to the ACES workflow. Inspect the reported source; override it when you know the encoding and automatic detection is wrong.
+---
 
-OpenEXR and PQ / HLG images are marked HDR. A rendered JPEG cannot recover RAW highlight information already lost. Use Look white balance for creative warming/cooling.
+## Raster Input Color Management
 
-## Lens calibration
+Alcedo Studio also supports JPEG, TIFF, PNG, and OpenEXR files. When opening a non-RAW file, the panel presents `Input Color / Input Profile`:
 
-Inspect automatic lens detection, enable calibration as needed, or search brand/model and select a matching profile manually. Check straight lines, image edges and composition. Do not substitute a merely similar lens for an unknown one.
+![Raster input color configuration](/img/tutorial-v0.3.3/raw-decode.webp)
+*Automatic Color Space Detection for Non-RAW Files*
 
-v0.3.0 places this in RAW Decode and fixes packaged Lensfun data and Nikon lens identification.
+- **Auto (metadata)**: Default setting. The engine parses embedded ICC color profiles, PNG chromaticity chunks, or OpenEXR color primaries.
+- **Scene-Referred Conversion**: Whether the image is encoded in sRGB, Display P3, Adobe RGB, or Rec.2020, the engine maps it cleanly into the scene-referred ACES linear workspace. This allows raster files to benefit from node-based grading and ACES/OpenDRT display transforms.
+- **HDR Raster Inputs**: 10-bit+ HEIF/TIFF images containing PQ / HLG curves or 16/32-bit floating-point OpenEXR images are automatically recognized as HDR inputs.
 
-## Crop and rotation
+---
 
-![Crop overlay, composition grid and Geometry](/img/tutorial-v0.3.3/geometry.webp)
+## Geometry: Intelligent Crop & Horizon Rotation
 
-![Crop and rotation controls](/img/tutorial-v0.3.3/geometry-controls.webp)
+Geometry modifications define the permanent canvas boundaries. All subsequent localized grades and display outputs conform to this framing.
 
-*Windows Release v0.3.3, Chinese UI: Crop overlay, composition grid and Geometry.*
+![Crop box, grid, and geometry parameters](/img/tutorial-v0.3.3/geometry.webp)
+*Composing with rule-of-thirds grid and boundary containment*
 
-1. Open Geometry and choose Aspect Ratio or custom width/height.
-2. Move and resize the overlay, or adjust Crop X / Y / Width / Height.
-3. Set Rotation and inspect the final boundary.
-4. Check History; reset crop and rotation or undo to return.
+1. **Aspect Ratio**:
+   - Standard presets include: `Original`, `1:1`, `4:5` (social portrait crop), `16:9`, `3:2`, and custom proportions.
+   - Locking the ratio ensures that dragging crop handles maintains strict proportionality.
+2. **Interactive Canvas Handles**:
+   - An on-canvas rule-of-thirds grid assists in compositional balancing.
+   - Drag corner and edge handles directly on the canvas, or enter exact pixel coordinates in the panel.
+3. **Horizon Leveling & Rotation**:
+   - Drag the rotation slider to level uneven horizons.
+   - **Boundary Containment Algorithm**: As you rotate the canvas, Alcedo Studio dynamically scales the crop rectangle so it remains strictly enclosed within valid sensor pixels, **preventing black rotated corners or artificial pixel extension**.
+4. **Reset**:
+   - Click `Reset crop and rotation` at any time to return to the full uncropped frame.
 
-From v0.3.1 the crop is the output image: rotating after crop rotates that cropped image. Crop remains within the photo, avoiding blank corners; edits and aspect choices are saved.
+---
 
-Older rotated crops can look different after upgrading. Check them before batch export. When copying geometry between landscape and portrait photos, verify a representative target first.
+With your input calibrated and your composition set, continue to [Grading Nodes, Layers & Masks](./nodes-and-masks.md) to explore multi-stage color design!

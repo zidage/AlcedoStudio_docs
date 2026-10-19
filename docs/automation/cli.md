@@ -1,80 +1,98 @@
-# 智能体与 alcedo-cli
+---
+sidebar_position: 1
+---
 
-v0.3.3 随应用安装 `alcedo-cli`。它可以操作无窗口的独立会话，或连接你正在使用的 Alcedo Studio 窗口。此页介绍使用流程；参数以与应用同版的 CLI schema 为准。
+# 智能体交互与 alcedo-cli 命令行
 
-本次实测 Release 的面板切换和径向蒙版绘制通过原生界面完成；QML 中存在一个功能，不代表 CLI 一定有独立命令。
+Alcedo Studio 原生内置了专为数字暗房设计的自动化工具链 **`alcedo-cli`**。无论是将重复的批处理渲染交给自动化脚本，还是让 AI 智能体连接 GUI 窗口与你协同调色，`alcedo-cli` 都能提供结构化、类型安全的调用接口。
 
-## 找到 CLI 并检查命令
+---
 
-Windows 的 CLI 位于应用程序旁；macOS 位于应用包内。先在对应目录运行，或把该目录加入 PATH。
+## 核心运行模式
+
+`alcedo-cli` 支持两种截然不同但同样强大的运行模式：
+
+```text
+[ alcedo-cli 命令行中枢 ]
+         │
+         ├─▶ 模式 1：GUI 协同伴随模式 (Companion Mode)
+         │     通过本地 RPC 连接已打开的桌面窗口，实时协同修图并在屏幕上同步反馈
+         │
+         └─▶ 模式 2：无头后台流水线 (Headless Pipeline Mode)
+               无需渲染 GUI 界面，独立在后台或服务器环境加载项目并执行批量导出
+```
+
+---
+
+## 快速定位与基础指令
+
+- **Windows**：随安装包释放于主程序同级目录（`alcedo-cli.exe`）。
+- **macOS**：位于应用包内部（`AlcedoStudio.app/Contents/MacOS/alcedo-cli`）。
+
+在终端中运行以下指令核验环境：
 
 ```powershell
+# 打印帮助信息
 alcedo-cli --help
+
+# 列出当前活动的会话 (GUI 窗口或已启动的无头会话)
 alcedo-cli --json session list
+
+# 查看完整的 API 规范与参数 Schema
 alcedo-cli schema
 ```
 
-会话列表用来确认连接目标；多个会话并存时，使用 `--session SESSION_NAME`，不要让脚本猜目标。CLI 和应用应使用相同版本。
+---
 
-## 在当前窗口协作
+## 模式 1：连接 GUI 窗口与智能体协同
 
 ![历史中的智能体标记与备注](/img/tutorial-v0.3.3/history.webp)
+*AI 智能体在协同过程中生成的参数提交与操作备注*
 
-*Windows Release v0.3.3 实机：历史中的智能体标记与备注。*
+当你正在 Alcedo Studio 桌面端精修照片时，AI 智能体可以通过 `alcedo-cli` 接入当前窗口协助工作：
 
-1. 在 GUI 中打开项目；CLI 的 session list 应显示该窗口会话可用。
-2. 选定会话，读取项目 / 图库信息。
-3. 智能体先 `control.acquire` 获取控制，才执行改变项目状态的命令。
-4. 按“预览 → 检查 → 调整”循环工作，记录编辑理由。
-5. 操作结束后调用 `control.release` 归还控制，即使处理中出错也应释放。
+### 1. 安全控制权锁协议（Control Lock Protocol）
+为防止人工鼠标拖拽与机器人指令发生写入冲突，系统设计了严格的锁控制协议：
+1. **获取控制权**：智能体在发起任何修改前，必须先调用 `control.acquire`：
+   ```powershell
+   alcedo-cli --session <SESSION_NAME> call control.acquire '{"holder_name":"photo-assistant"}'
+   ```
+2. **界面状态变化**：控制权生效期间，桌面端界面的参数滑块将暂时锁定，顶部任务栏亮起智能体会话卡片。**此时你依然可以自由平移、缩放画布或观察示波器**。
+3. **执行调色指令**：智能体执行参数微调、切换分支版本或挂载 LUT，并在提交中附带修改理由（如“提升暗部细节，营造冷调电影感”）。
+4. **释放控制权**：操作结束或异常中断时，智能体调用 `control.release` 立即归还桌面控制：
+   ```powershell
+   alcedo-cli --session <SESSION_NAME> call control.release '{}'
+   ```
+5. **用户紧急熔断机制**：任何时候若想打断智能体的操作，直接在桌面端点击状态栏的 `停止（Stop）` 按钮，即可无条件强制收回控制权！
 
-例如获取 / 释放指定会话的控制：
+---
 
-```powershell
-alcedo-cli --session SESSION_NAME call control.acquire '{"holder_name":"photo-assistant"}'
-alcedo-cli --session SESSION_NAME call control.get '{}'
-alcedo-cli --session SESSION_NAME call control.release '{}'
-```
+## 模式 2：无头后台流水线（Headless Batch）
 
-请用实际会话名替换占位符。示例用于说明调用形式；本次实机演示在独立项目中操作，现有项目的编辑未被调整。
-
-控制期间，你仍能平移、缩放与看示波器，改变状态的编辑控件暂时不可用。任务区显示智能体操作，历史（History）标记智能体编辑与备注。按停止（Stop）后智能体应停止，只有你明确要求继续后才能重新取得控制。
-
-## 无窗口会话
-
-```powershell
-alcedo-cli session start --headless --project 'D:\Photos\Trip.alcd'
-alcedo-cli --json session list
-alcedo-cli schema
-```
-
-独立会话适合批量工作。完成并确认保存后，仅停止自己启动的会话：
+在没有显示器或需要编写自动化工作流的服务器环境中，可启动无头独立会话：
 
 ```powershell
-alcedo-cli --session HEADLESS_NAME session stop
+# 1. 启动无头会话并指定项目
+alcedo-cli session start --headless --project 'D:\Photos\2026_Studio.alcd'
+
+# 2. 调用 tasks.wait 等待后台批处理导出完成
+alcedo-cli --session <HEADLESS_SESSION> call tasks.wait '{"task_id":"<task-id>"}'
+
+# 3. 处理完毕后安全关闭会话并保存
+alcedo-cli --session <HEADLESS_SESSION> session stop
 ```
 
-不要用 session stop 关闭用户正在使用的 GUI 会话。
+---
 
-## 能做什么
+## 常用 API 能力速查
 
-| 范围 | 操作 |
+通过 `alcedo-cli call <method> '<json_payload>'`，你可以编排几乎所有核心功能：
+
+| 模块类别 | 核心功能与能力说明 |
 | --- | --- |
-| 项目与图库 | 打开 / 创建 / 保存、导入、选择、评分、元数据、搜索与删除 |
-| 编辑 | 打开照片、读写参数、LUT、撤销 / 重做、历史 |
-| 版本 | 创建、分支、切换、改名、删除、复制 / 粘贴调整 |
-| 输出 | 生成预览、导出、查询并等待后台任务 |
+| **项目与图库** | `project.open` / `save`、`library.import`、星级评分、元数据读取与全局搜索。 |
+| **暗房编辑** | 检索参数目录（`editor.catalog`）、读取或批量写入曝光/白平衡/曲线参数、挂载 3D LUT。 |
+| **分支版本** | 创建命名分支（`versions.branch`）、切换版本分支、执行选择性参数粘贴。 |
+| **批处理任务** | 触发导出队列、监控长耗时任务进度并等待返回（`tasks.wait`）。 |
 
-执行前查看 schema 中的字段名、范围与要求，读取 `editor.catalog` 等目录确定支持的参数；不要直接套用其他版本的参数对象。
-
-## 等待批量操作
-
-导入、批量粘贴或导出返回 task_id 时，继续调用：
-
-```powershell
-alcedo-cli --session SESSION_NAME call tasks.wait '{"task_id":"<returned-task-id>"}'
-```
-
-检查最终状态、成功 / 失败数量和结果，再检查图库或输出文件。只拿到 task_id 不能证明批次成功。
-
-用户想让智能体直接修图时，可配合项目的 [alcedo skill](https://github.com/zidage/alcedo-skills) 建立预览检查循环。手工编辑流程仍见[第一次编辑](../getting-started/first-edit.md)。
+如需配合大模型智能体自主修图，推荐安装官方的 [alcedo skill](https://github.com/zidage/alcedo-skills)，实现全自动闭环的“意图分析 → 调整参数 → 校验直方图”智能暗房助手！

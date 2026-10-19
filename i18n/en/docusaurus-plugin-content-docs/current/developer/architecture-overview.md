@@ -1,31 +1,69 @@
-# Architecture overview
+---
+sidebar_position: 1
+---
 
-This describes v0.3.3 source structure. Start with the [interface tutorial](../getting-started/interface-overview.md) for operation.
+# Architecture Overview & Core Design
 
-## Shell and workspaces
+Alcedo Studio is a digital darkroom application engineered with **C++20** and **Qt 6 QML / Qt Quick**, designed for non-destructive RAW processing and asset management.
 
-ui/alcedo_main/main.cpp initializes services, QML types and context, then loads Alcedo.Main / Main. Main composes the toolbar, project dialogs, collections and WorkspaceHost. The host retains LibraryWorkspace and EditorWorkspace; routing switches between them.
+---
 
-QML handles presentation/input. C++ owns projects, Library queries, editing sessions and tasks. Library rows and inspector statistics use the unified browse/query service.
+## Tiered System Architecture
 
-## Image path
+The software architecture is decoupled into four distinct tiers:
 
 ```text
-File → RAW/raster input → Develop → Color Grades → Display Transform → Post → Preview/export
+┌────────────────────────────────────────────────────────────────────────┐
+│                        Qt 6 QML / Qt Quick Presentation Tier           │
+│   (TopToolbar, WorkspaceHost, LibraryWorkspace, EditorWorkspace, RHI) │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Q_PROPERTY & Signal/Slot Bindings
+┌───────────────────────────────────▼────────────────────────────────────┐
+│                       C++ Core Services & Ownership Tier (Services)    │
+│  ├─ AlbumService: DuckDB-backed Sleeve asset management & queries      │
+│  ├─ EditorSessionService: Working document, DAG commit graph & log     │
+│  ├─ ExportService: Asynchronous batch render queue scheduler           │
+│  └─ AutomationServer: Local RPC daemon serving alcedo-cli & AI agents  │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Native Compute & Shader Invocations
+┌───────────────────────────────────▼────────────────────────────────────┐
+│                    Cross-Platform GPU Acceleration (GPU Pipeline)      │
+│  ├─ Windows: Native NVIDIA CUDA Kernels (FP32 parallel compute)        │
+│  ├─ macOS: Apple Silicon Metal Unified Memory Compute Shaders          │
+│  └─ Generic: OpenCL 1.2 standard compute pipeline                     │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Low-Level Engines & Infrastructure
+┌───────────────────────────────────▼────────────────────────────────────┐
+│                       Third-Party Engines & Infrastructure             │
+│  ├─ LibRaw (CFA extraction and raw sensor decoding)                    │
+│  ├─ DuckDB (Embedded relational metadata storage)                      │
+│  ├─ Lensfun (Optical database for lens and camera distortion profiles) │
+│  └─ ONNX Runtime (On-device vision model inference engine)             │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
-Each grade owns adjustments and masks. Input, geometry, display transform and post processing apply to the whole photo. editor_rhi integrates with Qt Quick; CUDA, OpenCL or Metal performs processing.
+---
 
-## Editing and saving
+## Core Subsystem Responsibilities
 
-editor_session_service coordinates commands, the working document, graph projections, rendering and checkpoints. Confirmed edits enter a recovery journal and later materialize into DuckDB. Versions reference commit heads. Navigation and shutdown coordinate saving.
+### 1. UI Shell & Workspace Routing
+- `main.cpp` initializes hardware acceleration contexts, registers QML types and singletons, and loads the main window via `engine.loadFromModule("Alcedo.Main", "Main")`.
+- `WorkspaceHost` coordinates state transitions between `LibraryWorkspace` and `EditorWorkspace`, guaranteeing that pending transaction commits are serialized before leaving the darkroom.
 
-Batch paste uses the adjustment transfer service and creates target Versions. Merge is no longer a product action. See [history architecture](./edit-history-architecture.md).
+### 2. Sleeve Asset Management System (DuckDB Backend)
+- Located in `album_backend`. Replaces scattered per-image sidecar files (`.xmp`) with a centralized database, storing image records, cached EXIF properties, star ratings, and virtual collections in an `.alcd` project file.
+- Leverages DuckDB’s columnar vectorized query execution to support multi-dimensional filtering across dates, camera models, lens profiles, and ratings.
 
-## Background and external work
+### 3. Editor Session & DAG Commit Tree (EditorSessionService)
+- Located in `editor_session`. Each edited photograph maps to a Directed Acyclic Graph (DAG) of commits.
+- Settling a slider writes an atomic commit; named Versions act as pointers to specific commit nodes in the DAG.
+- Employs a transactional dual-write mechanism: slider adjustments append to an in-memory recovery log to maintain responsive interaction, before being asynchronously materialized into DuckDB at defined checkpoints, protecting against data loss during abnormal terminations.
 
-Import, ratings, paste, export and AI expose task status/progress/results. Thumbnail, editing and export have distinct scheduling/resource paths; sharing a GPU does not mean sharing one execution context.
+### 4. GPU Scene-Referred Pipeline & RHI
+- After decoding, image data is elevated into 16-bit float / 32-bit float high dynamic range scene-referred linear space (ACEScg).
+- Using Qt Quick RHI (Rendering Hardware Interface), compute pipelines submit rendered floating-point textures directly to the scene graph viewport compositor, avoiding redundant host memory readbacks and maintaining responsive interaction.
+- The display rendering transform (ACES 2.0 / OpenDRT) operates at the tail of the pipeline to map colors into the target display space.
 
-The sidecar supports local AI and remote providers. CLI calls the local automation server; GUI state changes require control. Headless and GUI are different hosts.
+---
 
-See the [source map](./tutorial-source-map.md). Threading, performance and lifetime guarantees require tests, traces or runtime evidence, not inference from module names.
+To build Alcedo Studio from source, proceed to [Building from Source](./build-from-source.md).

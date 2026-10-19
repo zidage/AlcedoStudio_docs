@@ -1,50 +1,43 @@
-# Tutorial sources and live verification
+---
+sidebar_position: 5
+---
 
-The source baseline is **v0.3.3**, commit `6024386cb64e9c5bd832cf6475df32e2db80a7c7`. At audit time main was `23ed8b652304748412b40ede683db4b5e5050ee7`, including later search/runtime changes.
+# UI Components & C++ Source Map Reference
 
-## Production loading order
+This reference index links Alcedo Studio’s QML presentation components to their underlying C++ business logic services, providing a clear map for customization, extensions, and code navigation.
 
-main.cpp loads Alcedo.Main / Main with engine.loadFromModule. The production CMake QML list determines packaged files; component declarations then identify workspaces and panels. Merely existing in the source directory does not make a file a product entry point.
+---
 
-| Area | Tagged QML components | Tutorial |
+## Front-End QML Views to Architecture Mapping
+
+The application entry point `main.cpp` loads `Alcedo.Main / Main.qml`. The component tree branches as follows:
+
+| Functional Tier | Primary QML Components | Underlying Subsystem & Documentation |
 | --- | --- | --- |
-| Shell/projects | Main, AppDialogs, ProjectLaunchController, WelcomeDialog, WelcomeNewProjectForm, WelcomeProjectOverview, TopToolbar | [Interface](../getting-started/interface-overview.md) |
-| Workspaces | WorkspaceHost, LibraryWorkspace, EditorWorkspace, EditorWorkspaceNavigation | [First edit](../getting-started/first-edit.md) |
-| Import | CollectionsPanel, FolderImportConfirmDialog, ImportProgressOverlay | [Library](../library/import-and-organize.md) |
-| Inspectors | InspectorPanel, AlbumInspectorPanel, ImageInspectorPanel, InspectorFieldActions, AlbumSectionView | [Library](../library/import-and-organize.md) |
-| Input | EditorRawDecodePanel, LensCatalogPicker, EditorGeometryPanel | [RAW/geometry](../editing/raw-and-geometry.md) |
-| Adjustment navigation | EditorWorkspaceRail, EditorAdjustmentStack, EditorAdjustmentHeader | [Interface](../getting-started/interface-overview.md) |
-| Local edits | EditorNodesPanel, EditorMaskGroupsPanel, EditorNodeMaskDrawer, EditorMasksContextPanel | [Nodes/masks](../editing/nodes-and-masks.md) |
-| Grading | EditorTonePanel, EditorLookPanel, EditorWhiteBalanceSection | [Color](../editing/tone-and-color.md) |
-| LUTs | EditorLutBrowserPanel, EditorLutControlPanel, LutSettingsPanel | [LUTs](../editing/lut-library.md) |
-| Output appearance | EditorDisplayTransformPanel, EditorPostProcessPanel, EditorScopePanel | [Display/effects](../editing/display-and-effects.md) |
-| History/transfer | EditorHistoryTransactionsPanel, EditorVersionsPanel, AdjustmentTransferDialog, EditorAdjustmentTransferActions | [Versions](../getting-started/edit-history-and-versions.md) |
-| Comparison | EditorComparisonPanel, EditorComparisonView, EditorComparisonCanvas | [A/B](../editing/comparison.md) |
-| Export | ExportInspectorPanel, ExportPresetPicker, ExportNamingEditor | [Export](../export/workflow.md) |
-| AI/search | GlobalSearchDialog, SemanticGenerationSettingsPanel, AiProviderSettingsPanel, AdvancedContentAnalysisDialog | [AI](../ai/overview.md), [search](../ai/search.md) |
-| Settings/tasks | SettingDialog, CacheSettingsPanel, KeyboardSettingsPanel, UpdatesSettingsPanel, BackgroundTaskBar, BackgroundTasksDialog, AgentSessionCard | [Settings](../settings/preferences.md), [CLI](../automation/cli.md) |
+| **Window & Project Shell** | `Main`, `AppDialogs`, `ProjectLaunchController`, `WelcomeDialog`, `TopToolbar` | Catalog load, welcome launcher & [Interface Overview](../getting-started/interface-overview.md) |
+| **Workspace Routing** | `WorkspaceHost`, `LibraryWorkspace`, `EditorWorkspace`, `EditorWorkspaceNavigation` | View transitions & [Your First Edit](../getting-started/first-edit.md) |
+| **Collections & Ingestion** | `CollectionsPanel`, `FolderImportConfirmDialog`, `ImportProgressOverlay` | Folder scanning & [Library Management](../library/import-and-organize.md) |
+| **Library Inspector** | `InspectorPanel`, `AlbumInspectorPanel`, `ImageInspectorPanel`, `AlbumSectionView` | Multi-dimensional culling & [Library Management](../library/import-and-organize.md) |
+| **RAW Input & Geometry** | `EditorRawDecodePanel`, `LensCatalogPicker`, `EditorGeometryPanel` | Sensor decode & [Input & Geometry](../editing/raw-and-geometry.md) |
+| **Tool Rails & Drawers** | `EditorWorkspaceRail`, `EditorAdjustmentStack`, `EditorAdjustmentHeader` | Tool drawer routing & [Interface Overview](../getting-started/interface-overview.md) |
+| **Grading Nodes & Masks** | `EditorNodesPanel`, `EditorMaskGroupsPanel`, `EditorNodeMaskDrawer`, `EditorMasksContextPanel` | DAG pipeline & [Grading Nodes & Masks](../editing/nodes-and-masks.md) |
+| **Tone & Creative Look** | `EditorTonePanel`, `EditorLookPanel`, `EditorWhiteBalanceSection` | Color math & [Tone, Curves & Color Grading](../editing/tone-and-color.md) |
+| **3D LUT Film Library** | `EditorLutBrowserPanel`, `EditorLutControlPanel`, `LutSettingsPanel` | Film packages & [3D LUT Library](../editing/lut-library.md) |
+| **Display & Post Processing** | `EditorDisplayTransformPanel`, `EditorPostProcessPanel`, `EditorScopePanel` | ACES/OpenDRT & [Display Transform & Effects](../editing/display-and-effects.md) |
+| **History & Version Branches** | `EditorHistoryTransactionsPanel`, `EditorVersionsPanel`, `AdjustmentTransferDialog` | Commit DAG & [Edit History & Versions](../getting-started/edit-history-and-versions.md) |
+| **A/B Comparison** | `EditorComparisonPanel`, `EditorComparisonView`, `EditorComparisonCanvas` | Dual-buffer viewport & [A/B Comparison](../editing/comparison.md) |
+| **Batch Export** | `ExportInspectorPanel`, `ExportPresetPicker`, `ExportNamingEditor` | Render queue & [Export Workflow](../export/workflow.md) |
+| **AI Vision & Global Search** | `GlobalSearchDialog`, `SemanticGenerationSettingsPanel` | Vector search & [AI Overview](../ai/overview.md) |
+| **Preferences & Monitoring** | `SettingDialog`, `CacheSettingsPanel`, `KeyboardSettingsPanel`, `BackgroundTaskBar` | System preferences & [Settings & Preferences](../settings/preferences.md) |
 
-The [tagged QML directory](https://github.com/zidage/AlcedoStudio/tree/v0.3.3/alcedo_studio/src/ui/alcedo_main/qml) is registered in the [production CMake file](https://github.com/zidage/AlcedoStudio/blob/v0.3.3/alcedo_studio/src/ui/alcedo_main/CMakeLists.txt). The [machine-readable inventory](/reference/v0.3.3-qml-inventory.json) records 134 packaged QML files and declaration references. Lexical reachability is not runtime coverage; inspect conditional Loaders and build options.
+Front-end QML sources are located in `alcedo_studio/src/ui/alcedo_main/qml`.
 
-## C++ checks
+---
 
-Export format, depth, range, presets and GPS come from album_backend/export_recipe_builder.cpp. CLI syntax/session selection comes from alcedo_cli/cli_commands.cpp. Control and waiting use automation/commands/control_commands.cpp and task_commands.cpp. Release notes define compatibility; standard presets disable ALCEDO_ENABLE_BRUSH_MASK.
+## Core C++ Services & Engine Source Locations
 
-## Live screenshots
-
-On 2026-10-18, the installed Windows Release's session.describe reported application_version **0.3.3**. An independent Alcedo Tutorial project imported eight RAW references: eight completed, zero failed or unsupported. CLI operations demonstrated exposure, a Version branch and LUT application. Native UI navigation demonstrated panels, a radial mask and comparison.
-
-Screenshots are real window captures, cropped and encoded losslessly without redrawing controls. Both locales use Chinese UI captures. The [screenshot manifest](/reference/tutorial-screenshots.json) records crop, dimensions, time and hashes.
-
-This verifies those visible controls and demonstrated operations. Export completion, remote AI, macOS, all GPU backends and old-project migration were not tested. A binary reporting 0.3.3 does not prove it matches the tag, so source and runtime evidence are recorded separately.
-
-## Reproduce the archive
-
-v0.2.0–v0.2.8 notes come from the bilingual CHANGELOG.md at v0.2.8. Later notes and v0.2.9 builds 2014/2015 come from docs/changelog at v0.3.3.
-
-```powershell
-node scripts/sync-release-notes.cjs D:/Projects/pu-erh_lab
-python scripts/crop-tutorial-screenshots.py
-```
-
-The first command reads immutable tags. The second needs original captures in ignored .work, alongside the demonstration project. Historical screenshots stored under a tag can still depict an older interface and are not sufficient evidence of that tag's controls.
+- **Export Recipe Builder & Pipeline Delivery**: `alcedo_studio/src/album_backend/export_recipe_builder.cpp`
+- **CLI Commands & Schema Registration**: `alcedo_studio/src/alcedo_cli/cli_commands.cpp`
+- **Agent Session Control & Command Dispatch**: `alcedo_studio/src/automation/commands/control_commands.cpp`
+- **Node-Based Color Pipeline & ACES Encodings**: `alcedo_studio/src/gpu_pipeline/`
+- **DuckDB Sleeve Catalog & Version Branches**: `alcedo_studio/src/album_backend/`

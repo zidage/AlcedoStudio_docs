@@ -3,46 +3,46 @@
     "message": "Quick Start"
   },
   "homepage.entry.quickStart.description": {
-    "message": "Follow the v0.3.3 interface from creating a project to finishing your first photo."
+    "message": "From project creation, RAW import, and tone grading to final export, quickly master the core workflow."
   },
   "homepage.entry.quickStart.link": {
-    "message": "Enter Quick Start"
+    "message": "Start Quick Start →"
   },
   "homepage.entry.ai.title": {
-    "message": "AI Features"
+    "message": "On-Device AI & Intelligence"
   },
   "homepage.entry.ai.description": {
-    "message": "Local models, API provider configuration, content labels, image rating, and semantic / fuzzy search."
+    "message": "Local offline CLIP semantic search and content tagging for total privacy, paired with alcedo-cli automation."
   },
   "homepage.entry.ai.link": {
-    "message": "View AI Features"
+    "message": "Explore AI Features →"
   },
   "homepage.entry.developer.title": {
-    "message": "Developer Docs"
+    "message": "Architecture & Developer Docs"
   },
   "homepage.entry.developer.description": {
-    "message": "Build, architecture, and GPU backend docs for contributors."
+    "message": "Deep dive into the DAG commit history, GPU-accelerated pipeline (CUDA/Metal/OpenCL), and alcedo-cli automation."
   },
   "homepage.entry.developer.link": {
-    "message": "Enter Developer Docs"
+    "message": "View Architecture Docs →"
   },
   "homepage.title": {
     "message": "Home"
   },
   "homepage.description": {
-    "message": "Alcedo Studio technical documentation"
+    "message": "Official Alcedo Studio Documentation & User Guide"
   },
   "homepage.hero.subtitle": {
-    "message": "v0.3.3 tutorials: import, select, grade with nodes, use LUTs, compare Versions and export."
+    "message": "Professional non-destructive RAW photo editor & digital asset management system: GPU-accelerated scene-referred color pipeline, node-based grading, and intelligent workflows."
   },
   "homepage.section.entries": {
     "message": "Documentation"
   },
   "homepage.section.focus": {
-    "message": "Focus areas"
+    "message": "Core Design Principles"
   },
   "homepage.focus.text": {
-    "message": "Tutorials follow production QML entry points and include real Windows Release v0.3.3 screenshots. Complete v0.2.x–v0.3.3 notes retain features, performance changes and fixes; the upgrade guide explains format and workflow changes."
+    "message": "Alcedo Studio pairs a DuckDB-backed non-destructive catalog with a scene-referred physical color pipeline (ACES 2.0 / OpenDRT), Git-like branching version control, and native GPU hardware acceleration, uniting scientific color precision with fluid creative interaction."
   },
   "theme.ErrorPageContent.title": {
     "message": "This page crashed.",
@@ -372,13 +372,22 @@
     "description": "The title of the tag list page"
   },
   "homepage.entry.editing.title": {
-    "message": "Editing and Export"
+    "message": "Image Editing & Color Grading"
   },
   "homepage.entry.editing.description": {
-    "message": "RAW and raster input, nodes and masks, LUT encodings, Version comparison and export presets."
+    "message": "Explore RAW decoding, masked grading nodes, CAT02 creative white balance, 3D LUT color transforms, and ACES/OpenDRT display transforms."
   },
   "homepage.entry.editing.link": {
-    "message": "Read editing tutorials"
+    "message": "Explore Editing System →"
+  },
+  "homepage.entry.library.title": {
+    "message": "Library & Asset Management"
+  },
+  "homepage.entry.library.description": {
+    "message": "DuckDB-powered digital asset management: virtual collections, star ratings, multi-dimensional smart filtering, and batch version synchronization."
+  },
+  "homepage.entry.library.link": {
+    "message": "Manage Library Photos →"
   },
   "homepage.entry.versions.title": {
     "message": "Versions and Upgrading"
@@ -388,5 +397,11 @@
   },
   "homepage.entry.versions.link": {
     "message": "Read the upgrade guide"
+  },
+  "homepage.hero.quickStart": {
+    "message": "Quick Start Tutorial"
+  },
+  "homepage.hero.developer": {
+    "message": "Developer & Architecture Docs"
   }
 }

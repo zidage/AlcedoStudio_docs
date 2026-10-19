@@ -1,37 +1,76 @@
-# Edit history and Version storage
+---
+sidebar_position: 3
+---
 
-This describes v0.3.3 commits, recovery journals and checkpoints. User operations are in [History and Versions](../getting-started/edit-history-and-versions.md).
+# Edit History & Version Storage Architecture
 
-## Format boundary
+Alcedo Studio implements a transactional **Directed Acyclic Graph (DAG) commit and branching model (internally designated Mini-Git)** in its C++ core, supporting non-linear branches and non-destructive versioning.
 
-v0.2.8 introduced a commit graph, but v0.3.0 changed the project/node pipeline format again. **v0.3.x cannot open or automatically migrate v0.2.9 and earlier projects.** Having Mini-Git history alone does not establish compatibility.
+---
 
-## Root, commit and Version
+## Core Data Structures & Models
 
-Each photo has an imported root. Confirmed parameter or graph edits form immutable commits. A Version is a named reference to a commit or root; the active Version determines editing state.
-
-Undo/redo moves through history. Editing after undo creates a continuation, not a named branch. Explicit branching creates another Version with shared ancestors. GPU handles and preview caches are not persisted editing content.
-
-## Confirmation and saving
+Within the C++ service layer, each photograph's editing context is represented by:
 
 ```text
-Live input → preview
-Confirmed input → recovery journal → working head
-Checkpoint → DuckDB records / Version / pipeline → remove saved journal prefix
+       [ Root Baseline ] (Immutable initial import state)
+              │
+       [ Commit 1: Base Exposure ]
+              │
+       [ Commit 2: Lens Calibration & Crop ]
+             / \
+            /   \
+           ▼     ▼
+  [ Commit 3A ]  [ Commit 3B ]
+  (Warm Film)    (High-Contrast B&W)
+       ▲               ▲
+       │               │
+  Version: "Warm"  Version: "B&W" (Active branch pointer)
 ```
 
-The application journal covers confirmed, not-yet-materialized editing. DuckDB WAL provides database transaction recovery. History is not a raw journal-file view.
+1. **Root**: The immutable base node initialized upon import, recording source file paths, raw sensor color matrices, and default metadata.
+2. **Commit**: Immutable adjustment transaction nodes recording parameter deltas for slider modifications, tone curve adjustments, node graph insertions, or mask geometry. Each Commit stores a hash reference to its parent commit.
+3. **Version**: Lightweight named pointers (analogous to Git branch heads `refs/heads/*`) pointing to specific Commit nodes in the DAG. The Active Version dictates which branch state is rendered in the viewport.
 
-Changing photos/Versions, leaving the editor and shutdown coordinate checkpoints. Save failures require explicit recovery/retry. Recovery guarantees need real journal and restoration tests.
+---
 
-## Adjustment transfer
+## Dual-Write Pipeline & Save Checkpoints
 
-The transfer service builds a selected parameter package from a source Version. Paste creates a new target Version and retains the old one. v0.3.1 includes Develop fields; v0.3.3 fixes preservation of unselected values in partial paste.
+To balance interactive slider responsiveness with crash resilience, the engine employs a staged transaction pipeline:
 
-Merge was removed from the product in v0.3.0. Historical two-parent/conflict designs do not describe the current UI. Paste is in Versions, with background results for batches.
+```text
+[ User Pointer Release / Parameter Settle ]
+                  │
+                  ▼
+[ 1. Append to Journal Recovery Log ] ──▶ Append to local in-memory transaction log; advances Head pointer
+                  │
+                  ▼ (Workspace navigation / Version checkout / Project save / Graceful exit)
+[ 2. Materializer Service Checkpoint ]  ──▶ Materializes pending commits into DuckDB tables; updates Version pointers
+                  │
+                  ▼
+[ 3. Log Rotation & Truncation ]       ──▶ Prunes journal entries committed safely to the database
+```
 
-## Source entry points
+### Why Decouple Real-Time Edits from Database Writes?
+If a user rapidly adjusts a slider, issuing direct synchronous database transactions for every motion would saturate disk I/O and reduce interface responsiveness.
+By recording settled inputs into a lightweight **Journal Recovery Log**, adjustments are tracked in memory first. The materializer service (`editor_mini_git_materializer`) then batches pending transactions into DuckDB upon workspace transitions, version checkouts, or saves. In the event of an abnormal shutdown or crash, the recovery engine replays unmaterialized journal entries upon launch, restoring unpersisted edit commits.
 
-src/include/app includes editor_working_document, editor_mini_git_commit_writer, editor_mini_git_journal_recovery, editor_mini_git_materializer, editor_save_checkpoint_service and adjustment_transfer_service. QML consumes projections/commands rather than mutating database references.
+---
 
-See the [source map](./tutorial-source-map.md) and [A/B tutorial](../editing/comparison.md).
+## Selective Adjustment Transfer
+
+The `adjustment_transfer_service` coordinates cross-photo grading transfer:
+1. **Parameter Extraction**: Extracts the serialized adjustment tree from a source Version node, filtered by user-selected modules (Tone, Look, LUT, Geometry, etc.).
+2. **Branch Injection**: For each destination photo, forks a **new branch Commit and Version** based on its current Active Commit, injecting the transferred parameters while preserving all unselected destination attributes (such as unique lens calibrations or crop framing).
+3. **Asynchronous Execution**: Batch transfers run via background task workers, avoiding UI thread stalls.
+
+---
+
+## Key Source Files
+
+Core implementations reside under `alcedo_studio/src/`:
+- `include/app/editor_working_document.hpp`: Active document abstraction
+- `include/app/editor_mini_git_commit_writer.hpp`: DAG commit generator
+- `include/app/editor_mini_git_journal_recovery.hpp`: Crash recovery journal manager
+- `include/app/editor_mini_git_materializer.hpp`: DuckDB materialization engine
+- `include/app/adjustment_transfer_service.hpp`: Selective parameter extraction and batch injection

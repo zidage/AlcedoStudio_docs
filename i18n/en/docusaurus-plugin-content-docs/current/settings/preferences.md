@@ -1,54 +1,71 @@
-# Settings, background tasks and updates
+---
+sidebar_position: 1
+---
 
-Open Settings in the toolbar. The scrollable v0.3.3 categories include Language / Theme, Default Behavior, Cache, Local Content Recognition, Advanced Content Analysis, Acceleration, Updates, Keyboard, LUTs and About.
+# Preferences, Cache Management & Updates
 
-## Appearance and default behavior
+Access `Settings` from the top toolbar to configure system parameters, GPU acceleration backends, disk thumbnail caching, keyboard shortcuts, and signed software updates.
 
-![Language, theme and settings categories](/img/tutorial-v0.3.3/settings.webp)
+---
 
-*Windows Release v0.3.3, Chinese UI: Language, theme and settings categories.*
+## Language, Themes & Workflow Behavior
 
-Choose language/theme under Language / Theme. Default Behavior controls masks on locked nodes: ask, create a new layer, or draw on the current node. Masking the first grade also limits its default adjustments; see [nodes and masks](../editing/nodes-and-masks.md).
+![Language, themes, and settings categories](/img/tutorial-v0.3.3/settings.webp)
+*Preferences Console: Language, themes, and default behaviors*
 
-## Thumbnail cache
+- **Language / Theme**: Toggle seamlessly between Simplified Chinese and English; ships with a professional darkroom dark theme.
+- **Default Behavior**:
+  Governs how the application handles adding masks while the root grading node is selected:
+  - **Create a new layer, then draw (Recommended)**: Automatically creates an isolated grading layer before drawing, preventing global baseline adjustments from being restricted within a local mask.
+  - **Draw on the current node**: Directly applies the mask to the active node.
+  - **Ask every time**: Displays a confirmation prompt.
 
-Cache shows Entries, Size, Hits / misses, storage folder, disk-cache switch, per-project maximum and JPEG quality. Maintenance offers Clear current project, Clear all cache and Refresh.
+---
 
-Clearing cache requires thumbnails to regenerate; it does not clear originals or editing history. Since v0.3.1 each project has its own disk thumbnails. Apply changes as directed by the page.
+## Disk Cache: Thumbnail Storage & Performance
 
-## Acceleration
+To reduce repetitive decoding overhead when browsing large sets of RAW files, Alcedo Studio manages an isolated disk thumbnail cache for each project:
 
-Select a supported CUDA / OpenCL / Metal backend and restart the application yourself. It is determined at startup and differs from AI model runtime configuration. See [installation](../getting-started/installation.md).
+- **Real-Time Metrics**: View active `Entries`, total occupied `Size` on disk, and cache Hit/Miss ratios.
+- **Cache Optimization**:
+  - **Disk cache toggle**: Keep enabled for cached thumbnail browsing.
+  - **Maximum entries per project** & **Thumbnail JPEG quality**: Tune quality based on high-DPI monitor needs.
+- **Maintenance Operations**:
+  - `Clear current project`: Clears thumbnail caches for the active catalog without affecting source images or edit histories (thumbnails regenerate on next browse).
+  - `Clear all cache`: Purges all temporary caches to reclaim disk space.
 
-## Keyboard
+---
 
-![Current keyboard bindings](/img/tutorial-v0.3.3/keyboard.webp)
+## Hardware Acceleration
 
-*Windows Release v0.3.3, Chinese UI: Current keyboard bindings.*
+See [Installation & Hardware Setup](../getting-started/installation.md). Select the optimal GPU compute backend for your platform (CUDA for NVIDIA on Windows, Metal for Apple Silicon on macOS, OpenCL 1.2 for generic graphics). **Restart the application after modifying this setting to recompile compute pipelines**.
 
-Since v0.3.0 you can capture a new key combination per command, inspect conflicts and restore defaults individually. Changes take effect immediately.
+---
 
-Follow this page and actual button tooltips for your bindings, especially on macOS or after customization. Focused text fields can handle shortcuts as text-editing commands.
+## Custom Keyboard Shortcuts
 
-## Software updates
+![Keyboard shortcut bindings](/img/tutorial-v0.3.3/keyboard.webp)
+*Keyboard Shortcuts Manager: Direct physical key recording and conflict detection*
 
-Since v0.2.9, updates use signed release metadata and verified packages.
+1. Locate the desired command in the list (e.g., "Undo", "Add Radial Mask", "Rate 5 Stars").
+2. Click the shortcut field and press your desired key combination directly on your keyboard (e.g. `Ctrl+Alt+E`).
+3. **Conflict Detection**: If the shortcut is already assigned elsewhere, a highlighted conflict alert identifies the colliding command.
+4. Click the reset arrow to restore factory defaults. Changes apply immediately without restarting.
 
-1. Check installed/available version and build in Updates.
-2. Read localized notes and download.
-3. Monitor, cancel or retry as needed.
-4. After verification, follow install/restart actions and check the new version.
+---
 
-Finish current project work first. Downloading does not mean installation is complete. Stable and testing channels are separate.
+## Signed Software Updates
 
-## Background tasks and agents
+Alcedo Studio provides digitally signed in-app updates:
 
-v0.3.2 moves the task indicator to the top toolbar. Click it or Background Tasks / Editor Tasks to inspect progress and errors.
+1. Open `Updates`. The engine checks for new releases and renders the localized release notes and changelog.
+2. Click `Download Update`. The background downloader retrieves the package and verifies SHA-256 signatures and digital certificates.
+3. Once verified, follow the prompt to restart and apply the update.
 
-Import, export, analysis, model work, ratings, paste and deletion can run in the background. Cancellation depends on task support; check completed counts afterward.
+---
 
-v0.3.3 pins agents at the top with their actions. Editing controls lock while an agent holds control, while pan, zoom and scopes remain available. Stop returns control immediately. Explicitly tell the agent when to continue. See [CLI](../automation/cli.md).
+## Background Tasks & Agent Monitoring
 
-## Other categories
-
-Use [Local Content Recognition](../ai/model-management.md) for local models, [Advanced Content Analysis](../ai/provider-configuration.md) for API configuration, and [LUTs](../editing/lut-library.md) for packages. About includes version, documentation and GitHub links.
+- **Persistent Status Light**: Located in the center of the top toolbar. Green indicates idle/normal; pulsing blue denotes active background tasks (batch export, folder import, AI analysis).
+- **Task Manager**: Click the status light to expand the task drawer to review active jobs or cancel lengthy operations.
+- **Agent Session Monitor**: When an external AI agent connects via `alcedo-cli`, an agent session card locks to the top of the task drawer, displaying active grading commands with an immediate `Stop` button to reclaim manual user control.

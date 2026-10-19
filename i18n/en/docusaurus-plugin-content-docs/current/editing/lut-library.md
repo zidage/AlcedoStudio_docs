@@ -1,57 +1,91 @@
-# LUT library, packages and encodings
+---
+sidebar_position: 4
+---
 
-Since v0.3.1, LUTs are downloaded separately. The old instruction to copy into bin/LUTs and restart is no longer the current workflow.
+# 3D LUT Library, Film Emulation & Color Space Encodings
 
-## Official packages
+3D LUTs (3-Dimensional Lookup Tables) are the industry standard for reproducing the nuanced tone curves, dye density, and split-toning characteristics of classic analog film stocks and motion picture prints. Alcedo Studio incorporates a color-managed LUT architecture that eliminates the severe clipping and blown highlights typical of naive LUT implementations.
 
-![LUT folder and categories](/img/tutorial-v0.3.3/lut-settings.webp)
+---
 
-*Windows Release v0.3.3, Chinese UI: LUT folder and categories.*
+## Official Film Packages & Custom Library Management
+
+To keep the application installer light and agile, Alcedo Studio distributes official film simulation packages via an on-demand, cryptographically verified package manager:
 
 ![Installed official LUT packages](/img/tutorial-v0.3.3/lut-packages.webp)
+*Official Film Simulation Package Manager in Preferences*
 
-*Windows Release v0.3.3, Chinese UI: Installed official LUT packages.*
+### 1. Downloading Official Film Packages
+1. Navigate to `Settings → LUTs`.
+2. Browse the `Official LUT Packages` list, featuring professionally calibrated film profiles (including Kodak Portra, Fujifilm Pro/Superia, CineStill motion picture stocks, Kodachrome, and Tri-X).
+3. Click `Download`. The engine downloads, verifies signatures, and installs the package in the background.
+4. Once deployed, the status updates to `Installed`. Updates and repairs can be performed directly from this panel.
 
-1. Open Settings → LUTs and check the library folder.
-2. Download a package under Official LUT Packages.
-3. Wait for download, signature verification and installation.
-4. Use Update / Repair when needed; inspect errors before Retry.
-5. v0.3.2 allows package removal after confirmation. Referencing photos lose that look until reinstalled.
+### 2. Importing Custom `.cube` LUTs
+To use your own commercial or custom grading `.cube` files:
+1. Under `Settings → LUTs`, locate the current `LUT library path`.
+2. Click `Open in File Explorer` (or `Open in Finder` on macOS) to reveal the custom LUT directory.
+3. Drop your `.cube` files or folders into the directory and click `Refresh`. Your custom LUTs will immediately appear under the `User` category in the browser.
 
-Changing to an empty folder copies and verifies the library before removing copied files from the old location. Choosing a folder that already contains files uses that folder without moving the old library. Read the confirmation carefully. Open in File Explorer / Finder and Refresh expose the actual folder and inventory.
+---
 
-## Custom LUTs and missing files
+## The Essential Color Science: Input & Output Color Space Encodings
 
-Import supported .cube files or place them in the browser's indicated user folder, then refresh. Nested folders are recognized; user LUTs appear under User.
+In amateur photo editors, the most catastrophic mistake is: **Applying a LUT authored for camera Log or Rec.709 video directly onto a linear ACES RAW photograph**. The result is immediately crushed shadows and blown-out highlights.
 
-Projects retain associations. Missing LUTs are reported and temporarily omitted from rendering; restoring the file restores the effect. Transfer LUT resources when moving machines.
+Alcedo Studio solves this scientifically by pairing each 3D LUT with explicit **Input Encoding** and **Output Encoding** color transforms:
 
-## Apply and set strength
+```text
+[ Scene Linear Color (ACEScg) ]
+             │
+             ▼
+[ 1. Input Color Transform ] ──▶ Converts scene data to the color space expected by the LUT (e.g. ARRI LogC3, Sony S-Log3, ACEScc)
+             │
+             ▼
+[ 2. 3D LUT Transform ] ───────▶ Applies the exact film print dye and tone mapping curves
+             │
+             ▼
+[ 3. Output Color Transform ] ─▶ Transforms the LUT's output back into the ACES pipeline
+             │
+             ▼
+[ Downstream Grading & Display Transform ]
+```
 
-![LUT filters and browser](/img/tutorial-v0.3.3/lut-browser.webp)
+![LUT strength, input and output encodings](/img/tutorial-v0.3.3/lut-controls.webp)
+*Configuring exact Input and Output Color Space Encodings*
 
-*Windows Release v0.3.3, Chinese UI: LUT filters and browser.*
+### Recommended Encodings Guide
+- **Official Film Simulation Packages**: Tailored specifically for Alcedo Studio's linear pipeline; default to **ACEScc** for both input and output.
+- **Cinema Camera Log LUTs (ARRI LogC3, Sony S-Log3, Canon Log 2)**:
+  - **Input Encoding**: Set to the corresponding camera Log curve (e.g. `ARRI LogC3`).
+  - **Output Encoding**: Typically set to `Rec.709` or `ACEScc`.
+- **Standard Web / Social LUTs**:
+  - If a LUT is intended for standard sRGB photos, set both Input and Output Encodings to `sRGB` or `Rec.709`.
+- **Remember for this LUT**:
+  Checking this box saves the input/output color encoding pairing in the local catalog. Whenever this LUT is selected in the future, the correct color transformations are applied automatically.
 
-Select the destination grade first. Open LUTs on the left, filter Category / Source / Brand / Print, search by name, use favorites, or switch grid/list. Print includes a no-print option.
+:::caution Strength Cannot Mask Encoding Mismatches
+If applying a LUT drastically crushes or blows out your image, check the Input and Output Encodings first rather than reducing Strength to 10%. With the correct encodings configured, a LUT can be used at 100% Strength with smooth highlight rolloff and clean shadows.
+:::
 
-Click a LUT to apply it; click the applied entry again to remove it. Set Strength from 0–100% on the right, or Remove the association. The browser locates the applied entry and names it in the footer.
+---
 
-When RAW Decode, Display Transform or Post Processing is active, the browser targets the last selected grade. Check its displayed name.
+## Browsing, Applying & Blending Strength
 
-## Input and Output encodings
+In the Editor, open the `LUTs` drawer from the left tool rail:
 
-![LUT strength and input/output encodings](/img/tutorial-v0.3.3/lut-controls.webp)
+![LUT filtering and visual browser](/img/tutorial-v0.3.3/lut-browser.webp)
+*Visual LUT Browser: Category filtering, search, and thumbnail previews*
 
-*Windows Release v0.3.3, Chinese UI: LUT strength and input/output encodings.*
+1. **Targeted Search**:
+   - Filter by Category (Black & White, Color Negative, Color Reversal, Motion Picture), Source, or Brand.
+   - Enter keywords (such as "Portra 400" or "5207") in the search bar.
+   - Click the star icon to pin frequently used LUTs to your favorites.
+2. **Apply to Node**:
+   - Verify the desired grading node is selected, then click a LUT in the grid to immediately apply it to the canvas; clicking the active item unbinds it.
+3. **Strength Blending**:
+   - Adjust the **Strength** slider (0%–100%) in the right panel. The GPU performs linear interpolation between the pre-LUT node state and the transformed output, letting you blend film emulation subtly into modern digital captures.
 
-v0.3.2 adds encoding selection and includes it in copied adjustments.
+---
 
-- Scene encodings include ACES and camera Log curves. Match the LUT author's specified input and output.
-- Display inputs are formed through an ACES 2.0 output transform before the LUT. Display outputs return to the scene workflow through the ACES 2.0 inverse output transform.
-- Official packages default to ACEScc. Do not assume an unknown custom LUT does.
-
-Choose Input and Output, inspect brightness/highlights/color, then set strength. Lowering strength does not fix an incorrect encoding.
-
-Remember for this LUT stores the pair in the library for future selections. Encoding changes also enter the current photo's history. This differs from the final Display Transform.
-
-Try official and custom looks on separate Versions, [compare](./comparison.md), then [export](../export/workflow.md).
+Now that you have explored film emulation, proceed to [Display Transform, HDR & Post-Processing](./display-and-effects.md) to discover color appearance modeling and finishing effects!

@@ -1,45 +1,64 @@
-# Display transform, HDR, scopes and post processing
+---
+sidebar_position: 5
+---
 
-Tone / Look / LUT work in the scene workflow. Display Transform forms the output appearance; Post Processing follows it for the whole photo.
+# Display Transform, HDR, Scopes & Post-Processing
 
-## Display Transform
+In a scene-referred pipeline, preceding grading nodes shape the physical radiance of light in the scene; the **Display Transform** then projects that wide dynamic range onto the specific capabilities of your display device. Following this transformation, **Post Processing** applies screen-referred optical diffusion, organic film grain, and lens character across the final render.
+
+---
+
+## Display Transform: Mapping Scene Radiance to Display Devices
+
+Modern camera sensors capture vast dynamic ranges (14–15+ stops of light), whereas typical desktop monitors display roughly 6–8 stops. Crude mathematical clamping causes skies to clip harshly into unnatural yellow-white blocks.
+
+Alcedo Studio incorporates a dedicated **Display Rendering Transform (DRT)** that compresses expansive dynamic range while maintaining smooth highlight saturation rolloff and strict hue constancy:
 
 ![OpenDRT and output encoding](/img/tutorial-v0.3.3/display-transform.webp)
+*Display Transform configuration: Core mapping algorithm, encoding gamut, and EOTF*
 
-*Windows Release v0.3.3, Chinese UI: OpenDRT and output encoding.*
+### Core Transform Methods
+- **ACES 2.0**: The latest standard from the Academy of Motion Picture Arts and Sciences. Features a redesigned tone scale that retains vibrant color purity in near-clipping highlights without the hue shifts observed in older ACES 1.x models.
+- **OpenDRT**: An open-source display rendering transform favored in cinema workflows. Offers deep parameterization, allowing you to fine-tune highlight tonescale slopes, shadow flare compensation, highlight desaturation, and creative white points.
 
-Choose ACES 2.0 or OpenDRT, then Encoding Space and Encoding EOTF for the intended output. Check Peak Luminance for HDR. OpenDRT also provides Look, Tonescale and Creative White options.
+### Encoding Gamut & Transfer Functions (EOTF)
+Match your target delivery medium:
+- **Standard SDR & Web Delivery**:
+  - **Encoding Space**: Standard monitors use `sRGB` or `Rec.709`; wide-gamut monitors use `Display P3`.
+  - **Encoding EOTF**: Select `sRGB` or `Gamma 2.2`.
+- **HDR Delivery**:
+  - **Encoding Space**: Wide-gamut `Rec.2020` or `Display P3`.
+  - **Encoding EOTF**: Select Perceptual Quantizer `PQ (SMPTE ST 2084)` or Hybrid Log-Gamma `HLG (ARIB STD-B67)`.
+  - **Peak Luminance**: Set to your target monitor's peak nit rating (e.g. 1000 nits or 1600 nits). On macOS with Liquid Retina XDR displays or Apple Pro Display XDR, true real-time viewport HDR preview is natively supported.
 
-Changing the transform changes appearance. v0.3.3 fixes OpenDRT output for Rec.709 / P3-D65 with sRGB encoding.
+---
 
-## SDR and HDR
+## Real-Time GPU Scopes: Waveform & Histogram
 
-Use an encoding suited to the receiving device, commonly sRGB for SDR. HDR requires compatible color space, PQ/HLG encoding, target brightness and an HDR-capable viewing path.
+Human vision easily adapts to ambient room lighting, creating subjective exposure errors. Relying on objective GPU scopes is essential for professional grading:
 
-macOS supports HDR preview on suitable displays. A Windows window is not sufficient final validation for every HDR output: check exported files with an HDR-capable viewer/device. v0.3.3 A/B comparison does not support HDR.
+- **Histogram**:
+  Located at the top of the right panel. Displays pixel frequency distribution across Red, Green, and Blue channels. Observe the outer edges to verify that shadows are not crushed to pure black and highlights retain unclipped headroom.
+- **Waveform**:
+  The horizontal axis maps directly to the horizontal pixel coordinates of the image, while the vertical axis indicates luminance levels from 0 to 100 IRE. This spatial alignment reveals the exact luminance of specific image zones (such as sunlight through clouds on the left or shadows on a face on the right), making it ideal for anchoring skin tones (typically between 40 and 70 IRE).
 
-HDR input classification and chosen display output are separate settings. Export has independent Ultra HDR JPEG quality, dithering and maximum edge controls; see [export](../export/workflow.md).
+---
 
-## Scopes and detail inspection
+## Screen Post-Processing
 
-Switch Histogram / Waveform above the adjustments. A histogram shows channel/brightness distribution; a waveform helps locate brightness across the frame. Use both with the actual image.
+Following the display transform, the image enters screen-space pixel coordinates. Alcedo Studio provides an authentic suite of finishing effects:
 
-FIT fits the viewport; 100% corresponds to pixel scale. Zoom/pan with the configured wheel modifier or trackpad, checking [Keyboard settings](../settings/preferences.md) for actual bindings. Inspect detail near 100%, then return to FIT for composition.
+![Post processing](/img/tutorial-v0.3.3/post.webp)
+*Post Processing: Diffusion glow, clarity, sharpening, and halation*
 
-## Post Processing
+| Module | Optical Simulation | Practical Guidelines & Visual Character |
+| --- | --- | --- |
+| **Diffusion** | Simulates cinema Black Pro-Mist filters or vintage lens optical flare. | Causes bright highlights (street lamps, direct sun edges) to bloom into a soft, dreamlike glow, gently easing clinical digital sharpness and softening skin textures. |
+| **Clarity** | Adaptive midtone high-frequency contrast enhancement. | Enhances texture across architecture, rock surfaces, and fabrics; subtle negative values provide a gentle, natural skin smoothing effect. |
+| **Sharpening** | High-frequency edge convolution with radius and threshold parameters. | Counteracts micro-blur from demosaicing interpolation, restoring crisp definition to eyes, eyelashes, and fine textures. |
+| **Film Grain** | Procedural multi-scale organic silver-halide grain synthesis. | Accurately models the physical grain clustering of analog film stocks. Grain is denser in mid-shadows and cleaner in bright highlights, breaking up digital clinical flatness. |
+| **Halation** | Simulates the red optical scatter produced when bright light penetrates cinema film stock (e.g. Kodak Vision3) and bounces off the anti-halation backing. | Infuses high-contrast specular edges with a warm orange-red fringe, a signature aesthetic of analog cinema film. |
 
-![Post Processing](/img/tutorial-v0.3.3/post.webp)
+---
 
-*Windows Release v0.3.3, Chinese UI: Post Processing.*
-
-Since v0.3.0 these effects apply once after Display Transform, rather than separately to every grade.
-
-| Section | Controls |
-| --- | --- |
-| Diffusion | Strength; inspect glow around bright sources and whites |
-| Detail | Clarity and Sharpen; inspect halos, detail and noise |
-| Texture | Film Grain and Halation; check grain and highlight glow |
-
-Diffusion arrived in v0.3.1 across CUDA, OpenCL and Metal. v0.3.2 changes its highlight curve, potentially softening old white-area halos. Grain and halation originated in v0.2.6.
-
-Finish exposure/color before evaluating effects. Inspect full-size output as well as preview. Exports use saved edits rather than transient slider values.
+You now understand the complete darkroom color pipeline! Continue to [A/B Comparison](./comparison.md) to evaluate your adjustments against baseline references.
