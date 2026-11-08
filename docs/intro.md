@@ -22,7 +22,7 @@ Alcedo Studio 是一款面向摄影与数字暗房工作流的非破坏性 RAW �
   ├─ 1. RAW 解码与镜头校正 (LibRaw / RCD / 神经引擎 / Lensfun)
   ├─ 2. 几何裁剪与旋转 (保持画面边界)
   ├─ 3. 节点式色彩分级 (Develop 基础显影 + 多个局部蒙版 Color Grade 节点)
-  ├─ 4. 显示变换 (ACES 2.0 / OpenDRT 色调映射与色彩空间转换)
+  ├─ 4. 显示变换 (ACES 2.0 / OpenDRT / 胶片印片)
   └─ 5. 屏幕后期处理 (柔光 Diffusion / 细节 Clarity / 胶片颗粒 Grain / 光晕 Halation)
        │
 [ 实时预览视口 (RHI) / 后台批量导出队列 (SDR / Ultra HDR) ]
@@ -59,6 +59,7 @@ Alcedo Studio 是一款面向摄影与数字暗房工作流的非破坏性 RAW �
 - [调色节点、图层与局部蒙版](./editing/nodes-and-masks.md)：节点流水线逻辑、图层堆栈、径向蒙版与渐变蒙版的绘制与微调。
 - [影调、曲线与色彩控制](./editing/tone-and-color.md)：曝光与局部影调、相机白平衡与 CAT02 创意白平衡、选择性色彩与 Lift/Gamma/Gain 色轮。
 - [3D LUT 库与色彩空间匹配](./editing/lut-library.md)：官方胶片模拟包、自定义 `.cube` 导入、输入/输出色彩空间编码转换与强度融合。
+- [胶片模拟](./editing/film-simulation.md)：选择负片、印片材料或反转片，调整画幅、颗粒、场景光与负片扫描
 - [显示变换、HDR 与后期质感](./editing/display-and-effects.md)：ACES 2.0 与 OpenDRT 色彩管理、Ultra HDR 预览、GPU 示波器与胶片柔光/颗粒/光晕。
 - [A/B 效果对比](./editing/comparison.md)：分屏对比、画中画与多版本视觉效果校验。
 

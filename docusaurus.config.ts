@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Alcedo Studio',
-  tagline: 'v0.3.3 使用教程与 v0.2.x–v0.3.3 更新记录',
+  tagline: '使用教程与 v0.2.x–v0.3.3 更新记录',
   favicon: 'img/favicon.ico',
 
   future: {

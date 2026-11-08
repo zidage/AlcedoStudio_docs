@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Display Transform, HDR, Scopes & Post-Processing
 
-In a scene-referred pipeline, preceding grading nodes shape the physical radiance of light in the scene; the **Display Transform** then projects that wide dynamic range onto the specific capabilities of your display device. Following this transformation, **Post Processing** applies screen-referred optical diffusion, organic film grain, and lens character across the final render.
+The **Display Transform** converts the scene-linear image for display. **Post Processing** provides diffusion, clarity, sharpening, and other effects
 
 ---
 
@@ -17,19 +17,21 @@ Alcedo Studio incorporates a dedicated **Display Rendering Transform (DRT)** tha
 ![OpenDRT and output encoding](/img/tutorial-v0.3.3/display-transform.webp)
 *Display Transform configuration: Core mapping algorithm, encoding gamut, and EOTF*
 
+This screenshot shows v0.3.3. The Film Print controls in this guide follow v0.3.5
+
 ### Core Transform Methods
 - **ACES 2.0**: The latest standard from the Academy of Motion Picture Arts and Sciences. Features a redesigned tone scale that retains vibrant color purity in near-clipping highlights without the hue shifts observed in older ACES 1.x models.
 - **OpenDRT**: An open-source display rendering transform favored in cinema workflows. Offers deep parameterization, allowing you to fine-tune highlight tonescale slopes, shadow flare compensation, highlight desaturation, and creative white points.
+- **Film Print**: Select a negative or reversal film and simulate a print, negative scan, or slide on a light table. See [Film Simulation](./film-simulation.md)
 
 ### Encoding Gamut & Transfer Functions (EOTF)
-Match your target delivery medium:
-- **Standard SDR & Web Delivery**:
-  - **Encoding Space**: Standard monitors use `sRGB` or `Rec.709`; wide-gamut monitors use `Display P3`.
-  - **Encoding EOTF**: Select `sRGB` or `Gamma 2.2`.
-- **HDR Delivery**:
-  - **Encoding Space**: Wide-gamut `Rec.2020` or `Display P3`.
-  - **Encoding EOTF**: Select Perceptual Quantizer `PQ (SMPTE ST 2084)` or Hybrid Log-Gamma `HLG (ARIB STD-B67)`.
-  - **Peak Luminance**: Set to your target monitor's peak nit rating (e.g. 1000 nits or 1600 nits). On macOS with Liquid Retina XDR displays or Apple Pro Display XDR, true real-time viewport HDR preview is natively supported.
+Choose the encoding space and EOTF for the target display:
+
+- **Rec.709**: BT.1886, Gamma 2.2, or sRGB
+- **P3-D65**: Gamma 2.2, sRGB, or ST 2084 (PQ)
+- **Rec.2020**: ST 2084 (PQ) or HLG
+
+For HDR, select PQ or HLG and set peak luminance for the target display. Film Print outputs from paper, cinema print stocks, and reversal film use Rec.709 SDR. Negative Scan provides OpenDRT and encoding settings
 
 ---
 
@@ -46,7 +48,7 @@ Human vision easily adapts to ambient room lighting, creating subjective exposur
 
 ## Screen Post-Processing
 
-Following the display transform, the image enters screen-space pixel coordinates. Alcedo Studio provides an authentic suite of finishing effects:
+Post Processing includes diffusion, clarity, sharpening, grain, and halation. With Film Print, adjust grain, format, and halation under **Display Transform → Style**
 
 ![Post processing](/img/tutorial-v0.3.3/post.webp)
 *Post Processing: Diffusion glow, clarity, sharpening, and halation*
@@ -56,8 +58,8 @@ Following the display transform, the image enters screen-space pixel coordinates
 | **Diffusion** | Simulates cinema Black Pro-Mist filters or vintage lens optical flare. | Causes bright highlights (street lamps, direct sun edges) to bloom into a soft, dreamlike glow, gently easing clinical digital sharpness and softening skin textures. |
 | **Clarity** | Adaptive midtone high-frequency contrast enhancement. | Enhances texture across architecture, rock surfaces, and fabrics; subtle negative values provide a gentle, natural skin smoothing effect. |
 | **Sharpening** | High-frequency edge convolution with radius and threshold parameters. | Counteracts micro-blur from demosaicing interpolation, restoring crisp definition to eyes, eyelashes, and fine textures. |
-| **Film Grain** | Procedural multi-scale organic silver-halide grain synthesis. | Accurately models the physical grain clustering of analog film stocks. Grain is denser in mid-shadows and cleaner in bright highlights, breaking up digital clinical flatness. |
-| **Halation** | Simulates the red optical scatter produced when bright light penetrates cinema film stock (e.g. Kodak Vision3) and bounces off the anti-halation backing. | Infuses high-contrast specular edges with a warm orange-red fringe, a signature aesthetic of analog cinema film. |
+| **Film Grain** | Adjusts grain and format. | Use the Post Processing controls with ACES 2.0 or OpenDRT. |
+| **Halation** | Adjusts the red glow around bright lights. | Use the Post Processing controls with ACES 2.0 or OpenDRT. |
 
 ---
 

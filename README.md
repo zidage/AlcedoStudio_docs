@@ -4,7 +4,7 @@ This website is built using [Docusaurus](https://docusaurus.io/), a modern stati
 
 Default locale is **简体中文** (`zh-Hans`). The v0.3.3 tutorials and complete v0.2.0–v0.3.3 release archive are available in Chinese and English (`en`).
 
-Tutorials follow the production QML entry points at source tag v0.3.3. Real Windows Release screenshots are shared between locales; their UI is Chinese. See `docs/developer/tutorial-source-map.md` for source/runtime boundaries and regeneration commands. Raw screenshots and the independent demonstration project remain in ignored `.work/`; published crops live in `static/img/tutorial-v0.3.3/`.
+Most tutorials follow the production QML entry points at source tag v0.3.3. The Film Simulation guide follows v0.3.5. Real Windows Release screenshots are shared between locales; their UI is Chinese. See `docs/developer/tutorial-source-map.md` for source/runtime boundaries and regeneration commands. Raw screenshots and the independent demonstration project remain in ignored `.work/`; published crops live in `static/img/tutorial-v0.3.3/`.
 
 ## Installation
 

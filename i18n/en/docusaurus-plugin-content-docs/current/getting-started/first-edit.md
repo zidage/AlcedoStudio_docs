@@ -68,6 +68,9 @@ Alcedo Studio’s grading pipeline operates in scene-referred linear color space
 3. **Apply a 3D LUT (Optional)**:
    - For analog film character, open the `LUT` panel and select a film simulation.
    - Adjust **Strength** between 40% and 70% to blend the aesthetic naturally.
+4. **Use Film Print (optional, v0.3.5)**:
+   - Under `Display Transform → Method`, select `Film Print` and choose a film. For a negative, also choose a print material
+   - See [Film Simulation](../editing/film-simulation.md) for details
 
 ---
 

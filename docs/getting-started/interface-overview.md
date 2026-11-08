@@ -95,12 +95,14 @@ Alcedo Studio 采用高度集成的现代化单窗口架构。你可以随时在
 2. 几何构图 (Geometry)                               ── 画面裁切比例、边界锁定与旋转校正
 3. 基础色调 (Tone)                                  ── 曝光、对比度、明暗部与色调曲线
 4. 创意外观 (Look)                                  ── CAT02 创意白平衡、饱和度、选择性色彩与色轮
-5. 3D LUT 胶片模拟 (LUT)                            ── LUT 选用、混合强度与色彩编码匹配
-6. 显示变换 (Display Transform)                     ── ACES 2.0 / OpenDRT 场景到显示设备映射
+5. 3D LUT (LUT)                                     ── LUT 选用、混合强度与色彩编码匹配
+6. 显示变换 (Display Transform)                     ── ACES 2.0 / OpenDRT / 胶片印片
 7. 屏幕后期处理 (Post Processing)                    ── 柔光 Diffusion、清晰度、锐化与胶片颗粒
 ```
 
 在绘制局部蒙版时，系统会自动滑出上下文 **蒙版（Mask）** 属性页；在多版本比较时则会展开 **对比（Compare）** 控制页。
+
+胶片印片的入口与参数说明见 [胶片模拟](../editing/film-simulation.md)
 
 ---
 

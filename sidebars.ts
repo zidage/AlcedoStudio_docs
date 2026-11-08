@@ -20,7 +20,8 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category', label: '编辑照片',
       items: ['editing/raw-and-geometry', 'editing/nodes-and-masks',
-        'editing/tone-and-color', 'editing/lut-library', 'editing/display-and-effects',
+        'editing/tone-and-color', 'editing/lut-library', 'editing/film-simulation',
+        'editing/display-and-effects',
         'getting-started/edit-history-and-versions', 'editing/comparison'],
     },
     {type: 'category', label: '导出', items: ['export/workflow']},

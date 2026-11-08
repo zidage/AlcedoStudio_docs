@@ -24,6 +24,7 @@ sidebar_position: 5
 | **基础影调与创意外观** | `EditorTonePanel`、`EditorLookPanel`、`EditorWhiteBalanceSection` | 调色计算与 [影调与色彩](../editing/tone-and-color.md) |
 | **3D LUT 胶片库** | `EditorLutBrowserPanel`、`EditorLutControlPanel`、`LutSettingsPanel` | 胶片管理与 [LUT 库](../editing/lut-library.md) |
 | **显示变换与后期效果** | `EditorDisplayTransformPanel`、`EditorPostProcessPanel`、`EditorScopePanel` | ACES/OpenDRT 与 [显示与后期](../editing/display-and-effects.md) |
+| **胶片印片（v0.3.5）** | `EditorDisplayTransformPanel`、`FilmStockPicker`、`FilmSwatch` | 片种选择与 [胶片模拟](../editing/film-simulation.md) |
 | **提交历史与版本分支** | `EditorHistoryTransactionsPanel`、`EditorVersionsPanel`、`AdjustmentTransferDialog` | DAG 提交与 [历史与版本](../getting-started/edit-history-and-versions.md) |
 | **A/B 视觉对比** | `EditorComparisonPanel`、`EditorComparisonView`、`EditorComparisonCanvas` | 双缓存对比与 [A/B 对比](../editing/comparison.md) |
 | **批处理导出** | `ExportInspectorPanel`、`ExportPresetPicker`、`ExportNamingEditor` | 渲染队列与 [导出工作流](../export/workflow.md) |

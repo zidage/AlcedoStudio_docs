@@ -4,7 +4,9 @@ sidebar_position: 4
 
 # 3D LUT Library, Film Emulation & Color Space Encodings
 
-3D LUTs (3-Dimensional Lookup Tables) are the industry standard for reproducing the nuanced tone curves, dye density, and split-toning characteristics of classic analog film stocks and motion picture prints. Alcedo Studio incorporates a color-managed LUT architecture that eliminates the severe clipping and blown highlights typical of naive LUT implementations.
+3D LUTs apply color transforms in a grading node. Alcedo Studio supports official LUT packages and imported `.cube` files, with controls for input encoding, output encoding, and strength
+
+In v0.3.5, **Display Transform → Film Print** also offers film, print material, and scan settings. See [Film Simulation](./film-simulation.md)
 
 ---
 

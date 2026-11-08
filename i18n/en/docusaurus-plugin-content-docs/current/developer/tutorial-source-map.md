@@ -24,6 +24,7 @@ The application entry point `main.cpp` loads `Alcedo.Main / Main.qml`. The compo
 | **Tone & Creative Look** | `EditorTonePanel`, `EditorLookPanel`, `EditorWhiteBalanceSection` | Color math & [Tone, Curves & Color Grading](../editing/tone-and-color.md) |
 | **3D LUT Film Library** | `EditorLutBrowserPanel`, `EditorLutControlPanel`, `LutSettingsPanel` | Film packages & [3D LUT Library](../editing/lut-library.md) |
 | **Display & Post Processing** | `EditorDisplayTransformPanel`, `EditorPostProcessPanel`, `EditorScopePanel` | ACES/OpenDRT & [Display Transform & Effects](../editing/display-and-effects.md) |
+| **Film Print (v0.3.5)** | `EditorDisplayTransformPanel`, `FilmStockPicker`, `FilmSwatch` | Stock selection in [Film Simulation](../editing/film-simulation.md) |
 | **History & Version Branches** | `EditorHistoryTransactionsPanel`, `EditorVersionsPanel`, `AdjustmentTransferDialog` | Commit DAG & [Edit History & Versions](../getting-started/edit-history-and-versions.md) |
 | **A/B Comparison** | `EditorComparisonPanel`, `EditorComparisonView`, `EditorComparisonCanvas` | Dual-buffer viewport & [A/B Comparison](../editing/comparison.md) |
 | **Batch Export** | `ExportInspectorPanel`, `ExportPresetPicker`, `ExportNamingEditor` | Render queue & [Export Workflow](../export/workflow.md) |

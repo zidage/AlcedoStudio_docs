@@ -22,7 +22,7 @@ Understanding the core architecture of Alcedo Studio helps you navigate and mast
   ├─ 1. RAW Decode & Lens Correction (LibRaw / RCD / Neural Engine / Lensfun)
   ├─ 2. Geometry & Crop (Aspect ratio preservation & rotation containment)
   ├─ 3. Node-Based Color Grading (Develop base + multiple masked Color Grade nodes)
-  ├─ 4. Display Transform (ACES 2.0 / OpenDRT tone mapping & color space mapping)
+  ├─ 4. Display Transform (ACES 2.0 / OpenDRT / Film Print)
   └─ 5. Post Processing (Diffusion / Clarity / Film Grain / Halation)
        │
 [ Real-Time Viewport (RHI) / Batch Export Queue (SDR / Ultra HDR) ]
@@ -59,6 +59,7 @@ Follow the documentation in the order of a complete photographic workflow:
 - [Grading Nodes, Layers & Masks](./editing/nodes-and-masks.md): Node pipeline logic, layer stacks, radial and gradient mask drawing and feathering.
 - [Tone, Curves & Color Grading](./editing/tone-and-color.md): Exposure, local contrast, Camera WB vs. CAT02 creative white balance, selective color, and Lift/Gamma/Gain wheels.
 - [3D LUT Library & Color Space Encoding](./editing/lut-library.md): Official film packages, custom `.cube` imports, input/output color encoding transforms, and strength blending.
+- [Film Simulation](./editing/film-simulation.md): Choose negatives, print materials, and reversal films; adjust format, grain, scene light, and negative scanning
 - [Display Transform, HDR & Post-Processing](./editing/display-and-effects.md): ACES 2.0 / OpenDRT color management, Ultra HDR preview, real-time GPU scopes, and film diffusion/grain/halation.
 - [A/B Comparison](./editing/comparison.md): Side-by-side and split slider modes to evaluate before/after or compare distinct version branches.
 

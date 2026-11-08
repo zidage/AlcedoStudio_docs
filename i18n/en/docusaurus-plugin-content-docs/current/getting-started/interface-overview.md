@@ -96,11 +96,13 @@ The adjustment panels are structured in alignment with the scientific processing
 3. Tone                        ── Exposure, contrast, highlights/shadows, and tone curves
 4. Look                        ── CAT02 creative white balance, saturation, selective color, and color wheels
 5. 3D LUT                      ── Film simulation selection, strength blending, and color space encoding
-6. Display Transform           ── ACES 2.0 / OpenDRT scene-to-display tone mapping
+6. Display Transform           ── ACES 2.0 / OpenDRT / Film Print
 7. Post Processing             ── Diffusion glow, clarity, sharpening, and authentic film grain
 ```
 
 Contextual tabs such as **Mask** (for fine-tuning mask geometry and inversion) and **Compare** (for A/B evaluation) slide out automatically when their respective tools are invoked.
+
+For the Film Print controls, see [Film Simulation](../editing/film-simulation.md)
 
 ---
 
