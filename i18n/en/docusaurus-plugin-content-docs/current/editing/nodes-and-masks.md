@@ -4,13 +4,13 @@ sidebar_position: 2
 
 # Grading Nodes, Layers & Local Masks
 
-In professional cinematography and high-end photographic retouching, single-layer global adjustment sliders often prove inadequate for complex lighting reconstructions. Alcedo Studio introduces a modern **Node-Based Color Pipeline** paired with **Layer-Style Mask Groups**, giving you surgical precision over every localized edit.
+Alcedo Studio uses a **node-based color pipeline** and **mask groups**. You can use multiple grading nodes and limit each node's adjustments with masks.
 
 ---
 
-## Why Node-Based Color Grading?
+## Node Processing Order
 
-Traditional photo editors stack every adjustment into a single monolithic list, causing global baseline adjustments and localized masks to collide unpredictably. Alcedo Studio decouples grading into a sequential processing chain:
+Grading nodes form a sequential processing chain, for example:
 
 ```text
 [ Input Decoding (RAW/Raster) ] 
@@ -29,13 +29,13 @@ Traditional photo editors stack every adjustment into a single monolithic list, 
 [ Post Processing ] ──────────────── (Applies screen-space diffusion glow, organic film grain, and halation)
 ```
 
-Each **Color Grade Node** functions as an isolated darkroom station equipped with its own dedicated `Tone`, `Look`, `LUT`, and `Mask` parameters.
+Each **Color Grade node** has its own `Tone`, `Look`, `LUT`, and `Mask` settings.
 
 ---
 
 ## Dual Perspectives: Nodes Graph & Mask Groups
 
-To cater to diverse grading habits, Alcedo Studio provides two equivalent viewpoints in the left tool rail:
+The left tool rail provides two views:
 
 ![Processing chain with two grading nodes and radial mask](/img/tutorial-v0.3.3/nodes.webp)
 *Nodes View: Visualizing the linear topology from raw input to calibrated display*
@@ -63,8 +63,8 @@ When you attach a mask to a grading node, the contextual **Mask** inspector slid
 ![Radial mask, layer list, and canvas handles](/img/tutorial-v0.3.3/masks.webp)
 *Manipulating radial mask feathering and rotation directly on canvas*
 
-### 1. Radial Mask: Sculpting Subject Illumination
-Ideal for lifting portraits, painting dimensional light, or adding subtle spotlights:
+### 1. Radial Mask
+Use a radial mask to adjust an elliptical area of the image:
 
 ![Mask enable, invert, opacity, and radius](/img/tutorial-v0.3.3/mask-controls.webp)
 *Fine-tuning radial mask geometry and inversion*
@@ -72,21 +72,21 @@ Ideal for lifting portraits, painting dimensional light, or adding subtle spotli
 1. **Draw the Mask**: With a grading node active, add a radial mask and drag across your subject to create an ellipse.
 2. **Interactive Canvas Handles**:
    - **Center Anchor**: Drag to reposition (arrow keys provide pixel-level nudge; hold `Shift` for larger steps).
-   - **Dual Feather Rings**: The inner ring marks the 100% influence core; the outer ring represents fall-off. Increasing the gap between rings produces seamless, organic blending without visible borders.
+   - **Dual Feather Rings**: The inner ring marks the 100% influence area; the outer ring marks the edge of the falloff. Adjust the gap between them to change the transition width.
    - **Rotation Handle**: Tilt the major and minor axes to align with jawlines or diagonal light rays.
 3. **Inversion & Opacity**:
-   - Check `Invert`: Instantly flips the mask to darken backgrounds, effectively shaping an organic vignette around your subject.
+   - Check `Invert` to reverse the mask's affected area.
    - `Opacity`: Adjusts overall mask influence between 0% and 100%.
 
 ### 2. Linear Gradient Mask: Balancing Sky and Earth
-The ultimate tool in landscape and architectural photography for controlling vast dynamic ranges:
+A linear gradient mask can be used to adjust the sky and foreground separately, for example:
 
 1. **Draw the Gradient**: Add a linear gradient mask and drag from the upper edge of the frame downward toward the horizon.
 2. **Transition Shaping**:
    - Rotate the gradient axis to match sloping mountain ridges or ocean horizons.
-   - Adjust **Transition Width**: A broad transition simulates natural atmospheric haze; a narrow transition conforms to sharp horizon edges.
-3. **Grade Locally**: Lower `Exposure`, pull back `Highlights`, and adjust color temperature on this node to recover rich cloud textures without darkening foreground shadows.
+   - Adjust **Transition Width** to control the extent of the mask's gradient.
+3. **Adjust the Node**: Change `Exposure`, `Highlights`, and white balance in the node, then check the mask's coverage in the image.
 
 ---
 
-With your node pipeline established, proceed to [Tone, Curves & Color Grading](./tone-and-color.md) to explore physical scene exposure and chromatic adaptation!
+For the adjustment controls within a node, see [Tone, Curves & Color Grading](./tone-and-color.md).

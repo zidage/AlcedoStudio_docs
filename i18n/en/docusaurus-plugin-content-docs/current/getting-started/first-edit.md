@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Your First Edit: A Complete Walkthrough
 
-This tutorial guides you through the end-to-end workflow in Alcedo Studio: from creating a project, importing photos, and grading tones to branching version trees and delivering high-fidelity exports.
+This tutorial covers creating a project, importing and editing photos, comparing versions, and exporting.
 
 ---
 
@@ -40,7 +40,7 @@ Double-click the imported thumbnail to enter the **Editor** darkroom viewport.
    - In the right adjustments stack, expand `RAW Decode`.
    - Verify the initial camera white balance (`As Shot`), and make subtle adjustments to temperature or tint as needed.
    - The demosaicing method defaults to high-precision RCD; if supported by your GPU, you can also select the Neural Engine for AI-driven reconstruction.
-   - Expand `Lens Calibration` and check `Enable Lens Calibration`. The engine automatically matches your camera and lens profile to eliminate distortion and optical vignetting.
+   - Expand `Lens Calibration` and check `Enable Lens Calibration`. The application matches a camera and lens profile to correct distortion and vignetting.
 2. **Crop & Geometry**:
    - Expand the `Geometry` panel.
    - Choose an aspect ratio (e.g. 16:9, 4:5, 1:1, or maintain original proportions).
@@ -50,7 +50,7 @@ Double-click the imported thumbnail to enter the **Editor** darkroom viewport.
 
 ## Step 4: Shape Tone and Color
 
-Alcedo Studio’s grading pipeline operates in scene-referred linear color space, making it best to shape exposure before introducing creative color:
+Alcedo Studio’s grading pipeline operates in a scene-referred linear color space. The following steps adjust tone and color:
 
 ![Tone adjustment](/img/tutorial-v0.3.3/tone.webp)
 *Sculpting balanced scene contrast in the Tone panel*
@@ -62,12 +62,12 @@ Alcedo Studio’s grading pipeline operates in scene-referred linear color space
    - **Tone Curve**: Add points to an S-curve to sculpt midtone contrast. Double-clicking any slider or curve point immediately resets it to default.
 2. **Inject Creative Look**:
    - Open the `Look` panel.
-   - Adjust **Look White Balance**: Based on CAT02 chromatic adaptation, this allows you to add artistic warmth or cool tint without altering the physical RAW sensor calibration.
-   - Adjust **Vibrance** and **Saturation**, preserving natural skin tones.
+   - Adjust **Look White Balance**: This control uses CAT02 chromatic adaptation to adjust temperature and tint.
+   - Adjust **Vibrance** and **Saturation**.
    - Expand **Color Wheels** to introduce color separation across shadows (Lift), midtones (Gamma), and highlights (Gain).
 3. **Apply a 3D LUT (Optional)**:
    - For analog film character, open the `LUT` panel and select a film simulation.
-   - Adjust **Strength** between 40% and 70% to blend the aesthetic naturally.
+   - Adjust **Strength** to suit the photo.
 4. **Use Film Print (optional, v0.3.5)**:
    - Under `Display Transform → Method`, select `Film Print` and choose a film. For a negative, also choose a print material
    - See [Film Simulation](../editing/film-simulation.md) for details
@@ -76,7 +76,7 @@ Alcedo Studio’s grading pipeline operates in scene-referred linear color space
 
 ## Step 5: Branch a Version & Run A/B Comparison
 
-In Alcedo Studio, you can explore bold creative ideas without risking previous adjustments:
+You can create and compare versions of the same photo:
 
 ![Version branch management](/img/tutorial-v0.3.3/versions.webp)
 *Creating isolated version branches for a single photo*
@@ -90,7 +90,7 @@ In Alcedo Studio, you can explore bold creative ideas without risking previous a
 
 ---
 
-## Step 6: High-Quality Export
+## Step 6: Export
 
 Deliver your finished photograph through the unified export queue:
 
@@ -100,11 +100,11 @@ Deliver your finished photograph through the unified export queue:
 1. Click `Library` in the top toolbar to return to the catalog, with your edited photo selected.
 2. Click `Add to Queue` in the right inspector, then switch to the `Export` tab.
 3. **Select an Export Preset**:
-   - Social media and web: Choose `Web` or `Social Media` (automatically configured for 2048px high-quality JPEG with GPS location stripped for privacy).
-   - Print and master archiving: Choose `Maximum Quality JPEG` or `16-bit TIFF`.
+   - Social media and web: Choose `Web` or `Social Media`. The presets use different dimensions; see [Export Presets](../export/workflow.md) for details.
+   - Printing or archiving: Choose `Maximum Quality JPEG` or `16-bit TIFF`.
 4. **Choose Destination**: Select your output folder under Destination.
 5. **Start Rendering**: Click `Export`. The GPU rendering pipeline processes images in the background. Check progress via the task indicator light, and find your finished image in the destination folder upon completion.
 
 ---
 
-Next, continue to [Edit History, Versions & Transferring Adjustments](./edit-history-and-versions.md) to master Git-style creative version control.
+For versions and adjustment transfer, see [Edit History, Versions & Transferring Adjustments](./edit-history-and-versions.md).

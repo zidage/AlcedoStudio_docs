@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Version Evolution & Upgrade Guide
 
-Alcedo Studio has evolved from an early cross-platform experiment into a mature, professional digital darkroom and digital asset management system. This guide summarizes key architectural milestones and essential upgrade considerations.
+This guide describes major Alcedo Studio version changes and upgrade considerations.
 
 ---
 
@@ -17,7 +17,7 @@ Review these architectural and workflow updates before performing major version 
 | **Catalog Format Redesign (Incompatible with v0.2.x)** | **v0.3.0** | v0.3.0 completely redesigned the node-based pipeline and DuckDB project format. **Projects created in v0.2.9 or earlier cannot be directly opened in v0.3.x.** Keep an earlier build installed to export existing master edits, or initialize new v0.3.x projects by re-importing source files. |
 | **Node Pipeline & Layer Stack** | **v0.3.0** | Introduced sequential node grading, layer-based mask groups, and CAT02 creative white balance. Legacy merge operations evolved into safer [Selective Parameter Transfer](../getting-started/edit-history-and-versions.md). |
 | **LUT Distribution & Encoding** | **v0.3.1** | Official film simulation packages transitioned to on-demand downloads. Visit `Settings → LUTs` to install packages; configure Input and Output Color Space Encodings for custom LUTs. |
-| **Production Export Presets** | **v0.3.3** | Full-fledged export presets replaced legacy naming-only presets, offering turnkey profiles for Web, Social Media, and Print with automated GPS privacy protection for online sharing. |
+| **Export Presets** | **v0.3.3** | Export presets replaced naming-only presets and provide configurations for web, social media, and print. Web sharing presets disable GPS location export by default. |
 
 ---
 
@@ -30,7 +30,7 @@ Review these architectural and workflow updates before performing major version 
 - **v0.3.0**: Major milestone. Deployed the modern `.alcd` project architecture; launched node-based grading with radial/gradient mask groups; introduced CAT02 matrix creative white balance and middle-gray contrast.
 
 ### v0.2.x Era: Single-Window Workspaces & Platform Foundations
-- **v0.2.9**: Digitally signed online update system; integrated Export Inspector; seamless Filmstrip navigation.
+- **v0.2.9**: Digitally signed online updates; integrated Export Inspector; Filmstrip navigation.
 - **v0.2.8**: Unified single-window Qt Quick QML architecture; GPU-accelerated Neural Engine demosaicing; transactional recovery logging and recursive folder imports.
 - **v0.2.7**: Multimodal cloud vision LLM integration; introduced five-tier critique strictness personas; supported OpenAI Codex OAuth browser sign-in.
 - **v0.2.6**: Added procedural film grain and optical halation; integrated on-device CLIP vision models for offline semantic tagging and natural language search; native Nikon HE/HE* raw support.

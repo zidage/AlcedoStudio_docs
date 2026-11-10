@@ -3,25 +3,25 @@
     "message": "Quick Start"
   },
   "homepage.entry.quickStart.description": {
-    "message": "From project creation, RAW import, and tone grading to final export, quickly master the core workflow."
+    "message": "Create a project, import photos, adjust tone and color, and export."
   },
   "homepage.entry.quickStart.link": {
-    "message": "Start Quick Start →"
+    "message": "Read the getting started guide →"
   },
   "homepage.entry.ai.title": {
-    "message": "On-Device AI & Intelligence"
+    "message": "Local AI & Automation"
   },
   "homepage.entry.ai.description": {
-    "message": "Local offline CLIP semantic search and content tagging for total privacy, paired with alcedo-cli automation."
+    "message": "Use a local CLIP model for content tags and semantic search, and automate editing with alcedo-cli."
   },
   "homepage.entry.ai.link": {
-    "message": "Explore AI Features →"
+    "message": "View AI documentation →"
   },
   "homepage.entry.developer.title": {
     "message": "Architecture & Developer Docs"
   },
   "homepage.entry.developer.description": {
-    "message": "Deep dive into the DAG commit history, GPU-accelerated pipeline (CUDA/Metal/OpenCL), and alcedo-cli automation."
+    "message": "DAG commit history, the GPU-accelerated pipeline (CUDA/Metal/OpenCL), and alcedo-cli automation."
   },
   "homepage.entry.developer.link": {
     "message": "View Architecture Docs →"
@@ -33,16 +33,16 @@
     "message": "Official Alcedo Studio Documentation & User Guide"
   },
   "homepage.hero.subtitle": {
-    "message": "Professional non-destructive RAW photo editor & digital asset management system: GPU-accelerated scene-referred color pipeline, node-based grading, and intelligent workflows."
+    "message": "A non-destructive RAW photo editor and library manager with GPU acceleration, grading nodes, and local AI features."
   },
   "homepage.section.entries": {
     "message": "Documentation"
   },
   "homepage.section.focus": {
-    "message": "Core Design Principles"
+    "message": "How It Works"
   },
   "homepage.focus.text": {
-    "message": "Alcedo Studio pairs a DuckDB-backed non-destructive catalog with a scene-referred physical color pipeline (ACES 2.0 / OpenDRT), Git-like branching version control, and native GPU hardware acceleration, uniting scientific color precision with fluid creative interaction."
+    "message": "Alcedo Studio stores photo references, adjustment parameters, and version history in a DuckDB project database. Its image pipeline uses a scene-referred linear color space and provides ACES and OpenDRT display transforms, branching versions, and GPU acceleration."
   },
   "theme.ErrorPageContent.title": {
     "message": "This page crashed.",
@@ -375,16 +375,16 @@
     "message": "Image Editing & Color Grading"
   },
   "homepage.entry.editing.description": {
-    "message": "Explore RAW decoding, masked grading nodes, CAT02 creative white balance, 3D LUT color transforms, and ACES/OpenDRT display transforms."
+    "message": "RAW decoding, masked grading nodes, CAT02 creative white balance, 3D LUT color transforms, and ACES/OpenDRT display transforms."
   },
   "homepage.entry.editing.link": {
-    "message": "Explore Editing System →"
+    "message": "View editing documentation →"
   },
   "homepage.entry.library.title": {
     "message": "Library & Asset Management"
   },
   "homepage.entry.library.description": {
-    "message": "DuckDB-powered digital asset management: virtual collections, star ratings, multi-dimensional smart filtering, and batch version synchronization."
+    "message": "Manage virtual collections, star ratings, filters, and batch adjustment transfers in the library."
   },
   "homepage.entry.library.link": {
     "message": "Manage Library Photos →"

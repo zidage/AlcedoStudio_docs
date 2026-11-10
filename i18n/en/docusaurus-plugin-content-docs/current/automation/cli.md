@@ -4,13 +4,13 @@ sidebar_position: 1
 
 # Automation & alcedo-cli Companion
 
-Alcedo Studio natively includes **`alcedo-cli`**, a specialized command-line interface and automation toolkit designed for modern digital darkrooms. Whether handing off batch export renders to automated scripts or inviting AI companion agents to co-edit inside your desktop window, `alcedo-cli` delivers structured, type-safe RPC endpoints.
+Alcedo Studio includes **`alcedo-cli`**, a command-line tool that scripts or AI agents can use to connect to an application window, edit photos, and run batch jobs.
 
 ---
 
 ## Core Execution Modes
 
-`alcedo-cli` operates in two powerful execution modes:
+`alcedo-cli` supports two execution modes:
 
 ```text
 [ alcedo-cli Automation Hub ]
@@ -63,7 +63,7 @@ To prevent race conditions between human mouse dragging and agent commands, the 
    ```powershell
    alcedo-cli --session <SESSION_NAME> call control.release '{}'
    ```
-5. **Emergency Override**: You can interrupt agent actions at any time by clicking `Stop` in the GUI task bar to instantly reclaim manual control!
+5. **Stop the Agent Session**: Click `Stop` in the GUI task bar to interrupt the agent session and reclaim control.
 
 ---
 
@@ -95,4 +95,4 @@ Using `alcedo-cli call <method> '<json_payload>'`, you can orchestrate nearly al
 | **Version Branches** | Branching named versions (`versions.branch`), version checkout, and selective adjustment transfer. |
 | **Batch Tasks** | Triggering export queues and monitoring progress via `tasks.wait`. |
 
-For autonomous editing workflows with LLMs, install the official [alcedo skill](https://github.com/zidage/alcedo-skills) to establish an intelligent feedback loop!
+For instructions on using AI agents, see the [alcedo skill](https://github.com/zidage/alcedo-skills).

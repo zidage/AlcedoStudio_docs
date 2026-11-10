@@ -10,7 +10,7 @@ This guide covers system requirements, installation procedures, and GPU accelera
 
 ## System & Hardware Requirements
 
-To ensure processing efficiency during 4K/8K image preview and export, verify that your computer meets the following specifications:
+The following table lists supported operating systems and recommended hardware and acceleration backends:
 
 | Platform | Operating System | Recommended Hardware & Acceleration Backend |
 | --- | --- | --- |

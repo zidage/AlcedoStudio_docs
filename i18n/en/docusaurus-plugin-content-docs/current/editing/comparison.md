@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Before & After: Version A/B Comparison
 
-During extended grading sessions, human vision rapidly suffers from chromatic adaptation fatigue (often mistaking warm skin casts for neutral). Alcedo Studio provides an **A/B Visual Comparison System**, enabling objective evaluation of your grade against the original unadjusted frame or side-by-side comparison between multiple named versions.
+Alcedo Studio’s **A/B comparison** shows an image before and after adjustments or compares two versions of the same photo.
 
 ---
 
@@ -32,21 +32,21 @@ Entering comparison mode reveals the `Comparison Controls` inspector on the righ
 ![A/B source, layout, swap and close controls](/img/tutorial-v0.3.3/comparison-controls.webp)
 *Switching flexibly between split divider, side-by-side, and stacked modes*
 
-| Layout Mode | Visual Interaction | Best Practical Use |
+| Layout Mode | Display | Use |
 | --- | --- | --- |
-| **Divider** | An interactive vertical line spans the canvas. Dragging the divider smoothly reveals either side with pixel-for-pixel spatial alignment. | The most popular micro-inspection mode. Ideal for checking skin shine, eye sharpness, noise reduction boundaries, and subtle vignette falloff. |
+| **Divider** | Drag the divider to reveal either side of the image. | Compare details at the same position. |
 | **Complete Images: Left / Right** | Side-by-side layout rendering two full, un-occluded frames. | Evaluating macro contrast balance, warm/cool color separation, and overall compositional mood. |
 | **Complete Images: Top / Bottom** | Vertically stacked layout displaying two complete frames. | Examining horizon line balance and sky-to-ground contrast in panoramic or wide landscape crops. |
-| **Swap A and B** | Instantly flips the visual positions of Source A and Source B. | Neutralizes subjective left-to-right reading order bias. |
+| **Swap A and B** | Swaps the positions of Source A and Source B. | Change the display order of the two sources. |
 
 ---
 
 ## Operational Mechanics & State Safeguards
 
-- **Focused Review**: While comparison mode is active, GPU resources are dedicated to dual-buffer composition. Parameter sliders and version switching are temporarily locked to prevent accidental parameter mutations during review.
+- **During Comparison**: Parameter adjustments and version switching are temporarily unavailable.
 - **Retry Mechanism**: If video memory pressure delays frame generation, click `Retry` to re-trigger the dual-render pipeline.
-- **Instant Exit**: When finished, click `Close` in the top bar to return to standard editing.
+- **Return to Editing**: Click `Close` in the top bar to exit comparison mode.
 
 ---
 
-With your adjustments refined and verified, proceed to [Export Workflow: Batch Queue & Presets](../export/workflow.md) to deliver your finished images!
+For export instructions, see [Export Workflow: Batch Queue & Presets](../export/workflow.md).

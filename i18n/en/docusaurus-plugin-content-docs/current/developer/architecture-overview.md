@@ -48,7 +48,7 @@ The software architecture is decoupled into four distinct tiers:
 
 ### 1. UI Shell & Workspace Routing
 - `main.cpp` initializes hardware acceleration contexts, registers QML types and singletons, and loads the main window via `engine.loadFromModule("Alcedo.Main", "Main")`.
-- `WorkspaceHost` coordinates state transitions between `LibraryWorkspace` and `EditorWorkspace`, guaranteeing that pending transaction commits are serialized before leaving the darkroom.
+- `WorkspaceHost` coordinates transitions between `LibraryWorkspace` and `EditorWorkspace` and serializes pending transaction commits when leaving the editor.
 
 ### 2. Sleeve Asset Management System (DuckDB Backend)
 - Located in `album_backend`. Replaces scattered per-image sidecar files (`.xmp`) with a centralized database, storing image records, cached EXIF properties, star ratings, and virtual collections in an `.alcd` project file.

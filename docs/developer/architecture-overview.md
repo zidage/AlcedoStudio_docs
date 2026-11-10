@@ -61,7 +61,7 @@ Alcedo Studio 是一款基于 **C++20** 与 **Qt 6 QML / Qt Quick** 构建的数
 
 ### 4. GPU 场景线性渲染管线（GPU Pipeline & RHI）
 - 图像解码后，数据统一提升至 16 位浮点 / 32 位浮点的高动态范围场景线性空间（ACEScg）。
-- 结合 Qt Quick RHI（Rendering Hardware Interface），计算管线直接将渲染完成的浮点纹理提交给场景图视口合成器，避免多余的主机内存回读，保证编辑过程中的流畅响应。
+- 结合 Qt Quick RHI（Rendering Hardware Interface），计算管线将渲染完成的浮点纹理提交给场景图视口合成器，避免多余的主机内存回读。
 - 完整的显示渲染变换（ACES 2.0 / OpenDRT）运行在管线末端，完成到目标显示色彩空间的映射。
 
 ---

@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Interface Overview & Workspace Layout
 
-Alcedo Studio features a unified, modern single-window architecture. You can seamlessly transition between organizing large photo catalogs in the **Library** and fine-tuning creative grades in the **Editor**, without managing disjointed popups or separate application windows.
+Alcedo Studio provides **Library** and **Editor** workspaces in one window for managing and editing photos.
 
 ---
 
@@ -31,7 +31,7 @@ The persistent top toolbar coordinates overall workspace modes and system states
 ```
 
 - **Sidebar Toggles**: Left button toggles the left panel (Collections in Library; Tool Rail in Editor). Right button toggles the right panel (Inspector in Library; Adjustment Stack in Editor).
-- **Mode Switcher**: Effortlessly switch between `Library` asset management and `Editor` darkroom grading.
+- **Mode Switcher**: Switch between the `Library` and `Editor` workspaces.
 - **File Menu**: Quick access to save the project (`Save Project`), create new catalogs, or reopen files.
 - **Settings**: Centralized preferences for GPU backends, disk caches, keyboard shortcuts, LUT packages, and AI models.
 - **Background Task Indicator**: Real-time progress monitor for RAW imports, thumbnail decoding, AI inferences, batch exports, and CLI agent sessions. Clicking the indicator opens the background task manager.
@@ -40,7 +40,7 @@ The persistent top toolbar coordinates overall workspace modes and system states
 
 ## Library Workspace: Three-Column Asset Management
 
-Entering the `Library` reveals a balanced three-column workspace designed for rapid culling and organization:
+The `Library` has three columns:
 
 ![Library and Album Inspector](/img/tutorial-v0.3.3/library.webp)
 *Library Workspace: Collections sidebar, center thumbnail grid, and right Album Inspector*
@@ -53,7 +53,7 @@ Entering the `Library` reveals a balanced three-column workspace designed for ra
 - **Virtual Collections**: Organize photos into custom albums. Adding photos to collections creates virtual references without moving or duplicating source files on disk.
 
 ### 2. Center Thumbnail Grid
-- **Fluid GPU Scrolling**: Smooth zoom slider adjusts grid density from dense contact sheets to large previews.
+- **Thumbnail Size**: Use the zoom slider to adjust grid density.
 - **Interactive Culling**: Multi-select support (Shift / Ctrl / Cmd), with quick right-click options for 1–5 star ratings and color labels.
 - **Open in Darkroom**: Double-click any photo to transition directly into the Editor.
 
@@ -65,9 +65,9 @@ A contextual multi-tab panel containing:
 
 ---
 
-## Editor Workspace: Professional Darkroom Grading
+## Editor Workspace
 
-Double-clicking any thumbnail opens the `Editor` workspace, optimized for precision color grading:
+Double-click a thumbnail to open the `Editor` workspace:
 
 ![Editor workspace and tone panel](/img/tutorial-v0.3.3/editor-tone.webp)
 *Editor Workspace: Left tool rail, center canvas viewport, and right adjustment stack*
@@ -86,7 +86,7 @@ Click an icon to expand its drawer; click again to collapse:
 - **LUT Browser**: Visual browser for official and custom 3D LUTs with search and category filtering.
 
 ### 3. Right Adjustment Stack
-The adjustment panels are structured in alignment with the scientific processing pipeline:
+The right panel contains these adjustments:
 
 ```text
 [ Real-Time Waveform / Histogram ]
@@ -97,7 +97,7 @@ The adjustment panels are structured in alignment with the scientific processing
 4. Look                        ── CAT02 creative white balance, saturation, selective color, and color wheels
 5. 3D LUT                      ── Film simulation selection, strength blending, and color space encoding
 6. Display Transform           ── ACES 2.0 / OpenDRT / Film Print
-7. Post Processing             ── Diffusion glow, clarity, sharpening, and authentic film grain
+7. Post Processing             ── Diffusion, clarity, sharpening, and film grain
 ```
 
 Contextual tabs such as **Mask** (for fine-tuning mask geometry and inversion) and **Compare** (for A/B evaluation) slide out automatically when their respective tools are invoked.
@@ -106,4 +106,4 @@ For the Film Print controls, see [Film Simulation](../editing/film-simulation.md
 
 ---
 
-Now that you understand the workspace layout, proceed to [Your First Edit](./first-edit.md) for a step-by-step walkthrough of developing a RAW photo.
+For a step-by-step editing tutorial, see [Your First Edit](./first-edit.md).

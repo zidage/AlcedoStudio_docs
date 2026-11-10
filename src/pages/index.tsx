@@ -10,7 +10,7 @@ function Home(): ReactNode {
       title: translate({id: 'homepage.entry.quickStart.title', message: '快速上手 (Quick Start)'}),
       description: translate({
         id: 'homepage.entry.quickStart.description',
-        message: '从创建项目、导入照片、核心影调调色到最终导出，快速建立完整工作流。',
+        message: '创建项目、导入照片、调整影调和色彩，然后导出。',
       }),
       to: '/docs/getting-started/installation',
       linkLabel: translate({
@@ -22,25 +22,25 @@ function Home(): ReactNode {
       title: translate({id: 'homepage.entry.editing.title', message: '图像编辑与色彩分级'}),
       description: translate({
         id: 'homepage.entry.editing.description',
-        message: '深入 RAW 解码、局部蒙版节点、CAT02 创意白平衡、3D LUT 编码与 ACES/OpenDRT 显示变换。',
+        message: 'RAW 解码、局部蒙版节点、CAT02 创意白平衡、3D LUT 编码与 ACES/OpenDRT 显示变换。',
       }),
       to: '/docs/editing/raw-and-geometry',
-      linkLabel: translate({id: 'homepage.entry.editing.link', message: '探索编辑系统 →'}),
+      linkLabel: translate({id: 'homepage.entry.editing.link', message: '查看编辑文档 →'}),
     },
     {
       title: translate({id: 'homepage.entry.library.title', message: '图库与资产管理'}),
       description: translate({
         id: 'homepage.entry.library.description',
-        message: 'DuckDB 驱动的高效数字资产管理：虚拟集合、星级评分、多维智能筛选与版本批量同步。',
+        message: '使用图库管理虚拟集合、星级评分、筛选和批量调整复用。',
       }),
       to: '/docs/library/import-and-organize',
       linkLabel: translate({id: 'homepage.entry.library.link', message: '管理图库照片 →'}),
     },
     {
-      title: translate({id: 'homepage.entry.ai.title', message: '端侧 AI 与智能分析'}),
+      title: translate({id: 'homepage.entry.ai.title', message: '本地 AI 与自动化'}),
       description: translate({
         id: 'homepage.entry.ai.description',
-        message: '本地离线 CLIP 语义搜索与内容标签，保护绝对隐私，结合 alcedo-cli 自动化协同修图。',
+        message: '使用本地 CLIP 模型生成内容标签、进行语义搜索，以及通过 alcedo-cli 自动化编辑。',
       }),
       to: '/docs/ai/overview',
       linkLabel: translate({id: 'homepage.entry.ai.link', message: '了解 AI 能力 →'}),
@@ -49,7 +49,7 @@ function Home(): ReactNode {
       title: translate({id: 'homepage.entry.developer.title', message: '架构与开发者文档'}),
       description: translate({
         id: 'homepage.entry.developer.description',
-        message: '解析 DAG 提交图历史、GPU 加速管线（CUDA/Metal/OpenCL）与 alcedo-cli 自动化。',
+        message: 'DAG 提交历史、GPU 加速管线（CUDA/Metal/OpenCL）与 alcedo-cli 自动化。',
       }),
       to: '/docs/developer/architecture-overview',
       linkLabel: translate({
@@ -73,7 +73,7 @@ function Home(): ReactNode {
           </Heading>
           <p className="alcedo-home-subtitle">
             <Translate id="homepage.hero.subtitle">
-              专业级非破坏性 RAW 照片处理与资产管理系统：GPU 加速色彩流水线、节点式调色与智能工作流。
+              非破坏性 RAW 照片编辑与图库管理软件，提供 GPU 加速、调色节点和本地 AI 功能。
             </Translate>
           </p>
           <div className="alcedo-home-actions">
@@ -113,11 +113,11 @@ function Home(): ReactNode {
         <section className="alcedo-home-section alcedo-home-focus">
           <div className="container alcedo-home-container">
             <Heading as="h2" className="alcedo-home-section-title">
-              <Translate id="homepage.section.focus">核心设计理念</Translate>
+              <Translate id="homepage.section.focus">工作方式</Translate>
             </Heading>
             <p className="alcedo-home-focus-text">
               <Translate id="homepage.focus.text">
-                Alcedo Studio 采用以 DuckDB 为底座的非破坏性元数据数据库，将原始照片与修改操作严格分离；图像处理管线基于物理场景线性空间（ACES / OpenDRT），搭配 Git 式分支版本管理与原生 GPU 硬件加速，兼顾摄影暗房的严谨色彩科学与流畅交互。
+                Alcedo Studio 在 DuckDB 项目数据库中保存照片引用、调整参数和版本记录。图像处理管线使用场景线性色彩空间，并提供 ACES 和 OpenDRT 显示变换、分支版本管理与 GPU 加速。
               </Translate>
             </p>
           </div>

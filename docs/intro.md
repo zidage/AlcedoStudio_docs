@@ -4,13 +4,13 @@ sidebar_position: 1
 
 # 欢迎使用 Alcedo Studio
 
-Alcedo Studio 是一款面向摄影与数字暗房工作流的非破坏性 RAW 照片处理与资产管理系统。软件采用 C++20 与 Qt 6 QML 构建，支持 GPU 硬件加速（Windows 平台支持 CUDA 与 OpenCL 1.2，macOS 平台支持 Metal），结合场景线性色彩管理与交互式编辑流水线。
+Alcedo Studio 是一款非破坏性 RAW 照片编辑与图库管理软件。软件使用 C++20 与 Qt 6 QML 构建，支持 GPU 加速（Windows 支持 CUDA 与 OpenCL 1.2，macOS 支持 Metal），并使用场景线性图像处理管线。
 
 ---
 
-## 核心设计理念
+## 工作方式
 
-理解 Alcedo Studio 的底层设计逻辑，有助于你更高效地掌握其工作流程：
+Alcedo Studio 的项目和图像处理流程如下：
 
 ```text
 [ 原始文件 (只读) ] 
@@ -28,16 +28,16 @@ Alcedo Studio 是一款面向摄影与数字暗房工作流的非破坏性 RAW �
 [ 实时预览视口 (RHI) / 后台批量导出队列 (SDR / Ultra HDR) ]
 ```
 
-1. **绝对的非破坏性编辑（Non-Destructive Editing）**  
-   原始 RAW 或位图文件在磁盘上仅作为只读资源被引用，软件绝不修改源文件。所有的导入记录、星级评分、虚拟集合、参数调整与历史版本，均统一物化在基于 DuckDB 驱动的 `.alcd` 单文件项目数据库中。
+1. **非破坏性编辑（Non-Destructive Editing）**
+   项目引用磁盘上的 RAW 或位图源文件，并在基于 DuckDB 的 `.alcd` 项目数据库中保存导入记录、评分、虚拟集合、调整参数与历史版本。
 2. **场景线性色彩科学（Scene-Referred Color Science）**  
-   不同于传统软件直接在显示空间（如 sRGB）做破坏性像素拉伸，Alcedo Studio 全程在场景线性宽色域空间（ACES 2.0 工作流）中进行物理光学与色彩运算。无论高光压缩、阴影提亮还是曲线调整，都能保持自然的色彩过渡与真实的高光滚降。
+   调色管线使用场景线性宽色域空间，并提供曝光、影调曲线等调整以及 ACES 2.0 和 OpenDRT 显示变换。
 3. **节点式分级与蒙版组（Node-Based Grading & Mask Groups）**  
-   打破单层滑块的局限，你可以构建灵活的调色节点链条。每个调色节点都可以独立挂载参数、3D LUT 以及包含羽化与反相的局部蒙版（径向椭圆、线性渐变），实现精细的图层化局部调整。
+   你可以使用多个调色节点。每个节点都有独立的调整参数、3D LUT 和局部蒙版；径向蒙版与线性渐变蒙版支持羽化和反相。
 4. **Git 式提交图版本控制（DAG Commit & Branching Versions）**  
-   每次释放滑块都会生成一次原子提交；你可以随时“从当前提交创建分支”保存不同色调方向（如“温暖日落”、“高反差黑白”），并在多个版本间无缝切换或进行像素级 A/B 对比。
+   调整结束后会生成历史提交；你可以从当前提交创建分支，在版本之间切换或进行 A/B 对比。
 5. **端侧隐私 AI 与智能体自动化（On-Device AI & Agent Automation）**  
-   内置本地离线视觉模型（基于 ONNX Runtime 的 CLIP 嵌入模型），在本地完成图像内容标签识别与自然语言语义检索，不向外部网络上传图像数据；同时提供配套的 `alcedo-cli` 命令行工具，支持外部脚本或智能体通过本地 RPC 协同调色与执行批处理流水线。
+   使用基于 ONNX Runtime 的本地 CLIP 模型生成图像内容标签和进行自然语言搜索。`alcedo-cli` 支持外部脚本或智能体通过本地 RPC 编辑照片和执行批处理。
 
 ---
 
@@ -54,7 +54,7 @@ Alcedo Studio 是一款面向摄影与数字暗房工作流的非破坏性 RAW �
 ### 资产管理与选片
 - [图库管理：导入、集合、评分与多维筛选](./library/import-and-organize.md)：文件格式支持、虚拟相册、星级打分、动态分组与时间线筛选。
 
-### 深入色彩与画质编辑
+### 色彩与画质编辑
 - [输入解码与几何构图](./editing/raw-and-geometry.md)：RAW 解码引擎（RCD / 神经引擎）、位图输入色彩、镜头畸变校正与智能裁剪旋转。
 - [调色节点、图层与局部蒙版](./editing/nodes-and-masks.md)：节点流水线逻辑、图层堆栈、径向蒙版与渐变蒙版的绘制与微调。
 - [影调、曲线与色彩控制](./editing/tone-and-color.md)：曝光与局部影调、相机白平衡与 CAT02 创意白平衡、选择性色彩与 Lift/Gamma/Gain 色轮。
@@ -71,7 +71,7 @@ Alcedo Studio 是一款面向摄影与数字暗房工作流的非破坏性 RAW �
 - [本地 AI 模型管理](./ai/model-management.md)：下载源选择、本地模型激活与推理设置。
 - [AI 标签生成](./ai/label-generation.md)：导入自动识别与相册批量重打标签。
 - [AI 自然语言与多维搜索](./ai/search.md)：基于文本的自然语义检索与 EXIF 结构化过滤。
-- [智能体交互与 CLI 命令行](./automation/cli.md)：使用 `alcedo-cli` 进行无头批量批处理与协同自动化修图。
+- [智能体交互与 CLI 命令行](./automation/cli.md)：使用 `alcedo-cli` 进行无头批处理与自动化编辑。
 
 ### 设置与底层架构
 - [首选项与系统设置](./settings/preferences.md)：缓存清理、快捷键定制与签名在线更新。

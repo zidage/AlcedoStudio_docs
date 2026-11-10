@@ -13,7 +13,7 @@ Access `Settings` from the top toolbar to configure system parameters, GPU accel
 ![Language, themes, and settings categories](/img/tutorial-v0.3.3/settings.webp)
 *Preferences Console: Language, themes, and default behaviors*
 
-- **Language / Theme**: Toggle seamlessly between Simplified Chinese and English; ships with a professional darkroom dark theme.
+- **Language / Theme**: Switch between Simplified Chinese and English and set the interface theme.
 - **Default Behavior**:
   Governs how the application handles adding masks while the root grading node is selected:
   - **Create a new layer, then draw (Recommended)**: Automatically creates an isolated grading layer before drawing, preventing global baseline adjustments from being restricted within a local mask.
@@ -59,7 +59,7 @@ See [Installation & Hardware Setup](../getting-started/installation.md). Select 
 Alcedo Studio provides digitally signed in-app updates:
 
 1. Open `Updates`. The engine checks for new releases and renders the localized release notes and changelog.
-2. Click `Download Update`. The background downloader retrieves the package and verifies SHA-256 signatures and digital certificates.
+2. Click `Download Update`. The application downloads and verifies the package.
 3. Once verified, follow the prompt to restart and apply the update.
 
 ---

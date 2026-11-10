@@ -4,13 +4,13 @@ sidebar_position: 1
 
 # 智能体交互与 alcedo-cli 命令行
 
-Alcedo Studio 原生内置了专为数字暗房设计的自动化工具链 **`alcedo-cli`**。无论是将重复的批处理渲染交给自动化脚本，还是让 AI 智能体连接 GUI 窗口与你协同调色，`alcedo-cli` 都能提供结构化、类型安全的调用接口。
+Alcedo Studio 随附命令行工具 **`alcedo-cli`**，可供脚本或 AI 智能体连接应用窗口、编辑照片和执行批处理。
 
 ---
 
 ## 核心运行模式
 
-`alcedo-cli` 支持两种截然不同但同样强大的运行模式：
+`alcedo-cli` 支持两种运行模式：
 
 ```text
 [ alcedo-cli 命令行中枢 ]
@@ -63,7 +63,7 @@ alcedo-cli schema
    ```powershell
    alcedo-cli --session <SESSION_NAME> call control.release '{}'
    ```
-5. **用户紧急熔断机制**：任何时候若想打断智能体的操作，直接在桌面端点击状态栏的 `停止（Stop）` 按钮，即可无条件强制收回控制权！
+5. **停止智能体会话**：点击桌面端状态栏中的 `停止（Stop）` 可中断智能体会话并收回控制权。
 
 ---
 
@@ -95,4 +95,4 @@ alcedo-cli --session <HEADLESS_SESSION> session stop
 | **分支版本** | 创建命名分支（`versions.branch`）、切换版本分支、执行选择性参数粘贴。 |
 | **批处理任务** | 触发导出队列、监控长耗时任务进度并等待返回（`tasks.wait`）。 |
 
-如需配合大模型智能体自主修图，推荐安装官方的 [alcedo skill](https://github.com/zidage/alcedo-skills)，实现全自动闭环的“意图分析 → 调整参数 → 校验直方图”智能暗房助手！
+有关配合 AI 智能体使用的说明，请参阅 [alcedo skill](https://github.com/zidage/alcedo-skills)。

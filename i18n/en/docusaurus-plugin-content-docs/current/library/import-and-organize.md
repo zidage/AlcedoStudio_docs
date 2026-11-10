@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Library: Import, Collections, Ratings & Multi-Dimensional Culling
 
-Alcedo Studio’s Library workspace is powered by an embedded high-performance **DuckDB database (the Sleeve engine)**, engineered to effortlessly handle catalogs containing tens of thousands of high-resolution images. All cataloging operations are performed on lightweight metadata references, ensuring blazing-fast querying while keeping your original files untouched.
+Alcedo Studio’s Library uses an embedded **DuckDB database (the Sleeve engine)** to store photo references, metadata, and edit information.
 
 ---
 
@@ -17,22 +17,24 @@ Alcedo Studio provides two flexible import pathways to accommodate diverse shoot
                         └──▶ [ Import From Folder (Recursive + Filtering) ] ┴─▶ [ DuckDB Metadata Catalog & Thumbnail Cache ]
 ```
 
+:::important Source Files and Memory Cards
+When you import photos, Alcedo Studio records the **absolute path** of each source file in the `.alcd` project. It does not copy, move, or modify the photos.
+
+Before importing, copy photos from the memory card to your computer or another storage device where you plan to keep them. If you import directly from a memory card, reading the source files may be limited by the I/O performance of the card and reader. If you remove the card or its mount path changes, the project cannot find the source files at their original paths.
+:::
+
 ### 1. Import Images
 Click `Import Images` in the left panel to launch the system file dialog. Ideal for bringing in single photographs or a small preselected batch.
 
 ### 2. Import From Folder
-For full memory cards or external archive drives, recursive folder scanning is the recommended approach:
+Importing from a folder scans the selected folder and its subfolders:
 1. Select the root directory. The engine scans the folder and all nested subdirectories.
 2. An import confirmation dialog aggregates files by their genuine format:
-   - **RAW**: Professional camera raw data (Sony `.ARW`, Canon `.CR2/.CR3`, Nikon `.NEF` including HE/HE*, Fujifilm `.RAF`, Leica / generic `.DNG`, etc.).
+   - **RAW**: Camera raw files (Sony `.ARW`, Canon `.CR2/.CR3`, Nikon `.NEF` including HE/HE*, Fujifilm `.RAF`, Leica / generic `.DNG`, etc.).
    - **Raster Images**: JPEG, TIFF (8/16/32-bit), PNG, and OpenEXR.
    - **Other Files**: Non-image assets are counted for visibility and automatically excluded.
-3. **Format Filtering**: Check only the formats you want to ingest. For dual-slot cards containing RAW + JPEG pairs, simply check RAW to keep your library lean.
+3. **Format Filtering**: Check the formats you want to import. If the folder contains both RAW and JPEG files, you can select only RAW.
 4. Click `Import … File(s)`. The engine concurrently extracts EXIF metadata and registers records into DuckDB. A circular progress ring monitors progress and supports smooth cancellation.
-
-:::important Project References vs. Physical Storage
-Alcedo Studio never copies or alters source files on disk. Importing simply establishes fast indexed pointers inside the `.alcd` project catalog.
-:::
 
 ---
 
@@ -50,7 +52,7 @@ Use the `Collections` panel in the left sidebar to group photographs by assignme
 
 ## Star Ratings & Culling
 
-Rapidly sorting through hundreds of burst frames is vital for photography workflows:
+Use keyboard shortcuts or batch operations to rate photos:
 
 - **Keyboard Culling**: With photos selected, press number keys `1` through `5` to assign star ratings; press `0` to clear ratings.
 - **Batch Rating**: Hold `Shift` for range selection or press `Ctrl+A` (`Cmd+A` on macOS) to select all images in the active view and assign ratings in bulk.
@@ -60,12 +62,12 @@ Rapidly sorting through hundreds of burst frames is vital for photography workfl
 
 ## Album Inspector: Filter, Sort & Group
 
-The `Album` inspector on the right turns raw metadata into an interactive control dashboard:
+The `Album` inspector on the right provides filtering, sorting, and grouping:
 
 ![Library and Album Inspector](/img/tutorial-v0.3.3/library.webp)
 *Using the Album Inspector for multi-dimensional filtering and dynamic grouping*
 
-### 1. Filter: Instant Viewport Narrowing
+### 1. Filter
 The inspector automatically aggregates metadata across the active view. Click any attribute to apply real-time filtering:
 - **Capture Date**: Click a year, month, or specific day (e.g. "2026-06-07").
 - **Gear**: Filter by camera body (e.g. "Sony A1", "Nikon Z8") or specific focal length / lens model.
@@ -87,8 +89,8 @@ Click `Group By` beside any metadata field to organize the thumbnail grid into c
 
 ## Capture Time & Hardware Timezone Handling
 
-Digital cameras record timestamps in EXIF based on their internal hardware clock (without arbitrary desktop timezone offsets). Alcedo Studio parses the camera's physical timestamp directly, **preventing desktop timezone shifts from desynchronizing shoot times**. This guarantees consistent multi-camera synchronization across international travels.
+Alcedo Studio reads the capture time recorded in EXIF without shifting it when the computer's time zone changes. Times from different cameras still depend on each camera's clock settings.
 
 ---
 
-Once your selects are organized, double-click an image to open [Input Decoding & Geometry](../editing/raw-and-geometry.md) and begin crafting your image!
+Double-click a photo to open the editor. For input and framing settings, see [Input Decoding & Geometry](../editing/raw-and-geometry.md).

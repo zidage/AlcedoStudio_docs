@@ -4,13 +4,13 @@ sidebar_position: 1
 
 # Welcome to Alcedo Studio
 
-Alcedo Studio is a non-destructive RAW photo editor and digital asset management (DAM) system engineered for photography and digital darkroom workflows. Built with C++20 and Qt 6 QML, it provides GPU hardware acceleration (CUDA and OpenCL 1.2 on Windows; Metal on macOS), uniting scene-referred color management with responsive interactive editing.
+Alcedo Studio is a non-destructive RAW photo editor and library manager. It is built with C++20 and Qt 6 QML, uses a scene-referred image processing pipeline, and supports GPU acceleration (CUDA and OpenCL 1.2 on Windows; Metal on macOS).
 
 ---
 
-## Core Architectural Concepts
+## How It Works
 
-Understanding the core architecture of Alcedo Studio helps you navigate and master its creative workflow:
+The project and image processing workflow is organized as follows:
 
 ```text
 [ Source Files (Read-Only) ] 
@@ -28,16 +28,16 @@ Understanding the core architecture of Alcedo Studio helps you navigate and mast
 [ Real-Time Viewport (RHI) / Batch Export Queue (SDR / Ultra HDR) ]
 ```
 
-1. **Strictly Non-Destructive Editing**  
-   Original RAW and raster files on disk are treated as immutable, read-only sources. File references, star ratings, virtual collections, adjustment parameters, and edit histories are unified within a single DuckDB-powered `.alcd` project database.
+1. **Non-Destructive Editing**
+   The project references RAW or raster source files on disk and stores import records, ratings, virtual collections, adjustment parameters, and edit history in a DuckDB-based `.alcd` project database.
 2. **Scene-Referred Color Science**  
-   Unlike traditional software that stretches pixels destructively in narrow display spaces (such as sRGB), Alcedo Studio conducts optical calculations in a physical, scene-referred wide-gamut space (ACES 2.0 workflow). Highlight roll-off, shadow recovery, and tone curves maintain smooth gradations and true-to-life color fidelity.
+   The grading pipeline uses a scene-referred wide-gamut space. It includes exposure and tone-curve adjustments and ACES 2.0 and OpenDRT display transforms.
 3. **Node-Based Grading & Mask Groups**  
-   Breaking past single-layer limits, Alcedo Studio allows you to build linear color grading chains. Each Color Grade node maintains independent parametric tone controls, 3D LUTs, and interactive masks (radial ellipses and linear gradients with custom feathering and inversion).
+   You can use multiple Color Grade nodes, each with its own adjustments, 3D LUT, and local masks. Radial and linear gradient masks support feathering and inversion.
 4. **Git-Like Versioning (DAG Commits & Branches)**  
-   Every settled slider adjustment records an atomic commit in a directed acyclic graph (DAG). You can fork named "Versions" at any point (e.g., "Warm Sunset", "Moody Monokrome") to explore alternate treatments without file duplication or data loss.
+   Completed adjustments are recorded as history commits. You can branch from the current commit, switch between versions, and compare them in A/B view.
 5. **On-Device AI & Agent Automation**  
-   An embedded on-device vision model (CLIP embeddings via ONNX Runtime) delivers offline, privacy-first automatic image tagging and natural language semantic search without uploading image data. Coupled with the companion `alcedo-cli` interface, external scripts and AI agents can automate grading and batch pipelines via local RPC.
+   A local CLIP model running through ONNX Runtime generates content tags and supports natural language search. External scripts and agents can use `alcedo-cli` and local RPC to edit photos and run batch jobs.
 
 ---
 
