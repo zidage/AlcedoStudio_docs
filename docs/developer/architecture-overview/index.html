@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">架构总览与核心设计 | Alcedo Studio</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://zidage.github.io/AlcedoStudio_docs/docs/developer/architecture-overview"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="架构总览与核心设计 | Alcedo Studio"><meta data-rh="true" name="description" content="Alcedo Studio 是一款基于 C++20 与 Qt 6 QML / Qt Quick 构建的数字暗房应用，专为非破坏性 RAW 处理与资产管理设计。"><meta data-rh="true" property="og:description" content="Alcedo Studio 是一款基于 C++20 与 Qt 6 QML / Qt Quick 构建的数字暗房应用，专为非破坏性 RAW 处理与资产管理设计。"><link data-rh="true" rel="icon" href="/AlcedoStudio_docs/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://zidage.github.io/AlcedoStudio_docs/docs/developer/architecture-overview"><link data-rh="true" rel="alternate" href="https://zidage.github.io/AlcedoStudio_docs/docs/developer/architecture-overview" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://zidage.github.io/AlcedoStudio_docs/en/docs/developer/architecture-overview" hreflang="en"><link data-rh="true" rel="alternate" href="https://zidage.github.io/AlcedoStudio_docs/docs/developer/architecture-overview" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"架构总览与核心设计","item":"https://zidage.github.io/AlcedoStudio_docs/docs/developer/architecture-overview"}]}</script><link rel="stylesheet" href="/AlcedoStudio_docs/assets/css/styles.79b97712.css">
-<script src="/AlcedoStudio_docs/assets/js/runtime~main.f6274389.js" defer="defer"></script>
+<script src="/AlcedoStudio_docs/assets/js/runtime~main.50468e79.js" defer="defer"></script>
 <script src="/AlcedoStudio_docs/assets/js/main.3f8c163a.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -38,7 +38,7 @@
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-gpu-场景线性渲染管线gpu-pipeline--rhi">4. GPU 场景线性渲染管线（GPU Pipeline &amp; RHI）<a href="#4-gpu-场景线性渲染管线gpu-pipeline--rhi" class="hash-link" aria-label="4. GPU 场景线性渲染管线（GPU Pipeline &amp; RHI）的直接链接" title="4. GPU 场景线性渲染管线（GPU Pipeline &amp; RHI）的直接链接" translate="no">​</a></h3>
 <ul>
 <li class="">图像解码后，数据统一提升至 16 位浮点 / 32 位浮点的高动态范围场景线性空间（ACEScg）。</li>
-<li class="">结合 Qt Quick RHI（Rendering Hardware Interface），计算管线直接将渲染完成的浮点纹理提交给场景图视口合成器，避免多余的主机内存回读，保证编辑过程中的流畅响应。</li>
+<li class="">结合 Qt Quick RHI（Rendering Hardware Interface），计算管线将渲染完成的浮点纹理提交给场景图视口合成器，避免多余的主机内存回读。</li>
 <li class="">完整的显示渲染变换（ACES 2.0 / OpenDRT）运行在管线末端，完成到目标显示色彩空间的映射。</li>
 </ul>
 <hr>
