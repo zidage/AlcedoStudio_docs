@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
-<title data-rh="true">编辑历史、分支版本与参数复用 | Alcedo Studio</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://zidage.github.io/AlcedoStudio_docs/docs/getting-started/edit-history-and-versions"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="编辑历史、分支版本与参数复用 | Alcedo Studio"><meta data-rh="true" name="description" content="Alcedo Studio 使用有向无环图（DAG）提交与分支记录编辑历史。你可以撤销或重做操作，也可以为同一张照片创建多个版本。"><meta data-rh="true" property="og:description" content="Alcedo Studio 使用有向无环图（DAG）提交与分支记录编辑历史。你可以撤销或重做操作，也可以为同一张照片创建多个版本。"><link data-rh="true" rel="icon" href="/AlcedoStudio_docs/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://zidage.github.io/AlcedoStudio_docs/docs/getting-started/edit-history-and-versions"><link data-rh="true" rel="alternate" href="https://zidage.github.io/AlcedoStudio_docs/docs/getting-started/edit-history-and-versions" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://zidage.github.io/AlcedoStudio_docs/en/docs/getting-started/edit-history-and-versions" hreflang="en"><link data-rh="true" rel="alternate" href="https://zidage.github.io/AlcedoStudio_docs/docs/getting-started/edit-history-and-versions" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"编辑历史、分支版本与参数复用","item":"https://zidage.github.io/AlcedoStudio_docs/docs/getting-started/edit-history-and-versions"}]}</script><link rel="stylesheet" href="/AlcedoStudio_docs/assets/css/styles.79b97712.css">
-<script src="/AlcedoStudio_docs/assets/js/runtime~main.50468e79.js" defer="defer"></script>
-<script src="/AlcedoStudio_docs/assets/js/main.3f8c163a.js" defer="defer"></script>
+<title data-rh="true">编辑历史、分支版本与参数复用 | Alcedo Studio</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://zidage.github.io/AlcedoStudio_docs/docs/getting-started/edit-history-and-versions"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="编辑历史、分支版本与参数复用 | Alcedo Studio"><meta data-rh="true" name="description" content="Alcedo Studio 使用有向无环图（DAG）提交与分支记录编辑历史。你可以撤销或重做操作，也可以为同一张照片创建多个版本。"><meta data-rh="true" property="og:description" content="Alcedo Studio 使用有向无环图（DAG）提交与分支记录编辑历史。你可以撤销或重做操作，也可以为同一张照片创建多个版本。"><link data-rh="true" rel="icon" href="/AlcedoStudio_docs/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://zidage.github.io/AlcedoStudio_docs/docs/getting-started/edit-history-and-versions"><link data-rh="true" rel="alternate" href="https://zidage.github.io/AlcedoStudio_docs/docs/getting-started/edit-history-and-versions" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://zidage.github.io/AlcedoStudio_docs/en/docs/getting-started/edit-history-and-versions" hreflang="en"><link data-rh="true" rel="alternate" href="https://zidage.github.io/AlcedoStudio_docs/docs/getting-started/edit-history-and-versions" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"编辑历史、分支版本与参数复用","item":"https://zidage.github.io/AlcedoStudio_docs/docs/getting-started/edit-history-and-versions"}]}</script><link rel="stylesheet" href="/AlcedoStudio_docs/assets/css/styles.0fb5cd69.css">
+<script src="/AlcedoStudio_docs/assets/js/runtime~main.8bdf9072.js" defer="defer"></script>
+<script src="/AlcedoStudio_docs/assets/js/main.9d83ce4b.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -15,8 +15,7 @@
 <p>Alcedo Studio 使用<strong>有向无环图（DAG）提交与分支</strong>记录编辑历史。你可以撤销或重做操作，也可以为同一张照片创建多个版本。</p>
 <hr>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="历史history原子提交与撤销重做">历史（History）：原子提交与撤销重做<a href="#历史history原子提交与撤销重做" class="hash-link" aria-label="历史（History）：原子提交与撤销重做的直接链接" title="历史（History）：原子提交与撤销重做的直接链接" translate="no">​</a></h2>
-<p><img decoding="async" loading="lazy" alt="历史中的编辑记录与标记" src="/AlcedoStudio_docs/assets/images/history-89e20045629854c6c4d24daed9ddf7d3.webp" width="320" height="485" class="img_ev3q">
-<em>查看线性历史步骤与参数提交记录</em></p>
+<figure class="mock_ik4N" aria-label="历史"><div class="titlebar_h9Cq"><span class="brand_K0VC">Alcedo Studio</span><span>历史</span></div><dl class="fields_pYpC"><div class="row_dKoG selected_lhKh"><dt>03 · 曝光 +0.30 EV</dt><dd><span class="value_s5os">智能体 · 提亮主体</span></dd></div><div class="row_dKoG"><dt>02 · 调整裁剪</dt><dd></dd></div><div class="row_dKoG"><dt>01 · 初始状态</dt><dd></dd></div></dl><figcaption>界面示意 · 仅展示相关控件，数值为示例</figcaption></figure>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-提交生成逻辑">1. 提交生成逻辑<a href="#1-提交生成逻辑" class="hash-link" aria-label="1. 提交生成逻辑的直接链接" title="1. 提交生成逻辑的直接链接" translate="no">​</a></h3>
 <ul>
 <li class=""><strong>交互预览</strong>：拖动滑块时，视口会预览调整效果。</li>
@@ -28,8 +27,7 @@
 <hr>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="版本versions多重调色分支探索">版本（Versions）：多重调色分支探索<a href="#版本versions多重调色分支探索" class="hash-link" aria-label="版本（Versions）：多重调色分支探索的直接链接" title="版本（Versions）：多重调色分支探索的直接链接" translate="no">​</a></h2>
 <p>**版本（Versions）**功能可以为同一张照片保存多套调整：</p>
-<p><img decoding="async" loading="lazy" alt="两个独立命名版本" src="/AlcedoStudio_docs/assets/images/versions-6025197c85bf687c7efadb3cba5596ba.webp" width="320" height="330" class="img_ev3q">
-<em>为同一张照片管理多套独立的风格分支</em></p>
+<figure class="mock_ik4N" aria-label="版本"><div class="titlebar_h9Cq"><span class="brand_K0VC">Alcedo Studio</span><span>版本</span></div><dl class="fields_pYpC"><div class="row_dKoG selected_lhKh"><dt>暖调胶片</dt><dd><span class="value_s5os">当前版本</span></dd></div><div class="row_dKoG"><dt>高反差黑白</dt><dd><span class="value_s5os">独立分支</span></dd></div></dl><figcaption>界面示意 · 仅展示相关控件，数值为示例</figcaption></figure>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="核心分支操作">核心分支操作<a href="#核心分支操作" class="hash-link" aria-label="核心分支操作的直接链接" title="核心分支操作的直接链接" translate="no">​</a></h3>
 <ul>
 <li class=""><strong>从当前提交创建分支（Branch from current commit）</strong>：<br>
@@ -44,24 +42,14 @@
 <hr>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="选择性复制与批量粘贴adjustment-transfer">选择性复制与批量粘贴（Adjustment Transfer）<a href="#选择性复制与批量粘贴adjustment-transfer" class="hash-link" aria-label="选择性复制与批量粘贴（Adjustment Transfer）的直接链接" title="选择性复制与批量粘贴（Adjustment Transfer）的直接链接" translate="no">​</a></h2>
 <p>使用<strong>选择性参数复制与粘贴</strong>，可以将所选调整从一张照片应用到其他照片。裁剪、曝光等参数也可以被选择，因此粘贴前应检查所选模块。</p>
-<p><img decoding="async" loading="lazy" alt="选择性复制与粘贴调整" src="/AlcedoStudio_docs/assets/images/versions-6025197c85bf687c7efadb3cba5596ba.webp" width="320" height="330" class="img_ev3q">
-<em>选择性勾选需复制的参数模块</em></p>
+<figure class="frame_ckso" aria-label="选择性复制与粘贴"><header class="title_sAx5"><b>Alcedo Studio</b><span>选择性复制与粘贴</span></header><div class="demoTabs_jn8_" aria-label="示例模式"><button type="button" aria-pressed="true">复制界面</button><button type="button" aria-pressed="false">粘贴界面</button></div><div class="dialogHeading_PU4x"><strong>复制调整</strong><span>DSC_0001.NEF <span aria-hidden="true">×</span></span></div><div class="transfer_nTyV"><section><h4>来源版本</h4><button type="button" class="listButton_Fo3y" aria-pressed="true">暖调胶片<small>当前</small></button><button type="button" class="listButton_Fo3y" aria-pressed="false">黑白</button></section><section><h4>节点</h4><div class="bulk_H2uL"><label><input type="checkbox">全选</label><button type="button">清除</button></div><div class="nodeRow_qqjm"><input type="checkbox" aria-label="选择节点全部参数：RAW 与几何"><button type="button" class="listButton_Fo3y" aria-pressed="false">RAW 与几何</button></div><div class="nodeRow_qqjm"><input type="checkbox" aria-label="选择节点全部参数：基础显影"><button type="button" class="listButton_Fo3y" aria-pressed="true">基础显影</button></div><div class="nodeRow_qqjm"><input type="checkbox" aria-label="选择节点全部参数：主体提亮"><button type="button" class="listButton_Fo3y" aria-pressed="false">主体提亮</button></div><div class="nodeRow_qqjm"><input type="checkbox" aria-label="选择节点全部参数：显示变换"><button type="button" class="listButton_Fo3y" aria-pressed="false">显示变换</button></div></section><section><h4>基础显影</h4><div class="bulk_H2uL"><label><input type="checkbox">全选</label><button type="button">清除</button></div><div class="itemSection_kdqR"><strong>色调</strong><label><input type="checkbox" checked="">曝光</label><label><input type="checkbox">对比度</label><label><input type="checkbox">高光</label></div><div class="itemSection_kdqR"><strong>外观</strong><label><input type="checkbox">白平衡</label><label><input type="checkbox">饱和度</label></div></section></div><div class="footer_Zt7l"><span>取消</span><span class="action_qQm3">复制调整</span></div><p class="explanation_zc_i" aria-live="polite">先选来源版本，再选节点；点节点名称查看参数，勾选框决定复制范围。蒙版按节点整体选择。</p><figcaption>界面示意 · 示例数据，控件位置参考 QML</figcaption></figure>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="操作步骤">操作步骤<a href="#操作步骤" class="hash-link" aria-label="操作步骤的直接链接" title="操作步骤的直接链接" translate="no">​</a></h3>
 <ol>
-<li class=""><strong>复制来源参数</strong>：<br>
-<!-- -->在已调色照片上右键，选择 <code>复制调整…（Copy Adjustments…）</code>。</li>
-<li class=""><strong>选择来源版本与模块</strong>：<br>
-<!-- -->在弹出的配置对话框中，选择提取参数的来源版本（Version），并按需精准勾选：<!-- -->
-<ul>
-<li class=""><strong>基础输入与几何</strong>：RAW 相机白平衡、去马赛克、镜头校正、裁剪与旋转。</li>
-<li class=""><strong>调色节点（Color Grade Nodes）</strong>：色调（曝光、对比度、曲线）、创意外观（CAT02 创意白平衡、饱和度、色轮）、3D LUT 及输入输出色彩编码。</li>
-<li class=""><strong>全局渲染</strong>：显示变换（ACES 2.0 / OpenDRT）及屏幕后期处理（柔光、颗粒、锐化）。</li>
-</ul>
-</li>
-<li class=""><strong>批量选择目标照片</strong>：<br>
-<!-- -->在图库或底部胶片带中多选一张或多张目标照片，右键选择 <code>粘贴调整…（Paste Adjustments…）</code>。</li>
-<li class=""><strong>确认粘贴规则</strong>：<br>
-<!-- -->再次核对本次要注入的参数范围，点击确认。系统将在后台异步批量完成处理。</li>
+<li class="">右键来源照片，选择复制调整…。</li>
+<li class="">在左栏选择来源版本。中栏列出 RAW 与几何、调色节点及显示变换；点击节点名称，在右栏查看该节点的参数项。</li>
+<li class="">勾选需要的参数。节点旁的勾选框控制该节点的可复制项；中栏的全选 / 清除作用于所有节点，右栏的全选 / 清除只作用于当前节点。蒙版以节点内全部蒙版为一个选择项；AI 蒙版不复制，对话框会列出被排除的内容。</li>
+<li class="">点击复制调整，在图库或胶片带选中目标照片，再选择粘贴调整…。</li>
+<li class="">粘贴界面只有两个只读栏：已复制的节点及其参数。核对后点击粘贴调整。若需改变范围，回到复制调整重新选择。</li>
 </ol>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="粘贴后的版本">粘贴后的版本<a href="#粘贴后的版本" class="hash-link" aria-label="粘贴后的版本的直接链接" title="粘贴后的版本的直接链接" translate="no">​</a></h3>
 <ul>
