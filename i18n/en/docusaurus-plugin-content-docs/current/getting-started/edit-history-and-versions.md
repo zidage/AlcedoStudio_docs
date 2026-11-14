@@ -2,6 +2,8 @@
 sidebar_position: 4
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # Edit History, Version Branches & Selective Transfer
 
 Alcedo Studio records edit history as **directed acyclic graph (DAG) commits and branches**. You can undo and redo operations and create multiple versions of a photo.
@@ -10,8 +12,7 @@ Alcedo Studio records edit history as **directed acyclic graph (DAG) commits and
 
 ## History: Atomic Commits & Non-Destructive Undo
 
-![History commit log with agent tags](/img/tutorial-v0.3.3/history.webp)
-*Reviewing chronological commits and adjustment records*
+<InterfaceMock kind="history" />
 
 ### 1. Commit Lifecycle
 - **Interactive Viewport Preview**: The viewport previews adjustments while you drag sliders.
@@ -27,8 +28,7 @@ Edits generated via `alcedo-cli` or AI companion agents are annotated in the his
 
 **Versions** let you save multiple sets of adjustments for one photo:
 
-![Two distinct named versions](/img/tutorial-v0.3.3/versions.webp)
-*Managing multiple independent creative branches for a single photograph*
+<InterfaceMock kind="versions" />
 
 ### Core Branching Workflows
 - **Branch from current commit**:  
@@ -45,21 +45,14 @@ Edits generated via `alcedo-cli` or AI companion agents are annotated in the his
 
 Use **Selective Adjustment Transfer** to copy selected adjustments from one photo to others. Crop and exposure can also be selected, so check the selected modules before pasting.
 
-![Selective copy and paste adjustments](/img/tutorial-v0.3.3/versions.webp)
-*Selectively choosing parameters for transfer*
+<InterfaceMock kind="transfer" />
 
 ### How to Transfer Adjustments
-1. **Copy Adjustments**:  
-   Right-click the graded source photo in the Library or Filmstrip and choose `Copy Adjustments…`.
-2. **Choose Source Version & Modules**:  
-   In the configuration dialog, select the source Version and check only the parameters you want to transfer:
-   - **Input & Geometry**: RAW camera white balance, demosaicing, lens calibration, crop, and rotation.
-   - **Color Grade Nodes**: Tone (exposure, contrast, curves), Look (CAT02 creative WB, vibrance, color wheels), 3D LUT, and color space encoding rules.
-   - **Global Transforms**: Display Transform (ACES 2.0 / OpenDRT) and Post Processing (diffusion, film grain, sharpening).
-3. **Select Target Photos**:  
-   Select one or more destination photos and right-click to choose `Paste Adjustments…`.
-4. **Confirm & Execute**:  
-   Verify the parameter selection and confirm. The transfer runs as an asynchronous background task.
+1. Right-click the source photo and choose Copy Adjustments….
+2. Select a source version in the left pane. The middle pane lists RAW & Geometry, Color Grade nodes, and Display Transform. Click a node name to show its items on the right.
+3. Check the required items. A node checkbox selects its transferable items. Select All / Clear in the middle pane applies across nodes; on the right it applies only to the focused node. Masks are one all-or-none item per node; AI masks are excluded and identified by the dialog.
+4. Click Copy Adjustments, select target photos, then choose Paste Adjustments….
+5. Paste uses two read-only panes: copied nodes and their items. Review them and click Paste Adjustments. Return to Copy Adjustments to change the selection.
 
 ### Versions After Pasting
 - **Branch Creation**: Pasting creates a version branch for each target photo and retains its existing versions.

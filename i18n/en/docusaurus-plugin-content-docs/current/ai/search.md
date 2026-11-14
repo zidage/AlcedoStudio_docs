@@ -2,6 +2,8 @@
 sidebar_position: 5
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # AI Semantic & Structured Search
 
 Alcedo Studio’s global search supports queries on fields such as EXIF metadata and natural language semantic search using a local CLIP model.
@@ -12,8 +14,7 @@ Alcedo Studio’s global search supports queries on fields such as EXIF metadata
 
 Click `Search` in the left utility rail of the Library (or press `Ctrl+F` / `Cmd+F` on macOS) to summon the central search console.
 
-![Search results list](/img/tutorial-v0.3.3/search-results.webp)
-*Global search results and metadata*
+<InterfaceMock kind="search-results" />
 
 Click `Search settings ▾` in the upper-right corner of the search box to configure active search fields:
 - **Filename**: Matches keywords within file names.
@@ -26,8 +27,7 @@ Click `Search settings ▾` in the upper-right corner of the search box to confi
 
 ## Mode 1: Natural Language Semantic Search (Find by Visual Concept)
 
-![Natural language search toggle and conditions](/img/tutorial-v0.3.3/search-conditions.webp)
-*Enabling natural language search to find photos using a text description*
+<InterfaceMock kind="search-conditions" />
 
 With `Natural language search` checked, you do not need preexisting keywords. Simply describe what you remember about the scene:
 

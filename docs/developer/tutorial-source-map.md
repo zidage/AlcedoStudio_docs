@@ -42,3 +42,22 @@ sidebar_position: 5
 - **智能体协同控制与会话管理**：`alcedo_studio/src/automation/commands/control_commands.cpp`
 - **节点流水线与场景色彩管理**：`alcedo_studio/src/gpu_pipeline/`
 - **DuckDB 资产管理与版本存储**：`alcedo_studio/src/album_backend/`
+
+## 本次校对的实现依据
+
+以下内容已对照主仓库本地提交 `2c3bf87b0`。下列路径相对于主仓库的 alcedo_studio/。
+
+| 内容 | 实现位置 | 核对结果 |
+| --- | --- | --- |
+| 去马赛克 | `src/include/decoders/processor/raw_demosaic_method.hpp`；`src/edit/runtime/cuda/cuda_sensor_demosaic.cpp`；`src/decoders/processor/operators/gpu/cuda_xtrans_interpolate.cu` | 方法为 Default / Legacy / Neural Engine；X-Trans Legacy 使用邻域插值。 |
+| 四路色轮 | `src/ui/alcedo_main/qml/EditorLookPanel.qml` | Lift、Gamma、Gain、Offset，两行两列，每路独立 Master。 |
+| 官方 LUT 包 | `src/ui/alcedo_main/qml/LutSettingsPanel.qml`；`src/ui/alcedo_main/qml/PackageCard.qml` | 包卡片包含来源、LUT 数量、版本、下载大小、状态与操作。 |
+| LUT 编码 | `src/edit/runtime/lut_bake.cpp` | 组合编码变换与原表采样，烘焙并缓存合成 LUT。 |
+| 复制与粘贴 | `src/ui/alcedo_main/qml/AdjustmentTransferDialog.qml`；`src/ui/alcedo_main/album_backend/adjustment_transfer_dialog_model.cpp` | 复制三栏；粘贴两栏只读。蒙版按节点整体选择，排除 AI 蒙版。 |
+| 波形图 | `src/edit/scope/cuda_scope_analyzer.cu`；`src/edit/scope/opencl_shader/scope_analyzer.cl`；`src/ui/alcedo_main/album_backend/editor_scope_item.cpp` | RGB 限制到 0–1；参考线在 25%、50%、75%，没有 IRE 换算。 |
+| 蒙版组 | `src/ui/alcedo_main/qml/EditorMaskGroupsPanel.qml`；`src/ui/alcedo_main/qml/EditorMaskGroupDelegate.qml`；`src/ui/alcedo_main/qml/EditorMaskGroupMaskRow.qml`；`src/ui/alcedo_main/qml/EditorMasksContextPanel.qml`；`src/include/edit/mask/grade_mask_coverage.hpp` | 空列表为全覆盖；非空且全部关闭为零覆盖；有效蒙版取逐像素最大值。 |
+| 筛选排序分组 | `src/ui/alcedo_main/qml/AlbumInspectorPanel.qml`；`src/ui/alcedo_main/qml/InspectorFieldActions.qml`；`src/ui/alcedo_main/qml/StarRatingFilter.qml` | 分区内筛选，标题栏独立控制排序与分组。 |
+
+交互示例位于本文档仓库的 src/components/SourceMocks/，使用示例数据。蒙版组示例只计算曝光与覆盖混合，不渲染照片。
+
+蒙版组计算器还对照 src/edit/runtime/cuda/cuda_primary_grade_pass.cu：Exposure 增加 EV / CE_ACESCC_B，MixGradePixel 在 ACEScc 域按 R8 覆盖权重混合。因此在纯曝光示例中，局部曝光增量为图层 EV × 覆盖权重。

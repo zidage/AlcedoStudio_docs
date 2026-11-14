@@ -2,6 +2,8 @@
 sidebar_position: 3
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # Local AI Model Management & Activation
 
 Alcedo Studio uses **CLIP (Contrastive Language-Image Pre-training)** vision models and **ONNX Runtime** for local content recognition and natural language search. This page describes how to download, manage, and activate models.
@@ -21,8 +23,7 @@ The local vision model encodes ingested images into dense semantic embeddings:
 
 Click `Settings` in the top toolbar and navigate to `Local Content Recognition`:
 
-![Local AI model settings](/img/tutorial-v0.3.3/local-ai.webp)
-*Local Model Management: Model selection, mirrors, and active runtime state*
+<InterfaceMock kind="local-ai" />
 
 ### 1. Select Vision Model
 Use the model dropdown to select a pre-trained model. Model size and hardware requirements vary, so consider your available storage and hardware.

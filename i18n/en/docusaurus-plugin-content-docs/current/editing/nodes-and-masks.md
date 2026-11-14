@@ -2,6 +2,9 @@
 sidebar_position: 2
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+import {MaskGroupsDemo} from '@site/src/components/SourceMocks';
+
 # Grading Nodes, Layers & Local Masks
 
 Alcedo Studio uses a **node-based color pipeline** and **mask groups**. You can use multiple grading nodes and limit each node's adjustments with masks.
@@ -16,13 +19,13 @@ Grading nodes form a sequential processing chain, for example:
 [ Input Decoding (RAW/Raster) ] 
        │ Scene-Referred Linear Color Stream (ACEScg)
        ▼
-[ Develop Base Node ] ────────────── (Establishes global exposure, sensor white balance, and base dynamic range)
+[ Develop Base Node ] ────────────── (Establishes global exposure and base dynamic range)
        │
 [ Color Grade 1: Subject Pop ] ──── (Radial Mask: Focuses on facial tones, lifts exposure, refines specular contrast)
        │
 [ Color Grade 2: Sky Burn ] ─────── (Linear Gradient Mask: Compresses overexposed sky clouds, infuses rich deep blue)
        │
-[ Color Grade 3: Global Film Grade ] (Applies 3D LUT film simulation and Lift/Gamma/Gain split toning across the composite)
+[ Color Grade 3: Global Film Grade ] (Applies 3D LUT film simulation and Lift/Gamma/Gain/Offset split toning across the composite)
        │
 [ Display Transform ] ────────────── (Maps scene linear values into target display gamut via ACES 2.0 / OpenDRT)
        │
@@ -37,8 +40,7 @@ Each **Color Grade node** has its own `Tone`, `Look`, `LUT`, and `Mask` settings
 
 The left tool rail provides two views:
 
-![Processing chain with two grading nodes and radial mask](/img/tutorial-v0.3.3/nodes.webp)
-*Nodes View: Visualizing the linear topology from raw input to calibrated display*
+<InterfaceMock kind="nodes" />
 
 ### 1. Nodes Topology Graph
 - **Add Color Grade**: Click `Add Color Grade` to insert a new grading stage into the chain.
@@ -46,9 +48,15 @@ The left tool rail provides two views:
 - **Target Selection**: Clicking a node in the canvas highlights it; the right adjustment stack updates its title to confirm that all sliders modify that specific node.
 
 ### 2. Layers & Mask Groups View
-If you prefer a layer-based workflow reminiscent of Photoshop or Capture One, open the `Mask Groups` drawer:
-- Each grading node is displayed as a layer card with an attached mask preview and an opacity slider.
-- Drag layers vertically to reorder operations and observe how sequential blend contexts affect your final render.
+Open Mask Groups on the left tool rail. Each group corresponds to a Color Grade node. Its header has a disclosure arrow, a coverage preview when it has masks, its name, a deletion lock, and a delete action. Expanded groups list their masks; a mask row shows its name, opacity summary, Invert, and Delete.
+
+<MaskGroupsDemo />
+
+Select a group to edit that node’s Tone, Look, and LUT controls. Select a mask to edit Enabled, Invert, and Opacity in the mask context panel. The opacity summary in the list is not a layer opacity slider.
+
+The example keeps three layers, with one radial mask on the middle layer. Change exposure, inversion, and opacity; the explanation beside or below the controls follows the current combination. A mask affects only its own node. Empty mask lists apply globally; a nonempty list with no enabled mask produces no coverage. Multiple enabled masks combine by the per-pixel maximum after inversion and opacity.
+
+Drag group headers to reorder them, or use Ctrl+Up / Ctrl+Down. The lock prevents deletion; it does not prevent adjustment edits.
 
 :::tip Base Node Protection Mechanism
 The root grading node holds the global baseline for the entire image. Under `Settings → Default Behavior`, the recommended option is "Create a new layer, then draw". When you begin drawing a mask, the application automatically provisions an isolated local grading layer, preventing your base exposure from being accidentally restricted inside a local circle.
@@ -60,14 +68,10 @@ The root grading node holds the global baseline for the entire image. Under `Set
 
 When you attach a mask to a grading node, the contextual **Mask** inspector slides out automatically while interactive geometric handles appear across the canvas.
 
-![Radial mask, layer list, and canvas handles](/img/tutorial-v0.3.3/masks.webp)
-*Manipulating radial mask feathering and rotation directly on canvas*
-
 ### 1. Radial Mask
 Use a radial mask to adjust an elliptical area of the image:
 
-![Mask enable, invert, opacity, and radius](/img/tutorial-v0.3.3/mask-controls.webp)
-*Fine-tuning radial mask geometry and inversion*
+<InterfaceMock kind="mask-controls" />
 
 1. **Draw the Mask**: With a grading node active, add a radial mask and drag across your subject to create an ellipse.
 2. **Interactive Canvas Handles**:

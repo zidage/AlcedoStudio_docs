@@ -2,6 +2,8 @@
 sidebar_position: 2
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # Interface Overview & Workspace Layout
 
 Alcedo Studio provides **Library** and **Editor** workspaces in one window for managing and editing photos.
@@ -12,8 +14,7 @@ Alcedo Studio provides **Library** and **Editor** workspaces in one window for m
 
 When you start Alcedo Studio, the Welcome screen offers an immediate entry point to your work:
 
-![Welcome screen: new project and recent list](/img/tutorial-v0.3.3/new-project.webp)
-*Welcome Screen: Create new projects and preview recent catalogs*
+<InterfaceMock kind="new-project" />
 
 - **Create New Project**: Click `New Project…`, provide a project name, and pick a parent directory. The application initializes an `.alcd` DuckDB database.
 - **Open Existing Project**: Click `Open Project…` to select and load an existing `.alcd` catalog.
@@ -42,8 +43,7 @@ The persistent top toolbar coordinates overall workspace modes and system states
 
 The `Library` has three columns:
 
-![Library and Album Inspector](/img/tutorial-v0.3.3/library.webp)
-*Library Workspace: Collections sidebar, center thumbnail grid, and right Album Inspector*
+<InterfaceMock kind="library" />
 
 ### 1. Left Navigation & Collections
 - **Quick Utilities**: Direct links to global `Search`, cloud-powered `Advanced Content Analysis`, and Background Tasks.
@@ -59,7 +59,7 @@ The `Library` has three columns:
 
 ### 3. Right Inspector
 A contextual multi-tab panel containing:
-- **Album**: Dynamic catalog analytics. Click any capture date, camera model, lens, star rating, or AI tag to instantly **filter** your view. Use dropdowns on each field to change **sort order** (ascending/descending) or **group** items into collapsible sections.
+- **Album**: Click values within each field section to filter. Each heading has separate ascending, descending, and grouping buttons. Click an active control again to clear that choice.
 - **Image**: Detailed EXIF exposure parameters, lens metadata, real-time histogram, and AI-generated critiques/captions.
 - **Export**: Batch export queue configuration, preset management, and export triggers.
 
@@ -69,8 +69,7 @@ A contextual multi-tab panel containing:
 
 Double-click a thumbnail to open the `Editor` workspace:
 
-![Editor workspace and tone panel](/img/tutorial-v0.3.3/editor-tone.webp)
-*Editor Workspace: Left tool rail, center canvas viewport, and right adjustment stack*
+<InterfaceMock kind="editor-tone" />
 
 ### 1. Center Canvas Viewport
 - **Hardware-Accelerated Display**: Renders the scene-referred color pipeline in real time with responsive pan and zoom (Fit to screen, 1:1 pixel mapping, or custom scale).
@@ -91,7 +90,7 @@ The right panel contains these adjustments:
 ```text
 [ Real-Time Waveform / Histogram ]
    │
-1. RAW Decode / Input Color    ── Sensor white balance, demosaicing, and lens calibration
+1. RAW Decode / Input Color    ── Demosaicing, camera white balance, and lens calibration
 2. Geometry                    ── Aspect ratio crop, boundary containment, and rotation
 3. Tone                        ── Exposure, contrast, highlights/shadows, and tone curves
 4. Look                        ── CAT02 creative white balance, saturation, selective color, and color wheels
@@ -99,6 +98,8 @@ The right panel contains these adjustments:
 6. Display Transform           ── ACES 2.0 / OpenDRT / Film Print
 7. Post Processing             ── Diffusion, clarity, sharpening, and film grain
 ```
+
+Camera white balance operates on the camera RGB image after RAW processing is complete.
 
 Contextual tabs such as **Mask** (for fine-tuning mask geometry and inversion) and **Compare** (for A/B evaluation) slide out automatically when their respective tools are invoked.
 

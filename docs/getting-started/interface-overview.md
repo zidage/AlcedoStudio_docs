@@ -2,6 +2,8 @@
 sidebar_position: 2
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # 界面总览与交互布局
 
 Alcedo Studio 在同一窗口中提供**图库（Library）**和**编辑器（Editor）**工作区，用于管理和编辑照片。
@@ -12,8 +14,7 @@ Alcedo Studio 在同一窗口中提供**图库（Library）**和**编辑器（Ed
 
 启动 Alcedo Studio 时，首先映入眼帘的是项目欢迎界面：
 
-![新建项目的名称和存储位置](/img/tutorial-v0.3.3/new-project.webp)
-*欢迎页：创建新项目与快速浏览最近项目*
+<InterfaceMock kind="new-project" />
 
 - **创建新项目**：点击 `新建项目…（New Project…）`，输入项目名称并选择硬盘目录，系统将生成对应的 `.alcd` 数据库文件。
 - **打开已有项目**：点击 `打开项目…（Open Project…）` 载入本地 `.alcd` 文件。
@@ -42,8 +43,7 @@ Alcedo Studio 在同一窗口中提供**图库（Library）**和**编辑器（Ed
 
 `图库（Library）`分为三栏：
 
-![图库与相册检查器](/img/tutorial-v0.3.3/library.webp)
-*图库工作区：左侧集合树、中间缩略图矩阵与右侧相册检查器*
+<InterfaceMock kind="library" />
 
 ### 1. 左侧导航与集合栏
 - **快捷工具**：包含全局 `搜索（Search）`、调用大模型的 `高级内容分析（Advanced Content Analysis）` 以及后台任务面板。
@@ -59,7 +59,7 @@ Alcedo Studio 在同一窗口中提供**图库（Library）**和**编辑器（Ed
 
 ### 3. 右侧多功能检查器（Inspector）
 包含三大核心视图：
-- **相册（Album）**：动态聚合图库元数据。点击拍摄日期、相机型号、镜头、星级或 AI 标签即可实时**筛选**；字段右侧的下拉菜单可随时切换升序/降序**排序**，或按该字段进行**折叠分组**。
+- **相册（Album）**：动态聚合图库元数据。点击拍摄日期、相机型号、镜头、星级或 AI 标签即可实时**筛选**；分区标题旁分别提供升序、降序与分组按钮，再次点击当前操作可取消。
 - **图像（Image）**：查看当前所选照片的完整 EXIF 拍摄参数、镜头型号、直方图以及 AI 生成的画面描述与评分理由。
 - **导出（Export）**：直接配置批处理导出队列，提供多种输出预设。
 
@@ -69,8 +69,7 @@ Alcedo Studio 在同一窗口中提供**图库（Library）**和**编辑器（Ed
 
 双击照片进入 `编辑（Editor）` 工作区：
 
-![单窗口编辑器与影调面板](/img/tutorial-v0.3.3/editor-tone.webp)
-*编辑器工作区：左侧工具轨、中央暗房视口与右侧参数调节堆栈*
+<InterfaceMock kind="editor-tone" />
 
 ### 1. 中央暗房主视口（Viewport）
 - **实时 GPU 加速渲染**：以物理场景线性空间实时呈现调色效果，支持流畅画布平移与缩放（适应屏幕、1:1 像素映射）。
@@ -91,7 +90,7 @@ Alcedo Studio 在同一窗口中提供**图库（Library）**和**编辑器（Ed
 ```text
 [ 实时波形图 / 直方图 ]
    │
-1. RAW 解码 / 输入色彩 (RAW Decode / Input Color)   ── 传感器白平衡、去马赛克与镜头校正
+1. RAW 解码 / 输入色彩 (RAW Decode / Input Color)   ── 去马赛克、相机白平衡与镜头校正
 2. 几何构图 (Geometry)                               ── 画面裁切比例、边界锁定与旋转校正
 3. 基础色调 (Tone)                                  ── 曝光、对比度、明暗部与色调曲线
 4. 创意外观 (Look)                                  ── CAT02 创意白平衡、饱和度、选择性色彩与色轮
@@ -99,6 +98,8 @@ Alcedo Studio 在同一窗口中提供**图库（Library）**和**编辑器（Ed
 6. 显示变换 (Display Transform)                     ── ACES 2.0 / OpenDRT / 胶片印片
 7. 屏幕后期处理 (Post Processing)                    ── 柔光 Diffusion、清晰度、锐化与胶片颗粒
 ```
+
+相机白平衡作用于 RAW 处理完成后的相机 RGB 图像。
 
 在绘制局部蒙版时，系统会自动滑出上下文 **蒙版（Mask）** 属性页；在多版本比较时则会展开 **对比（Compare）** 控制页。
 

@@ -2,6 +2,8 @@
 sidebar_position: 5
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # Display Transform, HDR, Scopes & Post-Processing
 
 The **Display Transform** converts the scene-linear image for display. **Post Processing** provides diffusion, clarity, sharpening, and other effects
@@ -12,10 +14,7 @@ The **Display Transform** converts the scene-linear image for display. **Post Pr
 
 A **Display Rendering Transform (DRT)** maps the scene-linear image to the target display range:
 
-![OpenDRT and output encoding](/img/tutorial-v0.3.3/display-transform.webp)
-*Display Transform configuration: Core mapping algorithm, encoding gamut, and EOTF*
-
-This screenshot shows v0.3.3. The Film Print controls in this guide follow v0.3.5
+<InterfaceMock kind="display-transform" />
 
 ### Core Transform Methods
 - **ACES 2.0**: Uses the ACES 2.0 display transform.
@@ -40,7 +39,7 @@ Use the histogram and waveform to inspect the distribution of image brightness:
 - **Histogram**:
   Located at the top of the right panel. Displays pixel frequency distribution across Red, Green, and Blue channels. Observe the outer edges to verify that shadows are not crushed to pure black and highlights retain unclipped headroom.
 - **Waveform**:
-  The horizontal axis maps directly to the horizontal pixel coordinates of the image, while the vertical axis indicates luminance levels from 0 to 100 IRE. This spatial alignment reveals the exact luminance of specific image zones (such as sunlight through clouds on the left or shadows on a face on the right), making it ideal for anchoring skin tones (typically between 40 and 70 IRE).
+  The horizontal axis follows the image’s horizontal position. The vertical axis plots each RGB channel of the final display frame, clamped to 0–1: 0 at the bottom and 1 at the top. Horizontal guides mark 25%, 50%, and 75% of that signal range. The current implementation does not convert this axis to IRE or nits. Use it to compare channel levels and their positions in the image; there is no fixed skin-tone target encoded in this scale.
 
 ---
 
@@ -48,8 +47,7 @@ Use the histogram and waveform to inspect the distribution of image brightness:
 
 Post Processing includes diffusion, clarity, sharpening, grain, and halation. With Film Print, adjust grain, format, and halation under **Display Transform → Style**
 
-![Post processing](/img/tutorial-v0.3.3/post.webp)
-*Post Processing: Diffusion glow, clarity, sharpening, and halation*
+<InterfaceMock kind="post" />
 
 | Module | Optical Simulation | Practical Guidelines & Visual Character |
 | --- | --- | --- |

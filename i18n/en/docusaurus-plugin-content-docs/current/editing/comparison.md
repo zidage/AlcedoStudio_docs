@@ -2,6 +2,8 @@
 sidebar_position: 6
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # Before & After: Version A/B Comparison
 
 Alcedo Studio’s **A/B comparison** shows an image before and after adjustments or compares two versions of the same photo.
@@ -12,8 +14,7 @@ Alcedo Studio’s **A/B comparison** shows an image before and after adjustments
 
 You can initiate comparison mode at any time from the main viewport toolbar or the Versions panel:
 
-![Unadjusted vs current grade with split divider](/img/tutorial-v0.3.3/comparison.webp)
-*Using the interactive split divider to evaluate before and after treatments*
+<InterfaceMock kind="comparison" />
 
 ### Two Primary Evaluation Scenarios
 1. **Before vs. After**:
@@ -29,8 +30,7 @@ You can initiate comparison mode at any time from the main viewport toolbar or t
 
 Entering comparison mode reveals the `Comparison Controls` inspector on the right:
 
-![A/B source, layout, swap and close controls](/img/tutorial-v0.3.3/comparison-controls.webp)
-*Switching flexibly between split divider, side-by-side, and stacked modes*
+<InterfaceMock kind="comparison-controls" />
 
 | Layout Mode | Display | Use |
 | --- | --- | --- |
@@ -41,10 +41,9 @@ Entering comparison mode reveals the `Comparison Controls` inspector on the righ
 
 ---
 
-## Operational Mechanics & State Safeguards
+## During Comparison & Returning to Editing
 
 - **During Comparison**: Parameter adjustments and version switching are temporarily unavailable.
-- **Retry Mechanism**: If video memory pressure delays frame generation, click `Retry` to re-trigger the dual-render pipeline.
 - **Return to Editing**: Click `Close` in the top bar to exit comparison mode.
 
 ---

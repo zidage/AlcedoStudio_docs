@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # 导出工作流：批处理队列、预设与元数据
 
 Alcedo Studio 将编辑参数保存在项目数据库中。**导出（Export）**将编辑结果渲染为图像文件。
@@ -36,8 +38,7 @@ Alcedo Studio 将编辑参数保存在项目数据库中。**导出（Export）*
 
 右侧检查器提供内置预设，用于配置格式、色彩空间、压缩率与尺寸：
 
-![完整导出预设菜单，底部含本机用户预设](/img/tutorial-v0.3.3/export-presets.webp)
-*选择内置专业导出预设或管理自定义方案*
+<InterfaceMock kind="export-presets" />
 
 | 预设名称 | 核心配置与参数规格 | 适用场景 |
 | --- | --- | --- |
@@ -71,8 +72,7 @@ Alcedo Studio 将编辑参数保存在项目数据库中。**导出（Export）*
 
 ## 4. 输出格式、位深与尺寸重采样
 
-![SDR 格式、位深与最长边](/img/tutorial-v0.3.3/export-sizing.webp)
-*精细调控输出位深、压缩格式与物理重采样尺寸*
+<InterfaceMock kind="export-sizing" />
 
 ### 格式与位深矩阵
 - **JPEG**：8 位标准压缩，可精细拖动 1–100 质量滑块。
@@ -92,8 +92,7 @@ Alcedo Studio 将编辑参数保存在项目数据库中。**导出（Export）*
 
 Alcedo Studio 支持 **Ultra HDR JPEG** 导出：
 
-![HDR 参数与队列](/img/tutorial-v0.3.3/export-hdr-queue.webp)
-*配置 Ultra HDR 增益图、HDR 质量与最长边*
+<InterfaceMock kind="export-hdr-queue" />
 
 - **增益图（Gain Map）**：Ultra HDR JPEG 包含 SDR 图像和增益图。支持 Ultra HDR 的查看软件和 HDR 显示设备可以使用增益图显示 HDR 效果；其他查看方式可显示 SDR 图像。
 - **HDR 独立配置**：可单独调节 HDR 质量、抖动（Dithering）以及 HDR 最长边（范围 256–8192 像素）。
@@ -102,8 +101,7 @@ Alcedo Studio 支持 **Ultra HDR JPEG** 导出：
 
 ## 6. 元数据、色彩配置文件与隐私安全
 
-![网页预设的元数据与 GPS 开关](/img/tutorial-v0.3.3/export-metadata.webp)
-*独立控制 GPS 与 EXIF 写入*
+<InterfaceMock kind="export-metadata" />
 
 - **EXIF 元数据（EXIF metadata）**：控制是否将光圈、快门、相机机身与镜头型号写入成片。
 - **ICC 配置文件（ICC profile）**：将色彩配置文件（如 sRGB、Display P3）嵌入图像，供支持色彩管理的软件读取。

@@ -2,6 +2,9 @@
 sidebar_position: 2
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+import {MaskGroupsDemo} from '@site/src/components/SourceMocks';
+
 # 调色节点、图层与局部蒙版
 
 Alcedo Studio 使用**节点式调色流水线（Node-Based Color Pipeline）**和**蒙版组（Mask Groups）**。你可以使用多个调色节点，并通过蒙版限制节点调整的范围。
@@ -16,13 +19,13 @@ Alcedo Studio 使用**节点式调色流水线（Node-Based Color Pipeline）**�
 [ 输入解码 (RAW/位图) ] 
        │ 场景线性色彩流 (ACEScg)
        ▼
-[ Develop 基础显影节点 ] ────────── (负责全局曝光、相机白平衡基准与基础动态范围)
+[ Develop 基础显影节点 ] ────────── (负责全局曝光与基础动态范围)
        │
 [ Color Grade 1: 主体提亮 ] ────── (挂载径向蒙版：聚焦人物面部，适度提亮并加强眼部微反差)
        │
 [ Color Grade 2: 天空压暗 ] ────── (挂载线性渐变蒙版：压暗云层过曝区域，加入深邃青蓝色调)
        │
-[ Color Grade 3: 整体风格胶片 ] ── (全局挂载 3D 胶片 LUT 与 Lift/Gamma/Gain 色调分离)
+[ Color Grade 3: 整体风格胶片 ] ── (全局挂载 3D 胶片 LUT 与 Lift/Gamma/Gain/Offset 色调分离)
        │
 [ Display Transform 显示变换 ] ─── (通过 ACES 2.0 / OpenDRT 将场景线性映射至显示器色域)
        │
@@ -37,8 +40,7 @@ Alcedo Studio 使用**节点式调色流水线（Node-Based Color Pipeline）**�
 
 左侧工具轨提供两种操作视图：
 
-![包含两个调色节点与径向蒙版的处理链](/img/tutorial-v0.3.3/nodes.webp)
-*节点视图：直观查看从基础输入到显示输出的完整拓扑链路*
+<InterfaceMock kind="nodes" />
 
 ### 1. 节点（Nodes）拓扑视图
 - **添加调色节点**：点击 `添加色彩分级（Add Color Grade）` 即可向处理链中插入新节点。
@@ -46,9 +48,15 @@ Alcedo Studio 使用**节点式调色流水线（Node-Based Color Pipeline）**�
 - **选择编辑目标**：在节点画布中单选某个节点，右侧调整面板的标题将同步显示该节点名称，确保所有参数调节均精准作用于目标节点。
 
 ### 2. 图层与蒙版组（Mask Groups）视图
-如果你更习惯 Photoshop 或 Capture One 的图层工作流，可以打开 `图层（Mask Groups）` 面板：
-- 每个调色节点对应一个图层卡片，卡片内直观显示当前挂载的蒙版缩略图与不透明度滑块。
-- 拖动图层可以调整处理顺序，改变节点对画面的作用顺序。
+在左侧工具轨打开蒙版组。每组对应一个调色节点。组标题包含展开箭头、有蒙版时显示的覆盖预览、名称、删除锁和删除操作。展开后列出蒙版；每行显示名称、不透明度摘要、反相和删除操作。
+
+<MaskGroupsDemo />
+
+选择组可编辑该节点的色调、外观与 LUT；选择蒙版后，在上下文面板中调整启用、反相和不透明度。列表里的不透明度是摘要，不是图层不透明度滑块。
+
+示例保留三个图层，中间图层带一个径向蒙版。可以调整曝光、反相和不透明度，旁边或下方的说明会随组合更新。蒙版只限制所属节点：空蒙版列表作用于全图；非空列表中没有启用的蒙版时，不产生覆盖。多个启用的蒙版在反相和不透明度处理后，按逐像素最大值合并。
+
+拖动组标题可调整处理顺序，也可用 Ctrl+上 / Ctrl+下。锁定只防止删除，不妨碍修改调整参数。
 
 :::tip 锁定节点保护机制
 第一个基础调色节点默认包含全图的基础基准。在 `设置（Settings） → 默认行为（Default Behavior）` 中，默认推荐勾选“新建图层后绘制”。这样当你在画面上尝试圈选局部时，系统会自动为你新建一个独立的调色层，避免将全图的基础曝光错误限制在局部圈子中。
@@ -60,14 +68,10 @@ Alcedo Studio 使用**节点式调色流水线（Node-Based Color Pipeline）**�
 
 为调色节点挂载蒙版后，右侧会自动滑出上下文 **蒙版（Mask）** 参数页，同时主画布上会呈现高精度的交互式几何控制柄。
 
-![径向蒙版、图层列表与控制柄](/img/tutorial-v0.3.3/masks.webp)
-*利用画布屏幕手柄交互式控制径向蒙版的羽化与位置*
-
 ### 1. 径向蒙版（Radial Mask）
 径向蒙版可用于调整画面中的椭圆区域：
 
-![蒙版启用、反相、不透明度与半径](/img/tutorial-v0.3.3/mask-controls.webp)
-*径向蒙版的详细几何参数调节*
+<InterfaceMock kind="mask-controls" />
 
 1. **选择工具并绘制**：在选定的调色节点上添加径向蒙版，在画面主体位置点击并拖动，拉伸出一个椭圆选区。
 2. **交互控制手柄**：

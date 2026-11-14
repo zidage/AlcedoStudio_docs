@@ -2,6 +2,9 @@
 sidebar_position: 1
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+import {LibraryInspectorDemo} from '@site/src/components/SourceMocks';
+
 # Library: Import, Collections, Ratings & Multi-Dimensional Culling
 
 Alcedo Studio’s Library uses an embedded **DuckDB database (the Sleeve engine)** to store photo references, metadata, and edit information.
@@ -62,28 +65,18 @@ Use keyboard shortcuts or batch operations to rate photos:
 
 ## Album Inspector: Filter, Sort & Group
 
-The `Album` inspector on the right provides filtering, sorting, and grouping:
+The Album inspector on the right starts with Library Overview and Total Photos. Below it, separate sections cover capture date, import time, edit time, camera, labels, custom labels, rating, and lens. The example shows four sections:
 
-![Library and Album Inspector](/img/tutorial-v0.3.3/library.webp)
-*Using the Album Inspector for multi-dimensional filtering and dynamic grouping*
+<LibraryInspectorDemo />
 
 ### 1. Filter
-The inspector automatically aggregates metadata across the active view. Click any attribute to apply real-time filtering:
-- **Capture Date**: Click a year, month, or specific day (e.g. "2026-06-07").
-- **Gear**: Filter by camera body (e.g. "Sony A1", "Nikon Z8") or specific focal length / lens model.
-- **Ratings & Labels**: Show only 5-star selects, or isolate specific AI tags (e.g. "Architecture", "Sunset").
-- **Compound Filters**: Combine criteria such as "Nikon Z8 + 50mm f/1.2 + 5 Stars". Active filter chips appear at the top and can be dismissed individually with `x`.
+Click a value inside a section: a calendar date, camera chip, star, label, or lens. Clicking the selected value again clears that field’s filter. Different fields can be combined. Rating selects the chosen star value. Custom labels have their own settings action.
 
-### 2. Sort: Tailored Timeline Navigation
-Use the dropdown menu beside any field to change the sort metric and order (Ascending / Descending):
-- **Capture Time**: Follows the chronological story recorded by camera hardware.
-- **Last Edited Time**: Quickly surfaces images you graded recently.
-- **Import Time** and **Rating**.
+### 2. Sort
+The field heading has separate ascending and descending buttons. Click the upward arrow for ascending order, or the downward arrow for descending order. Click the active arrow again to clear sorting. Time fields sort by their full timestamps.
 
-### 3. Group: Structured Collapsible Sections
-Click `Group By` beside any metadata field to organize the thumbnail grid into collapsible, titled blocks:
-- **Group by Edit Status**: Visually separates "Edited" from "Unedited" frames to ensure no shot is missed.
-- **Group by Capture Date**: Neatly folds shoots by day or month with collapsible headers.
+### 3. Group
+The group icon sits beside the two sort arrows in the same heading. Click it to group the grid by that field; click again to stop grouping. Grouping and sorting are independent. By Edit Time groups edited photos by the day of their latest edit, with unedited photos in a separate group. Date groups can be expanded and collapsed in the grid.
 
 ---
 

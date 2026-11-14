@@ -2,6 +2,8 @@
 sidebar_position: 3
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # 本地 AI 模型管理与激活
 
 Alcedo Studio 的本地内容识别与自然语言搜索使用 **CLIP（Contrastive Language-Image Pre-training）** 视觉模型和 **ONNX Runtime**。本页介绍如何下载、管理并激活模型。
@@ -21,8 +23,7 @@ Alcedo Studio 的本地内容识别与自然语言搜索使用 **CLIP（Contrast
 
 点击顶部菜单栏 `设置（Settings）`，在左侧选择 `本地内容识别（Local Content Recognition）`：
 
-![本地模型设置](/img/tutorial-v0.3.3/local-ai.webp)
-*本地模型管理控制台：选择模型、下载源与激活状态*
+<InterfaceMock kind="local-ai" />
 
 ### 1. 选择视觉模型（Model）
 在模型下拉框中选择预训练模型。模型大小和运行需求因所选模型而异，请根据可用存储空间和硬件配置选择。

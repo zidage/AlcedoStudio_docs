@@ -2,6 +2,8 @@
 sidebar_position: 3
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # 完成你的第一次编辑
 
 本教程介绍如何创建项目、导入和编辑照片、对比版本以及导出。
@@ -10,8 +12,7 @@ sidebar_position: 3
 
 ## 步骤 1：新建工作项目
 
-![新建项目的名称和存储位置](/img/tutorial-v0.3.3/new-project.webp)
-*新建 `.alcd` 项目数据库*
+<InterfaceMock kind="new-project" />
 
 1. 启动 Alcedo Studio，在欢迎页点击 `新建项目…（New Project…）`。
 2. 输入 **项目名称（Project Name）**（如 `2026_Landscape_Project`），并选择一个本地硬盘路径作为 **存储位置（Storage Location）**。
@@ -39,7 +40,7 @@ sidebar_position: 3
 1. **RAW 解码与镜头校正**：
    - 在右侧调整面板展开 `RAW 解码（RAW Decode）`。
    - 检查相机白平衡基准（`As Shot`），可适度微调色温与色调。
-   - 解码方法（Method）默认采用高质量 RCD 算法，如果配备了支持的 GPU，也可以体验神经网络去马赛克（Neural Engine）。
+   - 在方法（Method）中选择 Default、Legacy 或 Neural Engine。Legacy 对 Bayer 使用 RCD，对 X-Trans 使用传统插值；全分辨率下，Default 为 Bayer 选择 Legacy，为 X-Trans 选择 Neural Engine。
    - 展开 `镜头校正（Lens Calibration）`，勾选 `启用镜头校正（Enable Lens Calibration）`。系统将自动匹配相机与镜头光学配置，修正畸变与暗角。
 2. **构图与几何调整**：
    - 展开 `几何（Geometry）` 面板。
@@ -52,8 +53,7 @@ sidebar_position: 3
 
 Alcedo Studio 的底层调色引擎运行在场景线性空间中，调色时遵循先明暗后色彩的逻辑：
 
-![影调调整](/img/tutorial-v0.3.3/tone.webp)
-*通过 Tone 面板建立均衡的场景明暗关系*
+<InterfaceMock kind="tone" />
 
 1. **调整基础色调（Tone）**：
    - **曝光（Exposure）**：设定画面的基准亮度。
@@ -78,8 +78,7 @@ Alcedo Studio 的底层调色引擎运行在场景线性空间中，调色时遵
 
 可以为同一张照片创建版本并进行对比：
 
-![版本分支管理](/img/tutorial-v0.3.3/versions.webp)
-*为同一张照片创建独立的分支版本*
+<InterfaceMock kind="versions" />
 
 1. 打开左侧工具轨的 `版本（Versions）` 面板。
 2. 点击 `从当前提交创建分支（Branch from current commit）`，为当前版本命名（例如“暖调胶片版”）。
@@ -94,8 +93,7 @@ Alcedo Studio 的底层调色引擎运行在场景线性空间中，调色时遵
 
 调色完成后，通过统一的导出队列输出成片：
 
-![导出设置](/img/tutorial-v0.3.3/export-presets.webp)
-*选择导出预设并配置输出目标*
+<InterfaceMock kind="export-presets" />
 
 1. 点击顶部工具栏的 `图库（Library）` 返回图库，选中刚刚调色完成的照片。
 2. 点击右侧检查器的 `加入队列（Add to Queue）`，然后切换至 `导出（Export）` 选项卡。

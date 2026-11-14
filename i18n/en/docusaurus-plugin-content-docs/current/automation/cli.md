@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # Automation & alcedo-cli Companion
 
 Alcedo Studio includes **`alcedo-cli`**, a command-line tool that scripts or AI agents can use to connect to an application window, edit photos, and run batch jobs.
@@ -46,8 +48,7 @@ alcedo-cli schema
 
 ## Mode 1: Connecting to GUI Windows with AI Agents
 
-![Agent commits and notes in history](/img/tutorial-v0.3.3/history.webp)
-*AI agent parameter commits and rationale annotations recorded in history*
+<InterfaceMock kind="history" />
 
 While you edit in Alcedo Studio, external AI agents can connect to your window via `alcedo-cli` to assist with adjustments:
 

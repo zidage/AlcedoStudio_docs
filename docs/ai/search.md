@@ -2,6 +2,8 @@
 sidebar_position: 5
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # AI 自然语言与多维结构化搜索
 
 Alcedo Studio 的全局搜索支持 EXIF 等字段查询，也支持使用本地 CLIP 模型进行自然语言语义搜索。
@@ -12,8 +14,7 @@ Alcedo Studio 的全局搜索支持 EXIF 等字段查询，也支持使用本地
 
 在图库左侧快捷工具栏点击 `搜索（Search）`（或按下快捷键 `Ctrl+F`，macOS 为 `Cmd+F`），即可唤起居中弹出的全局搜索控制台。
 
-![搜索结果列表](/img/tutorial-v0.3.3/search-results.webp)
-*全局搜索结果与相关元数据*
+<InterfaceMock kind="search-results" />
 
 点击搜索框右上角的 `搜索设置 ▾（Search settings ▾）`，可灵活勾选生效字段：
 - **文件名（Filename）**：匹配照片文件名关键词。
@@ -26,8 +27,7 @@ Alcedo Studio 的全局搜索支持 EXIF 等字段查询，也支持使用本地
 
 ## 模式 1：自然语言语义搜索（按画面含义检索）
 
-![自然语言搜索开关与条件面板](/img/tutorial-v0.3.3/search-conditions.webp)
-*开启自然语言搜索，使用文字描述查找照片*
+<InterfaceMock kind="search-conditions" />
 
 勾选 `自然语言搜索（Natural language search）` 后，你无需事先为照片手动添加标签，即可直接描述记忆中的拍摄瞬间：
 

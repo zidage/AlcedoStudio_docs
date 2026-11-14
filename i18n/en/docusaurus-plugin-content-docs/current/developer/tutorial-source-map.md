@@ -42,3 +42,22 @@ Front-end QML sources are located in `alcedo_studio/src/ui/alcedo_main/qml`.
 - **Agent Session Control & Command Dispatch**: `alcedo_studio/src/automation/commands/control_commands.cpp`
 - **Node-Based Color Pipeline & ACES Encodings**: `alcedo_studio/src/gpu_pipeline/`
 - **DuckDB Sleeve Catalog & Version Branches**: `alcedo_studio/src/album_backend/`
+
+## Implementation references for this revision
+
+Checked against local application commit `2c3bf87b0`. Paths below are relative to the application repository’s alcedo_studio/.
+
+| Topic | Source | Verified behavior |
+| --- | --- | --- |
+| Demosaicing | `src/include/decoders/processor/raw_demosaic_method.hpp`；`src/edit/runtime/cuda/cuda_sensor_demosaic.cpp`；`src/decoders/processor/operators/gpu/cuda_xtrans_interpolate.cu` | Default / Legacy / Neural Engine; X-Trans Legacy: neighborhood interpolation. |
+| Four color wheels | `src/ui/alcedo_main/qml/EditorLookPanel.qml` | Lift, Gamma, Gain, Offset; 2 × 2; independent Master. |
+| Official LUT packages | `src/ui/alcedo_main/qml/LutSettingsPanel.qml`；`src/ui/alcedo_main/qml/PackageCard.qml` | Package cards: origin, LUT count, revision, archive size, status, actions. |
+| LUT encodings | `src/edit/runtime/lut_bake.cpp` | LmtEncodingConversion::Compose → BakeLmtCompositeTable → ResolveLmtSampledTable. |
+| Copy and Paste | `src/ui/alcedo_main/qml/AdjustmentTransferDialog.qml`；`src/ui/alcedo_main/album_backend/adjustment_transfer_dialog_model.cpp` | Copy: 3 panes; Paste: 2 read-only panes; masks selected per node; AI masks excluded. |
+| Waveform | `src/edit/scope/cuda_scope_analyzer.cu`；`src/edit/scope/opencl_shader/scope_analyzer.cl`；`src/ui/alcedo_main/album_backend/editor_scope_item.cpp` | RGB clamped to 0–1; 25% / 50% / 75% guides; no IRE conversion. |
+| Mask Groups | `src/ui/alcedo_main/qml/EditorMaskGroupsPanel.qml`；`src/ui/alcedo_main/qml/EditorMaskGroupDelegate.qml`；`src/ui/alcedo_main/qml/EditorMaskGroupMaskRow.qml`；`src/ui/alcedo_main/qml/EditorMasksContextPanel.qml`；`src/include/edit/mask/grade_mask_coverage.hpp` | Empty list: full coverage. Nonempty all-disabled list: zero coverage. Enabled masks: per-pixel maximum. |
+| Filter, Sort, Group | `src/ui/alcedo_main/qml/AlbumInspectorPanel.qml`；`src/ui/alcedo_main/qml/InspectorFieldActions.qml`；`src/ui/alcedo_main/qml/StarRatingFilter.qml` | Filter within sections; separate sort/group actions in the section header. |
+
+The interactive examples in this documentation repository’s src/components/SourceMocks/ use example values. Mask Groups calculates exposure and coverage mixing only; it does not render a photograph.
+
+The Mask Groups calculator also follows src/edit/runtime/cuda/cuda_primary_grade_pass.cu: Exposure adds EV / CE_ACESCC_B; MixGradePixel mixes the adjusted and original ACEScc values using R8 coverage. For the exposure-only example, this gives local EV = layer EV × coverage.

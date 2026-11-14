@@ -2,6 +2,8 @@
 sidebar_position: 6
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # 修改前后与版本 A/B 对比
 
 Alcedo Studio 的 **A/B 对比**可用于查看调整前后的画面，或比较同一照片的两个版本。
@@ -12,8 +14,7 @@ Alcedo Studio 的 **A/B 对比**可用于查看调整前后的画面，或比较
 
 你可以在主视口工具栏或版本抽屉中随时唤起对比模式：
 
-![未调整与当前结果的分隔线对比](/img/tutorial-v0.3.3/comparison.webp)
-*利用交互式分割线直观比对未调色原图与当前成片*
+<InterfaceMock kind="comparison" />
 
 ### 两种典型的比对场景
 1. **修图前后对比（Before vs. After）**：
@@ -29,8 +30,7 @@ Alcedo Studio 的 **A/B 对比**可用于查看调整前后的画面，或比较
 
 展开对比后，右侧面板会自动切换至 `对比控制（Comparison Controls）`：
 
-![A/B 来源、布局、交换与关闭](/img/tutorial-v0.3.3/comparison-controls.webp)
-*灵活切换分割线、左右并列或上下并排对比*
+<InterfaceMock kind="comparison-controls" />
 
 | 布局模式 | 显示方式 | 用途 |
 | --- | --- | --- |
@@ -41,10 +41,9 @@ Alcedo Studio 的 **A/B 对比**可用于查看调整前后的画面，或比较
 
 ---
 
-## 对比模式下的状态与安全机制
+## 对比期间与返回编辑
 
 - **对比期间**：参数调整与历史操作暂时不可用。
-- **重试机制**：如因显存分配压力导致渲染未就绪，可随时点击界面上的 `重试（Retry）` 按钮重新触发管线重绘。
 - **返回编辑**：点击顶部的 `关闭（Close）` 退出对比模式。
 
 ---

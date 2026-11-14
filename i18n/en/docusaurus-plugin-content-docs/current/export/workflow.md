@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # Export Workflow: Batch Queue, Presets & Metadata
 
 Alcedo Studio stores editing parameters in the project database. **Exporting** renders the edited result to an image file.
@@ -36,8 +38,7 @@ The export queue processes photos in the background while you continue browsing 
 
 The Export inspector provides presets for format, color profile, compression, and size:
 
-![Full export presets menu](/img/tutorial-v0.3.3/export-presets.webp)
-*Selecting built-in presets or managing custom export profiles*
+<InterfaceMock kind="export-presets" />
 
 | Preset Name | Configuration & Specifications | Primary Use Case |
 | --- | --- | --- |
@@ -71,8 +72,7 @@ Supported dynamic tokens include:
 
 ## 4. Output Formats, Bit Depth & Resampling
 
-![SDR format, bit depth, and sizing](/img/tutorial-v0.3.3/export-sizing.webp)
-*Fine-tuning bit depth, compression algorithms, and physical resampling*
+<InterfaceMock kind="export-sizing" />
 
 ### Format & Bit Depth Matrix
 - **JPEG**: 8-bit standard compression with fine-grained 1–100 quality slider.
@@ -92,8 +92,7 @@ Supported dynamic tokens include:
 
 Alcedo Studio natively supports the **Ultra HDR JPEG** standard:
 
-![HDR queue and parameters](/img/tutorial-v0.3.3/export-hdr-queue.webp)
-*Configuring Ultra HDR Gain Maps, HDR quality, and max edge scaling*
+<InterfaceMock kind="export-hdr-queue" />
 
 - **Gain Map**: An Ultra HDR JPEG contains an SDR image and a gain map. Compatible viewing software and an HDR display can use the gain map to show the HDR rendition; other viewers can display the SDR image.
 - **Dedicated HDR Controls**: Tune HDR Quality, Dithering, and maximum HDR edge scaling (256–8192px) independently of SDR output rules.
@@ -102,8 +101,7 @@ Alcedo Studio natively supports the **Ultra HDR JPEG** standard:
 
 ## 6. Metadata, Color Profiles & Privacy Protection
 
-![Web preset metadata and GPS toggle](/img/tutorial-v0.3.3/export-metadata.webp)
-*Independent GPS and EXIF controls*
+<InterfaceMock kind="export-metadata" />
 
 - **EXIF metadata**: Toggles whether exposure parameters, camera bodies, and lens models are written into files.
 - **ICC profile**: Embeds a color profile (e.g. sRGB or Display P3) for software that supports color management.

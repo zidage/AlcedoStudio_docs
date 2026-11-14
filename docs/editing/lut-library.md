@@ -2,6 +2,9 @@
 sidebar_position: 4
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+import {LutBakeFlow} from '@site/src/components/SourceMocks';
+
 # 3D LUT 库、胶片模拟与色彩空间编码
 
 3D LUT（三维颜色查找表）用于在调色节点中应用颜色变换。Alcedo Studio 支持官方 LUT 包和用户导入的 `.cube` 文件，并可设置 LUT 的输入编码、输出编码和强度
@@ -14,14 +17,15 @@ v0.3.5 还提供 **显示变换 → 胶片印片**，可选择胶片、印片材
 
 官方胶片模拟 LUT 包可在设置中下载，安装时会校验数字签名：
 
-![已安装的官方 LUT 包](/img/tutorial-v0.3.3/lut-packages.webp)
-*设置中的官方胶片 LUT 包管理器*
+<InterfaceMock kind="lut-packages" />
 
-### 1. 下载与安装官方胶片模拟包
-1. 进入顶部 `设置（Settings） → LUT（LUTs）` 面板。
-2. 在 `官方 LUT 包（Official LUT Packages）` 列表中选择需要的胶片模拟包，例如 Kodak Portra、Fujifilm Pro / Superia、CineStill 或 Kodachrome。
-3. 点击 `下载（Download）`。系统会在后台完成下载、数字签名完整性校验并自动解压部署。
-4. 部署完成后，状态标记为 `已安装（Installed）`。后续如有新版色彩优化，可在此直接一键点击更新或修复。
+### 1. 下载与安装官方 LUT 包
+1. 打开设置 → LUT，找到官方 LUT 包区域。
+2. 每张卡片对应一个完整包，例如 Spectral Film LUT 或 Spektrafilm LUT。Portra 等片种是包内的 LUT 条目。
+3. 卡片显示原始项目、LUT 数量、包版本、下载大小和安装状态。根据卡片当前状态，点击下载、更新或修复。
+4. 下载内容校验后安装到 LUT 库。已安装的卡片还提供移除包；移除后，使用其中 LUT 的照片将无法加载该外观。
+
+示意展示两种包状态；应用中的数量、版本与大小来自包清单。
 
 ### 2. 导入第三方与自定义 `.cube` 文件
 如果你拥有调色师定制或商业购买的 `.cube` 查找表：
@@ -33,29 +37,18 @@ v0.3.5 还提供 **显示变换 → 胶片印片**，可选择胶片、印片材
 
 ## LUT 输入与输出色彩空间编码
 
-LUT 对输入和输出编码可能有特定要求。编码不匹配时，画面的亮度和色彩可能与预期不同。每个调色节点提供 **输入编码（Input Encoding）** 与 **输出编码（Output Encoding）**设置：
+输入与输出表示原始 LUT 所需的输入编码及其产生的输出编码。这两个设置用于变换和重采样 LUT 本身。
 
-```text
-[ 场景线性色彩 (ACEScg) ]
-           │
-           ▼
-[ 1. 输入色彩转换 ] ──▶ 将场景色彩转换为 LUT 所期望的色彩空间 (如 ARRI LogC3, Sony S-Log3, ACEScc)
-           │
-           ▼
-[ 2. 3D LUT 三维变换 ] ──▶ 应用 LUT 定义的颜色变换
-           │
-           ▼
-[ 3. 输出色彩转换 ] ──▶ 将 LUT 的输出还原回 ACES 场景色彩流水线
-           │
-           ▼
-[ 后续调色与显示变换 ]
-```
+<LutBakeFlow />
 
-![LUT 强度、输入与输出编码](/img/tutorial-v0.3.3/lut-controls.webp)
-*在调色面板中设置精确的输入与输出色彩编码*
+需要准备时，软件把 ACEScc/AP1 网格点转换到所选输入编码，采样原始 LUT，再将采样结果从所选输出编码转换回 ACEScc/AP1。这些操作被烘焙为合成 LUT 并缓存。原表已经使用工作编码且定义域为单位范围时，可以直接使用原表。
+
+渲染照片时，调色管线查询准备好的 LUT，再按强度混合结果。
+
+<InterfaceMock kind="lut-controls" />
 
 ### 常见编码配置指南
-- **官方胶片模拟包**：默认采用 **ACEScc** 输入与输出。
+- **官方包**：以包内具体 LUT 的说明或已记录编码为准。要求 ACEScc 输入与输出的 LUT，才将两项设为 ACEScc。
 - **电影机 Log LUT（如 ARRI LogC3、Sony S-Log3、Canon Log 2）**：
   - **输入编码（Input）**：选择对应的相机 Log 曲线（如 `ARRI LogC3`）。
   - **输出编码（Output）**：按照 LUT 附带的说明选择。
@@ -73,8 +66,7 @@ LUT 对输入和输出编码可能有特定要求。编码不匹配时，画面�
 
 进入编辑器，在左侧工具轨打开 `LUT（LUTs）` 抽屉：
 
-![LUT 筛选与浏览器](/img/tutorial-v0.3.3/lut-browser.webp)
-*可视化 LUT 浏览器：支持分类搜索、收藏与缩略图预览*
+<InterfaceMock kind="lut-browser" />
 
 1. **精准检索**：
    - 可按类别（Category：黑白、彩色负片、反转片、电影卷）、来源（Source）或品牌（Brand）进行筛选。

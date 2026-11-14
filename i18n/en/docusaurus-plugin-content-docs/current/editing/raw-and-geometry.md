@@ -2,28 +2,32 @@
 sidebar_position: 1
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # Input Decoding, Color Profiles & Geometry
 
 This page covers **RAW decoding, raster input color**, and **crop and rotation**.
 
 ---
 
-## RAW Photography: Sensor-Level White Balance & Demosaicing
+## RAW Photography: Camera White Balance & Demosaicing
 
 RAW data from cameras with a color filter array (CFA) requires decoding and demosaicing to produce a color image.
 
-![Camera white balance and lens calibration](/img/tutorial-v0.3.3/raw-white-balance.webp)
-*RAW Decode Console: Camera White Balance & Optical Calibration*
+<InterfaceMock kind="raw-white-balance" />
 
 ### 1. Camera White Balance
-- **As Shot**: The application reads the camera's recorded white balance information and applies it during RAW decoding.
-- **Look White Balance**: RAW white balance is applied during decoding; the CAT02 white balance in the [Look panel](../editing/tone-and-color.md) operates within a grading node.
+- **As Shot**: The application reads the camera's recorded white balance information and applies white balance gains to the camera RGB image after RAW processing is complete.
+- **Look White Balance**: Camera white balance operates on the camera RGB image after RAW processing is complete; the CAT02 white balance in the [Look panel](../editing/tone-and-color.md) operates within a grading node.
 
 ### 2. Demosaicing Algorithms
-Demosaicing determines the sharpness, clarity, and artifact resistance when interpolating full three-channel color from the mosaic array:
-- **RCD (Ratio-based Corrected Demosaicing)**: The default algorithm for Bayer sensors.
-- **Neural Engine**: A GPU-accelerated neural network for Bayer and Fujifilm X-Trans sensor data.
-- **X-Trans**: Uses a neural network branch for Fujifilm’s 6×6 filter array.
+The Method selector offers Default, Legacy, and Neural Engine. X-Trans names a sensor filter array, not a separate algorithm option.
+
+- **Default**: Selects a method for the sensor. At full resolution, Bayer uses Legacy and X-Trans uses Neural Engine.
+- **Legacy**: Uses RCD for Bayer. For X-Trans, it uses traditional interpolation: estimate green from neighboring samples, then reconstruct red and blue using weighted color differences. This is a simple neighborhood interpolation approach, similar in purpose to bilinear interpolation.
+- **Neural Engine**: Uses neural-network reconstruction for Bayer or X-Trans data.
+
+Reduced-resolution decodes resolve to Legacy. Compare algorithms on the same photo at full resolution.
 
 ### 3. Highlight Reconstruction
 When some color channels clip, check `Enable Highlight Reconstruction` to estimate missing data using information from unclipped channels. Results depend on the source file and the extent of clipping.
@@ -40,8 +44,7 @@ Alcedo Studio features deep integration with the Lensfun optical database:
 
 Alcedo Studio also supports JPEG, TIFF, PNG, and OpenEXR files. When opening a non-RAW file, the panel presents `Input Color / Input Profile`:
 
-![Raster input color configuration](/img/tutorial-v0.3.3/raw-decode.webp)
-*Automatic Color Space Detection for Non-RAW Files*
+<InterfaceMock kind="raw-decode" />
 
 - **Auto (metadata)**: Default setting. The engine parses embedded ICC color profiles, PNG chromaticity chunks, or OpenEXR color primaries.
 - **Scene-Referred Conversion**: Whether the image is encoded in sRGB, Display P3, Adobe RGB, or Rec.2020, the engine maps it cleanly into the scene-referred ACES linear workspace. This allows raster files to benefit from node-based grading and ACES/OpenDRT display transforms.
@@ -53,8 +56,7 @@ Alcedo Studio also supports JPEG, TIFF, PNG, and OpenEXR files. When opening a n
 
 Crop and rotation set the image framing and can be undone or adjusted again in the edit history.
 
-![Crop box, grid, and geometry parameters](/img/tutorial-v0.3.3/geometry.webp)
-*Composing with rule-of-thirds grid and boundary containment*
+<InterfaceMock kind="geometry" />
 
 1. **Aspect Ratio**:
    - Standard presets include: `Original`, `1:1`, `4:5` (social portrait crop), `16:9`, `3:2`, and custom proportions.

@@ -2,6 +2,9 @@
 sidebar_position: 3
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+import {ColorWheelsMock} from '@site/src/components/SourceMocks';
+
 # Tone, Curves & Color Grading
 
 Alcedo Studio’s grading pipeline uses a **scene-referred, wide-gamut linear color space (ACEScg)**. This page covers tone, white balance, saturation, selective color, and color wheels.
@@ -12,8 +15,7 @@ Alcedo Studio’s grading pipeline uses a **scene-referred, wide-gamut linear co
 
 Under the active grading node, open the `Tone` panel. The controls follow a photographic progression from global illumination to localized contrast:
 
-![Tone panel adjustment](/img/tutorial-v0.3.3/tone.webp)
-*Sculpting light and shadow with physical exposure and bilateral tone mapping*
+<InterfaceMock kind="tone" />
 
 | Control | Physics & Algorithm Mechanics | Practical Tuning Guidelines |
 | --- | --- | --- |
@@ -34,17 +36,16 @@ Double-clicking any slider handle in the interface immediately resets the parame
 
 `RAW Decode` and `Look` have separate white balance controls that operate at different stages:
 
-![Look panel creative white balance and color controls](/img/tutorial-v0.3.3/look.webp)
-*Applying CAT02 creative white balance and hue controls in the Look panel*
+<InterfaceMock kind="look" />
 
 ```text
-[ RAW Camera White Balance ] ──▶ Adjusts channel gains during RAW decoding
+[ Camera White Balance ] ──▶ Adjusts channel gains on the camera RGB image after RAW processing is complete
 [ CAT02 Look White Balance ] ──▶ Adjusts white balance in the grading node
 ```
 
-1. **RAW Sensor White Balance (Camera WB)**:
-   - **Pipeline Stage**: Operates prior to demosaicing interpolation.
-   - **Method**: Applies white balance gains to color channels during decoding.
+1. **Camera White Balance (Camera WB)**:
+   - **Pipeline Stage**: Operates on the camera RGB image after RAW processing is complete.
+   - **Method**: Applies white balance gains to the color channels of the camera RGB image.
    - **Use**: Adjusts the white balance of the RAW image.
 2. **Creative Look White Balance (Look WB)**:
    - **Pipeline Stage**: Operates inside the scene-referred linear grading node.
@@ -71,14 +72,20 @@ Expand `Selective Color` to perform 3D geometric shifts across 8 primary hue fam
 
 ---
 
-## Three-Way Color Wheels (Lift / Gamma / Gain)
+## Four-Way Color Wheels (Lift / Gamma / Gain / Offset)
 
-The three wheels adjust color in different tonal ranges:
+The Look panel arranges four wheels in a two-by-two grid:
 
-- **Lift (Shadows / Pedestal)**: Operates predominantly on dark tones and black levels. Typically pushed toward cool cyan-blue to ground shadows.
-- **Gamma (Midtones / Power)**: Covers the majority of skin reflections and primary scene textures, establishing overall emotional warmth.
-- **Gain (Highlights / Slope)**: Acts as a slope multiplier affecting specular highlights. Pushed toward warm golden tones to create classic complementary contrast.
-- **Master Luminance Sliders**: Each color wheel includes a dedicated master luminance slider below the disc, allowing you to rebalance zonal brightness without disturbing your color vector. Click `Reset wheels` to return to default.
+<ColorWheelsMock />
+
+- **Shadows (Lift)**: Primarily changes color and brightness near black, with less effect on highlights.
+- **Midtones (Gamma)**: Primarily changes midtones, with less effect at the darkest and brightest ends.
+- **Highlights (Gain)**: Primarily changes color and brightness near white, with less effect on shadows.
+- **Offset**: Changes all tonal ranges, like an exposure adjustment per color channel.
+- **Master**: Each wheel has its own brightness control in EV below the disc. Offset is a fourth wheel; Master is the control beneath each wheel.
+
+Double-click a disc to reset that wheel, or choose Reset wheels to reset all four.
+
 
 ---
 

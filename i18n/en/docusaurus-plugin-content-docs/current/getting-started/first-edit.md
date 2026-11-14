@@ -2,6 +2,8 @@
 sidebar_position: 3
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # Your First Edit: A Complete Walkthrough
 
 This tutorial covers creating a project, importing and editing photos, comparing versions, and exporting.
@@ -10,8 +12,7 @@ This tutorial covers creating a project, importing and editing photos, comparing
 
 ## Step 1: Create a Working Project
 
-![Create new project](/img/tutorial-v0.3.3/new-project.webp)
-*Creating a new `.alcd` project database*
+<InterfaceMock kind="new-project" />
 
 1. Launch Alcedo Studio and click `New Project…` on the Welcome screen.
 2. Enter a **Project Name** (e.g. `2026_Landscape_Project`) and pick a local folder as your **Storage Location**.
@@ -39,7 +40,7 @@ Double-click the imported thumbnail to enter the **Editor** darkroom viewport.
 1. **RAW Decoding & Lens Calibration**:
    - In the right adjustments stack, expand `RAW Decode`.
    - Verify the initial camera white balance (`As Shot`), and make subtle adjustments to temperature or tint as needed.
-   - The demosaicing method defaults to high-precision RCD; if supported by your GPU, you can also select the Neural Engine for AI-driven reconstruction.
+   - Use Method to choose Default, Legacy, or Neural Engine. Legacy uses RCD for Bayer and traditional interpolation for X-Trans; at full resolution, Default selects Legacy for Bayer and Neural Engine for X-Trans.
    - Expand `Lens Calibration` and check `Enable Lens Calibration`. The application matches a camera and lens profile to correct distortion and vignetting.
 2. **Crop & Geometry**:
    - Expand the `Geometry` panel.
@@ -52,8 +53,7 @@ Double-click the imported thumbnail to enter the **Editor** darkroom viewport.
 
 Alcedo Studio’s grading pipeline operates in a scene-referred linear color space. The following steps adjust tone and color:
 
-![Tone adjustment](/img/tutorial-v0.3.3/tone.webp)
-*Sculpting balanced scene contrast in the Tone panel*
+<InterfaceMock kind="tone" />
 
 1. **Refine Base Tone**:
    - **Exposure**: Establish overall scene brightness.
@@ -78,8 +78,7 @@ Alcedo Studio’s grading pipeline operates in a scene-referred linear color spa
 
 You can create and compare versions of the same photo:
 
-![Version branch management](/img/tutorial-v0.3.3/versions.webp)
-*Creating isolated version branches for a single photo*
+<InterfaceMock kind="versions" />
 
 1. Expand the `Versions` panel from the left tool rail.
 2. Click `Branch from current commit` and give your version a name (e.g. "Warm Golden Hour").
@@ -94,8 +93,7 @@ You can create and compare versions of the same photo:
 
 Deliver your finished photograph through the unified export queue:
 
-![Export settings](/img/tutorial-v0.3.3/export-presets.webp)
-*Selecting export presets and configuring destinations*
+<InterfaceMock kind="export-presets" />
 
 1. Click `Library` in the top toolbar to return to the catalog, with your edited photo selected.
 2. Click `Add to Queue` in the right inspector, then switch to the `Export` tab.

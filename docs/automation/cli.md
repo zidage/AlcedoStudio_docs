@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # 智能体交互与 alcedo-cli 命令行
 
 Alcedo Studio 随附命令行工具 **`alcedo-cli`**，可供脚本或 AI 智能体连接应用窗口、编辑照片和执行批处理。
@@ -46,8 +48,7 @@ alcedo-cli schema
 
 ## 模式 1：连接 GUI 窗口与智能体协同
 
-![历史中的智能体标记与备注](/img/tutorial-v0.3.3/history.webp)
-*AI 智能体在协同过程中生成的参数提交与操作备注*
+<InterfaceMock kind="history" />
 
 当你正在 Alcedo Studio 桌面端精修照片时，AI 智能体可以通过 `alcedo-cli` 接入当前窗口协助工作：
 

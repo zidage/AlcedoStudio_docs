@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # Preferences, Cache Management & Updates
 
 Access `Settings` from the top toolbar to configure system parameters, GPU acceleration backends, disk thumbnail caching, keyboard shortcuts, and signed software updates.
@@ -10,8 +12,7 @@ Access `Settings` from the top toolbar to configure system parameters, GPU accel
 
 ## Language, Themes & Workflow Behavior
 
-![Language, themes, and settings categories](/img/tutorial-v0.3.3/settings.webp)
-*Preferences Console: Language, themes, and default behaviors*
+<InterfaceMock kind="settings" />
 
 - **Language / Theme**: Switch between Simplified Chinese and English and set the interface theme.
 - **Default Behavior**:
@@ -44,8 +45,7 @@ See [Installation & Hardware Setup](../getting-started/installation.md). Select 
 
 ## Custom Keyboard Shortcuts
 
-![Keyboard shortcut bindings](/img/tutorial-v0.3.3/keyboard.webp)
-*Keyboard Shortcuts Manager: Direct physical key recording and conflict detection*
+<InterfaceMock kind="keyboard" />
 
 1. Locate the desired command in the list (e.g., "Undo", "Add Radial Mask", "Rate 5 Stars").
 2. Click the shortcut field and press your desired key combination directly on your keyboard (e.g. `Ctrl+Alt+E`).

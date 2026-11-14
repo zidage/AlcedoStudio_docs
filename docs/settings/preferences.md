@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+
 # 设置、缓存管理与软件更新
 
 通过顶部工具栏的 `设置（Settings）`，你可以集中调优 Alcedo Studio 的各项系统参数，包括 GPU 硬件加速、磁盘缓存策略、快捷键定制以及签名在线更新。
@@ -10,8 +12,7 @@ sidebar_position: 1
 
 ## 语言、主题与默认操作习惯
 
-![语言、主题与设置分类](/img/tutorial-v0.3.3/settings.webp)
-*设置面板：语言、主题与工作流行为定制*
+<InterfaceMock kind="settings" />
 
 - **语言与主题（Language / Theme）**：可在“简体中文”与“English”之间切换，并设置界面主题。
 - **默认行为（Default Behavior）**：
@@ -44,8 +45,7 @@ sidebar_position: 1
 
 ## 键盘快捷键（Keyboard）定制
 
-![当前快捷键绑定](/img/tutorial-v0.3.3/keyboard.webp)
-*键盘快捷键定制器：支持直接按键录制与冲突检测*
+<InterfaceMock kind="keyboard" />
 
 1. 在列表中找到需要更改的操作指令（如“撤销”、“添加径向蒙版”、“评分 5 星”）。
 2. 单击输入框，直接在物理键盘上按下你期望的组合键（如 `Ctrl+Alt+E`），系统将实时捕获并录制。

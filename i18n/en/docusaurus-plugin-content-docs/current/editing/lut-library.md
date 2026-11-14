@@ -2,6 +2,9 @@
 sidebar_position: 4
 ---
 
+import InterfaceMock from '@site/src/components/InterfaceMock';
+import {LutBakeFlow} from '@site/src/components/SourceMocks';
+
 # 3D LUT Library, Film Emulation & Color Space Encodings
 
 3D LUTs apply color transforms in a grading node. Alcedo Studio supports official LUT packages and imported `.cube` files, with controls for input encoding, output encoding, and strength
@@ -14,14 +17,15 @@ In v0.3.5, **Display Transform → Film Print** also offers film, print material
 
 Official film simulation LUT packages can be downloaded in Settings. Their signatures are checked during installation:
 
-![Installed official LUT packages](/img/tutorial-v0.3.3/lut-packages.webp)
-*Official Film Simulation Package Manager in Preferences*
+<InterfaceMock kind="lut-packages" />
 
-### 1. Downloading Official Film Packages
-1. Navigate to `Settings → LUTs`.
-2. Select a package from `Official LUT Packages`, such as Kodak Portra, Fujifilm Pro/Superia, CineStill, Kodachrome, or Tri-X.
-3. Click `Download`. The engine downloads, verifies signatures, and installs the package in the background.
-4. Once deployed, the status updates to `Installed`. Updates and repairs can be performed directly from this panel.
+### 1. Downloading Official LUT Packages
+1. Open Settings → LUTs and find Official LUT Packages.
+2. Each card represents an entire package, such as Spectral Film LUT or Spektrafilm LUT. A film stock such as Portra is an entry inside a package.
+3. The card shows its upstream project, LUT count, revision, archive size, and installation status. Click Download, Update, or Repair as offered by that card.
+4. Downloads are verified and installed in the library. Installed cards also provide Remove package; removing a package makes its LUTs unavailable to photos that use them.
+
+The schematic shows two example package states. Counts, revisions, and sizes come from the package feed in the application.
 
 ### 2. Importing Custom `.cube` LUTs
 To use your own commercial or custom grading `.cube` files:
@@ -33,29 +37,18 @@ To use your own commercial or custom grading `.cube` files:
 
 ## LUT Input & Output Color Space Encodings
 
-LUTs may require specific input and output encodings. A mismatch can produce unexpected brightness or color. Each grading node provides **Input Encoding** and **Output Encoding** settings:
+Input and Output describe the encoding expected by the original LUT and the encoding it produces. These settings transform and resample the LUT itself.
 
-```text
-[ Scene Linear Color (ACEScg) ]
-             │
-             ▼
-[ 1. Input Color Transform ] ──▶ Converts scene data to the color space expected by the LUT (e.g. ARRI LogC3, Sony S-Log3, ACEScc)
-             │
-             ▼
-[ 2. 3D LUT Transform ] ───────▶ Applies the color transform defined by the LUT
-             │
-             ▼
-[ 3. Output Color Transform ] ─▶ Transforms the LUT's output back into the ACES pipeline
-             │
-             ▼
-[ Downstream Grading & Display Transform ]
-```
+<LutBakeFlow />
 
-![LUT strength, input and output encodings](/img/tutorial-v0.3.3/lut-controls.webp)
-*Configuring exact Input and Output Color Space Encodings*
+When preparation is needed, the application converts ACEScc/AP1 grid points into the selected input encoding, samples the original LUT, and converts the samples from the selected output encoding back to ACEScc/AP1. It bakes these operations into a composite LUT and caches it. A LUT already using the working encoding and a unit domain can use its original table directly.
+
+During rendering, the grading pipeline samples this prepared LUT and mixes the result using Strength.
+
+<InterfaceMock kind="lut-controls" />
 
 ### Recommended Encodings Guide
-- **Official Film Simulation Packages**: Tailored specifically for Alcedo Studio's linear pipeline; default to **ACEScc** for both input and output.
+- **Official packages**: Check the individual LUT's documented or remembered encodings. Choose ACEScc for both only when that LUT expects it.
 - **Cinema Camera Log LUTs (ARRI LogC3, Sony S-Log3, Canon Log 2)**:
   - **Input Encoding**: Set to the corresponding camera Log curve (e.g. `ARRI LogC3`).
   - **Output Encoding**: Choose the encoding specified by the LUT's documentation.
@@ -73,8 +66,7 @@ If applying a LUT produces unexpected contrast, check the required input and out
 
 In the Editor, open the `LUTs` drawer from the left tool rail:
 
-![LUT filtering and visual browser](/img/tutorial-v0.3.3/lut-browser.webp)
-*Visual LUT Browser: Category filtering, search, and thumbnail previews*
+<InterfaceMock kind="lut-browser" />
 
 1. **Targeted Search**:
    - Filter by Category (Black & White, Color Negative, Color Reversal, Motion Picture), Source, or Brand.

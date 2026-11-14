@@ -57,7 +57,7 @@ Follow the documentation in the order of a complete photographic workflow:
 ### Creative Editing & Color Science
 - [Input Decoding & Geometry](./editing/raw-and-geometry.md): RAW demosaicing (RCD / Neural Engine), raster color profiles, lens correction, and crop/rotation.
 - [Grading Nodes, Layers & Masks](./editing/nodes-and-masks.md): Node pipeline logic, layer stacks, radial and gradient mask drawing and feathering.
-- [Tone, Curves & Color Grading](./editing/tone-and-color.md): Exposure, local contrast, Camera WB vs. CAT02 creative white balance, selective color, and Lift/Gamma/Gain wheels.
+- [Tone, Curves & Color Grading](./editing/tone-and-color.md): Exposure, local contrast, Camera WB vs. CAT02 creative white balance, selective color, and Lift/Gamma/Gain/Offset wheels.
 - [3D LUT Library & Color Space Encoding](./editing/lut-library.md): Official film packages, custom `.cube` imports, input/output color encoding transforms, and strength blending.
 - [Film Simulation](./editing/film-simulation.md): Choose negatives, print materials, and reversal films; adjust format, grain, scene light, and negative scanning
 - [Display Transform, HDR & Post-Processing](./editing/display-and-effects.md): ACES 2.0 / OpenDRT color management, Ultra HDR preview, real-time GPU scopes, and film diffusion/grain/halation.

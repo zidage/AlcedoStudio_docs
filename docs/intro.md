@@ -57,7 +57,7 @@ Alcedo Studio 的项目和图像处理流程如下：
 ### 色彩与画质编辑
 - [输入解码与几何构图](./editing/raw-and-geometry.md)：RAW 解码引擎（RCD / 神经引擎）、位图输入色彩、镜头畸变校正与智能裁剪旋转。
 - [调色节点、图层与局部蒙版](./editing/nodes-and-masks.md)：节点流水线逻辑、图层堆栈、径向蒙版与渐变蒙版的绘制与微调。
-- [影调、曲线与色彩控制](./editing/tone-and-color.md)：曝光与局部影调、相机白平衡与 CAT02 创意白平衡、选择性色彩与 Lift/Gamma/Gain 色轮。
+- [影调、曲线与色彩控制](./editing/tone-and-color.md)：曝光与局部影调、相机白平衡与 CAT02 创意白平衡、选择性色彩与 Lift/Gamma/Gain/Offset 色轮。
 - [3D LUT 库与色彩空间匹配](./editing/lut-library.md)：官方胶片模拟包、自定义 `.cube` 导入、输入/输出色彩空间编码转换与强度融合。
 - [胶片模拟](./editing/film-simulation.md)：选择负片、印片材料或反转片，调整画幅、颗粒、场景光与负片扫描
 - [显示变换、HDR 与后期质感](./editing/display-and-effects.md)：ACES 2.0 与 OpenDRT 色彩管理、Ultra HDR 预览、GPU 示波器与胶片柔光/颗粒/光晕。
